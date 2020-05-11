@@ -1,30 +1,82 @@
 <template>
-  <div class="modal" v-show="value">
-    <div class="container">
-      <div class="modal__title">Sign Up:</div>
-      <input v-model="email" placeholder="enter email" />
-      <p>username is: {{ email }}</p>
-      <input v-model="password" placeholder="enter password" />
-      <p>password is: {{ password }}</p>
-      <button class="btn">Submit</button>
+  <div>
+    <b-button v-b-modal.modal-prevent-closing>Signup</b-button>
+    <div class="mt-3">
+      Submitted Name:
+      <div v-if="submittedNames.length === 0">--</div>
+      <ul v-else class="mb-0 pl-3">
+        <li v-for="name in submittedNames" v-bind:key=name>{{ name }}</li>
+      </ul>
     </div>
+
+    <b-modal
+      id="modal-prevent-closing"
+      ref="modal"
+      title="Submit Your Name"
+      @show="resetModal"
+      @hidden="resetModal"
+      @ok="handleOk"
+    >
+      <form ref="form" @submit.stop.prevent="handleSubmit">
+        <b-form-group
+          :state="nameState"
+          label="Name"
+          label-for="name-input"
+          invalid-feedback="Name is required"
+        >
+          <b-form-input
+            id="name-input"
+            v-model="name"
+            :state="nameState"
+            required
+          ></b-form-input>
+        </b-form-group>
+      </form>
+    </b-modal>
   </div>
 </template>
+
 <script>
 export default {
-  name: 'SignUp',
-  props: {
-    value: {
-      required: true,
+  data() {
+    return {
+      name: '',
+      nameState: null,
+      submittedNames: [],
+    };
+  },
+  methods: {
+    checkFormValidity() {
+      const valid = this.$refs.form.checkValidity();
+      this.nameState = valid;
+      return valid;
     },
-    methods: {
-      close() {
-        this.$emit('input', !this.value);
-      },
+    resetModal() {
+      this.name = '';
+      this.nameState = null;
+    },
+    handleOk(bvModalEvt) {
+      // Prevent modal from closing
+      bvModalEvt.preventDefault();
+      // Trigger submit handler
+      this.handleSubmit();
+    },
+    handleSubmit() {
+      // Exit when the form isn't valid
+      if (!this.checkFormValidity()) {
+        return;
+      }
+      // Push the name to submitted names
+      this.submittedNames.push(this.name);
+      // Hide the modal manually
+      this.$nextTick(() => {
+        this.$bvModal.hide('modal-prevent-closing');
+      });
     },
   },
 };
 </script>
+
 <style scoped>
 .modal {
   border: 1px solid forestgreen;
