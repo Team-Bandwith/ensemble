@@ -27,7 +27,7 @@ exports.mutation = new GraphQLObjectType({
         bcrypt.hash(args.password, 8)
           .then((hash) => db.one(query, [args.username, args.email, hash]))
           .then(res => res)
-          .catch(err => err);
+          .catch(err => console.log(err));
       }
     }
   }
