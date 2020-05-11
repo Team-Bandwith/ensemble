@@ -1,32 +1,66 @@
+<script>
+import Vue from 'vue';
+import BootstrapSidebar from './components/vue-bootstrap-sidebar.vue';
+
+export default Vue.extend({
+  name: 'App',
+  components: {
+    BootstrapSidebar,
+  },
+  data() {
+    return {
+      initialShow: true,
+      header: '<h3>Ensemble</h3>',
+      links: [
+        { name: 'Home', href: { name: 'Home' }, faIcon: ['fas', 'home'] },
+        { name: 'About', href: { name: 'About' }, faIcon: 'users' },
+        { name: 'Contact', href: { name: 'contact' }, faIcon: 'phone' },
+      ],
+    };
+  },
+  methods: {
+    onSidebarChanged() {
+    },
+  },
+});
+</script>
+
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+  <div id="App">
+    <BootstrapSidebar
+      :initial-show="initialShow"
+      :links="links"
+      :header="header"
+      :fa="true"
+      @sidebarChanged="onSidebarChanged"
+    >
+      <template v-slot:navbar>
+        <b-navbar
+          id="mainNavbar"
+          toggleable="lg"
+          type="light"
+          variant="light"
+          fixed="top"
+        >
+          <b-navbar-nav>
+            <b-nav-item>
+              Ensemble
+            </b-nav-item>
+          </b-navbar-nav>
+        </b-navbar>
+      </template>
+
+      <template v-slot:content>
+        <b-container style="margin-top: 56px">
+          <router-view />
+        </b-container>
+      </template>
+    </BootstrapSidebar>
   </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+<style lang="scss">
+@import 'node_modules/bootstrap/scss/bootstrap';
+@import 'node_modules/bootstrap-vue/src/index.scss';
+@import './scss/default-theme';
 </style>
