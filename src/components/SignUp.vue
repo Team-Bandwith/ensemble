@@ -1,13 +1,6 @@
 <template>
   <div>
     <b-button v-b-modal.modal-prevent-closing>Signup</b-button>
-    <div class="mt-3">
-      Submitted Name:
-      <div v-if="submittedNames.length === 0">--</div>
-      <ul v-else class="mb-0 pl-3">
-        <li v-for="name in submittedNames" v-bind:key=name>{{ name }}</li>
-      </ul>
-    </div>
 
     <b-modal
       id="modal-prevent-closing"
@@ -19,15 +12,42 @@
     >
       <form ref="form" @submit.stop.prevent="handleSubmit">
         <b-form-group
-          :state="nameState"
-          label="Name"
+          :state="usernameState"
+          label="Username"
           label-for="name-input"
-          invalid-feedback="Name is required"
+          invalid-feedback="Username is required"
         >
           <b-form-input
             id="name-input"
-            v-model="name"
-            :state="nameState"
+            v-model="username"
+            :state="usernameState"
+            required
+          ></b-form-input>
+        </b-form-group>
+        <b-form-group
+          :state="emailState"
+          label="E-mail"
+          label-for="email-input"
+          invalid-feedback="E-mail is required"
+        >
+          <b-form-input
+            type="email"
+            id="email-input"
+            v-model="email"
+            :state="emailState"
+            required
+          ></b-form-input>
+        </b-form-group>
+        <b-form-group
+          :state="pwdState"
+          label="Password"
+          label-for="pwd-input"
+          invalid-feedback="Password is required"
+        >
+          <b-form-input
+            id="pwd-input"
+            v-model="password"
+            :state="pwdState"
             required
           ></b-form-input>
         </b-form-group>
@@ -37,18 +57,25 @@
 </template>
 
 <script>
+import { request } from 'graphql-request';
+
 export default {
   data() {
     return {
-      name: '',
-      nameState: null,
-      submittedNames: [],
+      username: '',
+      usernameState: null,
+      email: '',
+      emailState: null,
+      password: '',
+      pwdState: null,
     };
   },
   methods: {
     checkFormValidity() {
       const valid = this.$refs.form.checkValidity();
-      this.nameState = valid;
+      this.usernameState = valid;
+      this.emailState = valid;
+      this.pwdState = valid;
       return valid;
     },
     resetModal() {
@@ -66,8 +93,17 @@ export default {
       if (!this.checkFormValidity()) {
         return;
       }
-      // Push the name to submitted names
-      this.submittedNames.push(this.name);
+
+      const query = `
+  mutation {
+    signUp(username: "${this.username}", email: "${this.email}", password: "${this.password}") {
+      id
+    }
+  }
+`;
+      request(`http://localhost:${process.env.PORT}/api`, query)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
       // Hide the modal manually
       this.$nextTick(() => {
         this.$bvModal.hide('modal-prevent-closing');

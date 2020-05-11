@@ -24,6 +24,6 @@ app.use(
   })
 );
 
-app.listen(8081, () =>
+app.listen(process.env.PORT, () =>
   console.log('GraphQL server running on localhost:8081')
 );
