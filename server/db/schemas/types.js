@@ -1,4 +1,4 @@
-const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLInt } = require('graphql');
+const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLInt, GraphQLBoolean } = require('graphql');
 
 exports.MemberType = new GraphQLObjectType({
   name: "Member",
@@ -9,6 +9,8 @@ exports.MemberType = new GraphQLObjectType({
     url_avatar: { type: GraphQLString },
     email: { type: GraphQLString },
     password: { type: GraphQLString },
+    auth: { type: GraphQLBoolean },
+    token: { type: GraphQLString },
   }
 });
 

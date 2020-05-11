@@ -12,7 +12,10 @@ const schema = new GraphQLSchema({
 });
 
 var app = express();
+
 app.use(cors());
+app.use(express.static('dist'));
+
 app.use(
   '/',
   expressGraphQl({
