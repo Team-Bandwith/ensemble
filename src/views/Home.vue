@@ -21,6 +21,8 @@ export default {
   data() {
     return {
       modalOpen: false,
+      username: '',
+      password: '',
     };
   },
   methods: {
