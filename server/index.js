@@ -12,7 +12,10 @@ const schema = new GraphQLSchema({
 });
 
 var app = express();
+
 app.use(cors());
+app.use(express.static('dist'));
+
 app.use(
   '/',
   expressGraphQl({
@@ -21,6 +24,6 @@ app.use(
   })
 );
 
-app.listen(8081, () =>
+app.listen(process.env.PORT, () =>
   console.log('GraphQL server running on localhost:8081')
 );
