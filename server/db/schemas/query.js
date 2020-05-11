@@ -1,5 +1,6 @@
+const bcrypt = require('bcrypt');
 const { db } = require('../pgAdapter');
-const { GraphQLObjectType, GraphQLString } = require("graphql");
+const { GraphQLObjectType, GraphQLString, GraphQLID } = require("graphql");
 const { 
   MemberType,
   FriendType,
@@ -13,18 +14,19 @@ exports.query = new GraphQLObjectType({
   name: "RootQueryType",
   type: "Query",
   fields: {
-    member: {
+    logIn: {
       type: MemberType,
-      args: { username: { type: GraphQLString } },
+      args: { username: { type: GraphQLString }, password: { type: GraphQLString }},
       resolve(parentValue, args) {
-        const query = `SELECT * FROM project WHERE username=$1`;
-        const values = [args.username];
+        const query = `SELECT * FROM member WHERE username=$1`;
 
         return db
-          .one(query, values)
-          .then(res => res)
-          .catch(err => err);
+          .one(query, [args.username])
+          .then((member) => bcrypt.compare(args.password, member.password)
+            .then((result) => result ? member : "Incorrect password")
+          )
+          .catch((err) => console.log(err.message))
       }
-    },
+    }
   }
 });

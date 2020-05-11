@@ -15,7 +15,7 @@ exports.mutation = new GraphQLObjectType({
   name: "RootMutationType",
   type: "Mutation",
   fields: {
-    addMember: {
+    signUp: {
       type: MemberType,
       args: {
         username: { type: GraphQLString },
