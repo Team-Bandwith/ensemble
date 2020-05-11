@@ -17,28 +17,28 @@ Once the project moves into development, the press release can be used as a touc
  -->
 
 ## Heading
-  > Howdy
+  > Ensemble
 
 ## Sub-Heading
-  > This app is for quarentined users to get to know their neighbor.
+  > This app let’s users play and record music created with or without their friends.  
 
 ## Summary
-  > Get to know your neighbors during isolation by creating an online social gathering involving games and messaging.
+  > Play and save music through our website using your keyboard or controller as an instrument.
 
 ## Problem
-  > Being isolated and unable to communicate with people you are geographically close to.
-
+  > People may not own istruments, or be able to get together to make music.
+  
 ## Solution
-  > Join an online party based on location and interact with your neighbors through chat, games, and sharing images.
+  > Allows people to play instruments and collaborate with friends from the safety of their homes.
 
 ## Quote from You
-  > "We hope Howdy will close the social distancing gap and provide a social outlet for neighbors in need of connection." -Product Owner
+  > "We hope Ensemble will open up your creative. Play along with your friends and join the fun! " -Product Owner
 
 ## How to Get Started
-  > Simply create a username and login to look for parties around you, or create one of your own.
+  > Simply create a username and login to start making music.  
   
 ## Customer Quote
-  > "Being quarentined has really left me out of touch with my neighbors. It is really nice to use this app and stay in contact with them!" -Howdy User
+  > "I love being able to create and share my music that I make with my friends using Ensemble!" -Ensemble User
 
 ## Closing and Call to Action
-  > Don't go anywhere, just log in and get started hanging out with your neighbors.
+  > No need to meet up at the band room, or drag your instruments to your friends house.  Just log in and make music together.
