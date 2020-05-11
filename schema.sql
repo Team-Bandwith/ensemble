@@ -1,13 +1,13 @@
-DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS member;
 DROP TABLE IF EXISTS friend;
 DROP TABLE IF EXISTS message;
 DROP TABLE IF EXISTS comment;
 DROP TABLE IF EXISTS song_user;
 DROP TABLE IF EXISTS song;
 
-CREATE TABLE user (
+CREATE TABLE member (
   id serial PRIMARY KEY,
-  username VARCHAR (50) UNIQUE NOT NULL,
+  username VARCHAR (50) NOT NULL,
   url_avatar VARCHAR (255),
   email VARCHAR (50) NOT NULL,
   password VARCHAR (50) NOT NULL,
