@@ -1,5 +1,5 @@
 const { db } = require('../pgAdapter');
-const { GraphQLObjectType, GraphQLID, GraphQLString } = require("graphql");
+const { GraphQLObjectType, GraphQLString } = require("graphql");
 const { 
   MemberType,
   FriendType,

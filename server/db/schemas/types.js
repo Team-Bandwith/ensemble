@@ -9,7 +9,6 @@ exports.MemberType = new GraphQLObjectType({
     url_avatar: { type: GraphQLString },
     email: { type: GraphQLString },
     password: { type: GraphQLString },
-    salt: { type: GraphQLString },
   }
 });
 
