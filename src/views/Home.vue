@@ -1,9 +1,13 @@
 <template>
+  <b-row>
+    <b-col>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
     <HelloWorld msg="Welcome to Ensemble" />
     <SignUp />
   </div>
+    </b-col>
+  </b-row>
 </template>
 
 <script>
