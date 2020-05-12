@@ -1,16 +1,22 @@
 <template>
   <b-container fluid>
-    <ul id="example-1">
-      <li v-for="song in songs" :key="song.id">
-        <b-row>
+
+    <div v-for="song in songs" :key="song.id">
+        <div class="song-item">
+        <b-row cols="12">
           <b-col>
-            <div class="song-id">{{ song.id }}</div>
-            <div class="song-title">{{ song.name }}</div>
-            <div class="song-url">{{ song.url }}</div>
+            <div class="song-id">id:{{ song.id }}</div>
+            <div class="song-title">title:{{ song.name }}</div>
+            <div class="song-url">
+              url:{{ song.url }}
+            </div>
+            <div class="song-likes">#likes:{{ song.count_likes }}</div>
+            <div class="song-likes">created at:{{ song.created_at }}</div>
           </b-col>
         </b-row>
-      </li>
-    </ul>
+      </div>
+      <hr>
+    </div>
   </b-container>
 </template>
 
@@ -62,18 +68,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
+.song-item{
+  padding: 1em;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+.song-title{
+  font-weight: bold;
 }
 </style>
