@@ -13,6 +13,8 @@
       />
       <!-- eslint-enable -->
       <b-list-group class="items-wrapper">
+            <SignUp />
+            <Login />
         <template v-for="(link, index) in links">
           <template v-if="link.href !== undefined">
             <b-list-group-item :key="index">
@@ -87,11 +89,15 @@
 </template>
 <script>
 import HamburgerButton from '@jurajkavka/vue-hamburger-button';
+import Login from './Login.vue';
+import SignUp from './SignUp.vue';
 
 export default {
   name: 'BootstrapSidebar',
   components: {
     HamburgerButton,
+    SignUp,
+    Login,
   },
   props: {
     links: {
