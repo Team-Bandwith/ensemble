@@ -44,16 +44,18 @@ export default {
       }
     }`;
       request('http://localhost:8081/api', query)
-        .then((res) => console.log('sucess!', res))
+        .then((res) => {
+          this.songs = res.getAllSongs;
+        })
         .catch((err) => console.log(err));
     },
   },
   mounted() {
-    const loggedIn = false;
+    const loggedIn = true;
     if (loggedIn) {
-      this.songs = [{ id: 3, name: 'test2', url: 'http://#2' }];
+      this.songs = [];
+      this.getAllSongs();
     }
-    this.songs = this.getAllSongs();
   },
 };
 </script>
