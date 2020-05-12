@@ -1,17 +1,18 @@
-const graphql = require("graphql");
-const express = require("express");
-const cors = require("cors");
-const expressGraphQl = require("express-graphql");
+const graphql = require('graphql');
+const express = require('express');
+const cors = require('cors');
+const expressGraphQl = require('express-graphql');
+
 const { GraphQLSchema } = graphql;
 const { query } = require('./db/schemas/query');
 const { mutation } = require('./db/schemas/mutation');
 
 const schema = new GraphQLSchema({
   query,
-  mutation
+  mutation,
 });
 
-var app = express();
+const app = express();
 
 app.use(cors());
 app.use(express.static('dist'));
@@ -19,11 +20,9 @@ app.use(express.static('dist'));
 app.use(
   '/',
   expressGraphQl({
-    schema: schema,
-    graphiql: true
-  })
+    schema,
+    graphiql: true,
+  }),
 );
 
-app.listen(process.env.S_PORT, () =>
-  console.log('GraphQL server running on localhost:8081')
-);
+app.listen(process.env.S_PORT, () => console.log('GraphQL server running on localhost:8081'));

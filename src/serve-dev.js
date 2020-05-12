@@ -5,7 +5,7 @@ import Dev from '@/App.vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faUserSecret, faHome, faTint, faUsers,
-  faPhone, faChild,
+  faPhone, faChild, faUser, faMusic,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { router } from './router/index';
@@ -16,6 +16,8 @@ library.add(faTint);
 library.add(faUsers);
 library.add(faPhone);
 library.add(faChild);
+library.add(faUser);
+library.add(faMusic);
 
 Vue.config.productionTip = false;
 
