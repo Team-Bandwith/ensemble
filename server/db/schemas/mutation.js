@@ -1,5 +1,5 @@
 const graphql = require('graphql');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const { db } = require('../pgAdapter');
 const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLBoolean } = graphql;
 const { 
