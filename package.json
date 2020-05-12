@@ -13,7 +13,10 @@
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "@fortawesome/vue-fontawesome": "^0.1.9",
     "@jurajkavka/vue-hamburger-button": "^1.0.5",
+<<<<<<< HEAD
     "bcrypt": "^4.0.1",
+=======
+>>>>>>> (fix) changed to bcryptjs
     "bcryptjs": "^2.4.3",
     "bootstrap": "^4.4.1",
     "bootstrap-vue": "^2.13.1",
