@@ -1,6 +1,6 @@
 import Vue from 'vue';
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import VueRouter from 'vue-router';
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faUserSecret, faHome, faTint, faUsers,
@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import socketio from 'socket.io-client';
 import VueSocketIO from 'vue-socket.io';
 import App from './App.vue';
-import { router } from './router';
+import { router } from './router/index';
 import store from './store';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
@@ -39,6 +39,7 @@ export const SocketInstance = socketio('http://localhost:8081');
 Vue.use(VueSocketIO, SocketInstance);
 
 Vue.config.productionTip = false;
+Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 new Vue({
   router,
