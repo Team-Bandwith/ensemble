@@ -13,8 +13,8 @@ export default Vue.extend({
       header: '<h3>Ensemble</h3>',
       links: [
         { name: 'Home', href: { name: 'Home' }, faIcon: ['fas', 'home'] },
-        { name: 'About', href: { name: 'About' }, faIcon: 'users' },
-        { name: 'Contact', href: { name: 'contact' }, faIcon: 'phone' },
+        { name: 'Profile', href: { name: 'Profile' }, faIcon: 'user' },
+        { name: 'Jam', href: { name: 'Jam' }, faIcon: 'music' },
       ],
     };
   },
