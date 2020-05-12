@@ -1,32 +1,84 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-  </div>
+  <b-container fluid>
+
+    <div v-for="song in songs" :key="song.id">
+        <div class="song-item">
+        <b-row cols="12">
+          <b-col>
+            <div class="song-id">id:{{ song.id }}</div>
+            <div class="song-title">title:{{ song.name }}</div>
+            <div class="song-url">
+              url:{{ song.url }}
+            </div>
+            <div class="song-likes">#likes:{{ song.count_likes }}</div>
+            <div class="song-likes">
+              created at:
+              {{ handleMoment().startOf('hour').fromNow() || song.created_at }}
+            </div>
+          </b-col>
+        </b-row>
+      </div>
+      <hr>
+    </div>
+
+  </b-container>
 </template>
 
 <script>
+import { request } from 'graphql-request';
+
+const moment = require('moment');
+
 export default {
   name: 'HelloWorld',
   props: {
     msg: String,
+    loggedIn: Boolean,
+  },
+  data() {
+    return {
+      handleMoment: moment,
+      songs: [
+        { id: 1, name: 'test1', url: 'http://#1' },
+        { id: 2, name: 'test2', url: 'http://#2' },
+      ],
+    };
+  },
+  methods: {
+    getAllSongs() {
+      const query = `query {
+      getAllSongs {
+        id, 
+        id_author, 
+        name, 
+        url, 
+        count_likes,
+        created_at
+      }
+    }`;
+      request('http://localhost:8081/api', query)
+        .then((res) => {
+          this.songs = res.getAllSongs;
+        })
+        .catch((err) => console.log(err));
+    },
+  },
+  mounted() {
+    const loggedIn = true;
+    if (loggedIn) {
+      this.songs = [];
+      this.getAllSongs();
+    }
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
+.song-item{
+  padding: 1em;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+.song-title{
+  font-weight: bold;
 }
 </style>

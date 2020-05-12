@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { db } = require('../pgAdapter');
-const { GraphQLObjectType, GraphQLString, GraphQLID } = require("graphql");
+const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList } = require("graphql");
 const { 
   MemberType,
   FriendType,
@@ -15,6 +15,15 @@ exports.query = new GraphQLObjectType({
   name: "RootQueryType",
   type: "Query",
   fields: {
+    getAllSongs: {
+      type: new GraphQLList(SongType),
+      resolve() {
+        const query = `SELECT * FROM song`;
+        return db.any(query)
+          .then(function(data) { return data })
+          .catch(function(err) { console.log('err', err)})
+      },
+    },
     logIn: {
       type: MemberType,
       args: { username: { type: GraphQLString }, password: { type: GraphQLString }},

@@ -25,6 +25,7 @@
     "graphql-request": "^1.8.2",
     "jsonwebtoken": "^8.5.1",
     "midi-note": "^1.0.0",
+    "moment": "^2.25.3",
     "nexusui": "^2.0.16",
     "passport": "^0.4.1",
     "pg-promise": "^10.5.5",
@@ -34,6 +35,7 @@
     "vue": "^2.6.11",
     "vue-bootstrap-sidebar": "^1.0.6",
     "vue-fontawesome": "0.0.2",
+    "vue-moment": "^4.1.0",
     "vue-router": "^3.1.6",
     "vue-socket.io": "^3.0.9",
     "vuex": "^3.1.3"
