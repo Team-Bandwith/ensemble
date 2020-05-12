@@ -15,10 +15,13 @@
 </template>
 
 <script>
+import { request } from 'graphql-request';
+
 export default {
   name: 'HelloWorld',
   props: {
     msg: String,
+    loggedIn: Boolean,
   },
   data() {
     return {
@@ -26,8 +29,31 @@ export default {
         { id: 1, name: 'test1', url: 'http://#1' },
         { id: 2, name: 'test2', url: 'http://#2' },
       ],
-      currentUser: '',
     };
+  },
+  methods: {
+    getAllSongs() {
+      const query = `query {
+      getAllSongs {
+        id, 
+        id_author, 
+        name, 
+        url, 
+        count_likes,
+        created_at
+      }
+    }`;
+      request('http://localhost:8081/api', query)
+        .then((res) => console.log('sucess!', res))
+        .catch((err) => console.log(err));
+    },
+  },
+  mounted() {
+    const loggedIn = false;
+    if (loggedIn) {
+      this.songs = [{ id: 3, name: 'test2', url: 'http://#2' }];
+    }
+    this.songs = this.getAllSongs();
   },
 };
 </script>
