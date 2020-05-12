@@ -1,19 +1,17 @@
 <template>
   <b-container class="jam">
-    <b-row class="jam-top">
-      <b-col>
-        <div class="">
+    <b-row v-align="start">
+      <b-col cols="8" >
+        <div class="jam-instrument">
           <h1>instrument component</h1>
         </div>
       </b-col>
-      <b-col>
-        <div>
+      <b-col cols="4" class="jam-chat">
           <h1>chat component</h1>
-        </div>
       </b-col>
     </b-row>
-    <b-row>
-      <b-col>
+    <b-row align-v="end" >
+      <b-col class="jam-band">
         <h1>band members component</h1>
       </b-col>
     </b-row>
@@ -31,5 +29,7 @@ export default {
 </script>
 
 <style>
-
+.jam-instrument {
+  height: 60vh;
+}
 </style>
