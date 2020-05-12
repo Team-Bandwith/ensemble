@@ -1,17 +1,17 @@
 <template>
   <div>
-    <b-button v-b-modal.modal-prevent-closing>Login</b-button>
-    <div class="mt-3">
+    <b-button v-b-modal.login>Login</b-button>
+    <!-- <div class="mt-3">
       Submitted Name:
       <div v-if="submittedNames.length === 0">--</div>
       <ul v-else class="mb-0 pl-3">
         <li v-for="name in submittedNames" v-bind:key=name>{{ name }}</li>
       </ul>
-    </div>
+    </div> -->
 
     <b-modal
-      id="modal-prevent-closing"
-      ref="modal"
+      id="login"
+      ref="modal1"
       title="Submit Your Name"
       @show="resetModal"
       @hidden="resetModal"
