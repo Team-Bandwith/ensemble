@@ -1,9 +1,9 @@
 <template>
-  <b-container class="jam">
+  <b-container class="jam-page">
     <b-row v-align="start">
       <b-col cols="8" >
         <div class="jam-instrument">
-          <h1>instrument component</h1>
+          <Instrument/>
         </div>
       </b-col>
       <b-col cols="4" class="jam-chat">
@@ -19,13 +19,15 @@
 </template>
 
 <script>
+import Instrument from '../components/instrument.vue';
+
 export default {
-  data() {
-    return {
-      name: '',
-    };
+  name: 'jam',
+  components: {
+    Instrument,
   },
 };
+
 </script>
 
 <style>
