@@ -11,17 +11,24 @@
               url:{{ song.url }}
             </div>
             <div class="song-likes">#likes:{{ song.count_likes }}</div>
-            <div class="song-likes">created at:{{ song.created_at }}</div>
+            <div class="song-likes">
+              created at:
+              <!--enter song.created_at, update DB date to ISO -->
+              {{ handleMoment().format('dddd') }}
+            </div>
           </b-col>
         </b-row>
       </div>
       <hr>
     </div>
+
   </b-container>
 </template>
 
 <script>
 import { request } from 'graphql-request';
+
+const moment = require('moment');
 
 export default {
   name: 'HelloWorld',
@@ -31,6 +38,7 @@ export default {
   },
   data() {
     return {
+      handleMoment: moment,
       songs: [
         { id: 1, name: 'test1', url: 'http://#1' },
         { id: 2, name: 'test2', url: 'http://#2' },
