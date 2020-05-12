@@ -1,8 +1,17 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    this is a list of songs
-  </div>
+  <b-container fluid>
+    <ul id="example-1">
+      <li v-for="song in songs" :key="song.id">
+        <b-row>
+          <b-col>
+            <div class="song-id">{{ song.id }}</div>
+            <div class="song-title">{{ song.name }}</div>
+            <div class="song-url">{{ song.url }}</div>
+          </b-col>
+        </b-row>
+      </li>
+    </ul>
+  </b-container>
 </template>
 
 <script>
@@ -10,6 +19,15 @@ export default {
   name: 'HelloWorld',
   props: {
     msg: String,
+  },
+  data() {
+    return {
+      songs: [
+        { id: 1, name: 'test1', url: 'http://#1' },
+        { id: 2, name: 'test2', url: 'http://#2' },
+      ],
+      currentUser: '',
+    };
   },
 };
 </script>
