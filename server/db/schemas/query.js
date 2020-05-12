@@ -37,8 +37,10 @@ exports.query = new GraphQLObjectType({
               if (result) {
                 return {
                   auth: true,
+                  id: member.id,
                   username: member.username,
                   email: member.email,
+                  url_avatar: member.url_avatar,
                   token: jwt.sign({ id: member.id }, process.env.secret, { expiresIn: 86400 }),
                 }
               }

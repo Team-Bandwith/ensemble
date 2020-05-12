@@ -1,14 +1,6 @@
 <template>
   <div>
     <b-button v-b-modal.login>Login</b-button>
-    <!-- <div class="mt-3">
-      Submitted Name:
-      <div v-if="submittedNames.length === 0">--</div>
-      <ul v-else class="mb-0 pl-3">
-        <li v-for="name in submittedNames" v-bind:key=name>{{ name }}</li>
-      </ul>
-    </div> -->
-
     <b-modal
       id="login"
       ref="modal1"
@@ -19,15 +11,28 @@
     >
       <form ref="form" @submit.stop.prevent="handleSubmit">
         <b-form-group
-          :state="nameState"
-          label="Name"
-          label-for="name-input"
-          invalid-feedback="Name is required"
+          :state="usernameState"
+          label="Userame"
+          label-for="username-input"
+          invalid-feedback="Username is required"
         >
           <b-form-input
-            id="name-input"
-            v-model="name"
-            :state="nameState"
+            id="username-input"
+            v-model="username"
+            :state="usernameState"
+            required
+          ></b-form-input>
+        </b-form-group>
+        <b-form-group
+          :state="pwdState"
+          label="Password"
+          label-for="password-input"
+          invalid-feedback="Password is required"
+        >
+          <b-form-input
+            id="password-input"
+            v-model="password"
+            :state="pwdState"
             required
           ></b-form-input>
         </b-form-group>
@@ -37,23 +42,29 @@
 </template>
 
 <script>
+import { request } from 'graphql-request';
+
 export default {
   data() {
     return {
-      name: '',
-      nameState: null,
-      submittedNames: [],
+      username: '',
+      usernameState: null,
+      password: '',
+      pwdState: null,
     };
   },
   methods: {
     checkFormValidity() {
       const valid = this.$refs.form.checkValidity();
-      this.nameState = valid;
+      this.usernameState = valid;
+      this.pwdState = valid;
       return valid;
     },
     resetModal() {
-      this.name = '';
-      this.nameState = null;
+      this.username = '';
+      this.usernameState = null;
+      this.password = '';
+      this.pwdState = null;
     },
     handleOk(bvModalEvt) {
       // Prevent modal from closing
@@ -62,15 +73,56 @@ export default {
       this.handleSubmit();
     },
     handleSubmit() {
+      /* eslint-disable camelcase */
       // Exit when the form isn't valid
       if (!this.checkFormValidity()) {
         return;
       }
-      // Push the name to submitted names
-      this.submittedNames.push(this.name);
+
+      const query = `
+  query {
+    logIn(username: "${this.username}", password: "${this.password}") {
+      id,
+      username,
+      email,
+      url_avatar,
+      token
+    }
+  }
+`;
+      request('http://localhost:8081/api', query)
+        .then((res) => {
+          if (!res.logIn) {
+            alert('Username not found.');
+          }
+
+          if (!res.logIn.token) {
+            alert('Incorrect password.');
+          } else {
+            const {
+              id,
+              username,
+              email,
+              url_avatar,
+            } = res.logIn;
+            const user = {
+              id,
+              username,
+              email,
+              url_avatar,
+            };
+            localStorage.setItem('user', JSON.stringify(user));
+            localStorage.setItem('jwt', res.logIn.token);
+
+            if (this.$route.params.nextUrl != null) {
+              this.$router.push(this.$route.params.nextUrl);
+            }
+          }
+        })
+        .catch((err) => console.log(err));
       // Hide the modal manually
       this.$nextTick(() => {
-        this.$bvModal.hide('modal-prevent-closing');
+        this.$bvModal.hide('login');
       });
     },
   },
