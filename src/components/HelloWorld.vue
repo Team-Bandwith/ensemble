@@ -13,8 +13,7 @@
             <div class="song-likes">#likes:{{ song.count_likes }}</div>
             <div class="song-likes">
               created at:
-              <!--enter song.created_at, update DB date to ISO -->
-              {{ handleMoment().format('dddd') }}
+              {{ handleMoment().startOf('hour').fromNow() || song.created_at }}
             </div>
           </b-col>
         </b-row>
