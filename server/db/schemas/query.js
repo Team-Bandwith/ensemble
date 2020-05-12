@@ -29,7 +29,6 @@ exports.query = new GraphQLObjectType({
       args: { username: { type: GraphQLString }, password: { type: GraphQLString }},
       resolve(parentValue, args) {
         const query = `SELECT * FROM member WHERE username=$1`;
-        console.log(args);
         return db
           .one(query, [args.username])
           .then((member) => bcrypt.compare(args.password, member.password)

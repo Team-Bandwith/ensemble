@@ -89,20 +89,60 @@ export default {
       this.handleSubmit();
     },
     handleSubmit() {
+      /* eslint-disable camelcase */
       // Exit when the form isn't valid
       if (!this.checkFormValidity()) {
         return;
       }
 
-      const query = `
+      const addMember = `
   mutation {
     signUp(username: "${this.username}", email: "${this.email}", password: "${this.password}") {
-      id
+      username
     }
   }
 `;
-      request('http://localhost:8081/api', query)
-        .then((res) => console.log(res))
+      const getNewMember = `
+  query {
+    logIn(username: "${this.username}", password: "${this.password}") {
+      id,
+      username,
+      email,
+      url_avatar,
+      token
+    }
+  }
+`;
+      request('http://localhost:8081/api', addMember)
+        .then(() => request('http://localhost:8081/api', getNewMember))
+        .then((res) => {
+          if (!res.logIn) {
+            alert('Username not found.');
+          }
+
+          if (!res.logIn.token) {
+            alert('Incorrect password.');
+          } else {
+            const {
+              id,
+              username,
+              email,
+              url_avatar,
+            } = res.logIn;
+            const user = {
+              id,
+              username,
+              email,
+              url_avatar,
+            };
+            localStorage.setItem('user', JSON.stringify(user));
+            localStorage.setItem('jwt', res.logIn.token);
+
+            if (this.$route.params.nextUrl != null) {
+              this.$router.push(this.$route.params.nextUrl);
+            }
+          }
+        })
         .catch((err) => console.log(err));
       // Hide the modal manually
       this.$nextTick(() => {
