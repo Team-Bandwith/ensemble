@@ -13,8 +13,9 @@
       />
       <!-- eslint-enable -->
       <b-list-group class="items-wrapper">
-            <SignUp />
-            <Login />
+      <img alt="Vue logo" class="logo" src="../assets/logo.png" />
+      <SignUp />
+        <Login />
         <template v-for="(link, index) in links">
           <template v-if="link.href !== undefined">
             <b-list-group-item :key="index">
@@ -133,4 +134,11 @@ export default {
 </script>
 <style lang="scss">
 @import 'node_modules/@jurajkavka/vue-hamburger-button/src/scss/default-theme.scss';
+
+.logo{
+  border-radius: 50% 50%;
+  width: 100px;
+  margin: 0 auto;
+  background: #000;
+}
 </style>
