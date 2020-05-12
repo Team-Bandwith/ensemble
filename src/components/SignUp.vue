@@ -101,7 +101,7 @@ export default {
     }
   }
 `;
-      request(`http://localhost:${process.env.S_PORT}/api`, query)
+      request('http://localhost:8081/api', query)
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
       // Hide the modal manually
