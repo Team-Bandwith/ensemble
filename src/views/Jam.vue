@@ -1,10 +1,37 @@
 <template>
-  <b-row>
-    <b-col>
-
-  <div class="jam">
-    <h1>This is the Jam page</h1>
-  </div>
-    </b-col>
-  </b-row>
+  <b-container class="jam-page">
+    <b-row v-align="start">
+      <b-col cols="8" >
+        <div class="jam-instrument">
+          <Instrument/>
+        </div>
+      </b-col>
+      <b-col cols="4" class="jam-chat">
+          <h1>chat component</h1>
+      </b-col>
+    </b-row>
+    <b-row align-v="end" >
+      <b-col class="jam-band">
+        <h1>band members component</h1>
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
+
+<script>
+import Instrument from '../components/instrument.vue';
+
+export default {
+  name: 'jam',
+  components: {
+    Instrument,
+  },
+};
+
+</script>
+
+<style>
+.jam-instrument {
+  height: 60vh;
+}
+</style>
