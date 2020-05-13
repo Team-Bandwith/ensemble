@@ -25,7 +25,7 @@ exports.mutation = new GraphQLObjectType({
       },
       resolve(parentValue, args) {
         const query = `INSERT INTO member(username, email, password) VALUES ($1, $2, $3) RETURNING id`;
-        bcrypt.hash(args.password, 8)
+        return bcrypt.hash(args.password, 8)
           .then((hash) => db.one(query, [args.username, args.email, hash]))
           .then(res => res)
           .catch(err => console.log(err));
