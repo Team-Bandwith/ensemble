@@ -114,6 +114,8 @@ export default {
             localStorage.setItem('user', JSON.stringify(user));
             localStorage.setItem('jwt', res.logIn.token);
 
+            this.$emit('input', true);
+
             if (this.$route.params.nextUrl != null) {
               this.$router.push(this.$route.params.nextUrl);
             }

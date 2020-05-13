@@ -13,22 +13,24 @@
       />
       <!-- eslint-enable -->
       <b-list-group class="items-wrapper">
-        <img alt="Vue logo" class="logo" src="../assets/logo.png" />
-            <SignUp />
-            <Login />
-            <div>
-              <b-button @click="logOut">Logout</b-button>
-            </div>
-        <template v-for="(link, index) in links">
-          <template v-if="link.href !== undefined">
-            <b-list-group-item :key="index">
-              <b-button
-                block
-                :to="link.href"
-                variant="info"
-                class="btn sidebar-menu-item"
-                :squared="true"
-              >
+        <div v-if="!loggedIn">
+          <SignUp />
+          <Login v-model="loggedIn" />
+        </div>
+          <div v-if="loggedIn">
+            <b-button @click="logOut">Logout</b-button>
+          </div>
+        <div v-if="loggedIn">
+          <template v-for="(link, index) in links">
+            <template v-if="link.href !== undefined">
+              <b-list-group-item :key="index">
+                <b-button
+                  block
+                  :to="link.href"
+                  variant="info"
+                  class="btn sidebar-menu-item"
+                  :squared="true"
+                >
                 <div class="fa-icon">
                   <component
                     v-if="link.faIcon"
@@ -67,6 +69,7 @@
             </b-list-group-item>
           </template>
         </template>
+        </div>
       </b-list-group> <!--/ .items-wrapper -->
       <HamburgerButton
         id="sidebarButton"
@@ -124,6 +127,7 @@ export default {
   data() {
     return {
       show: this.initialShow,
+      loggedIn: false,
     };
   },
   methods: {
@@ -132,6 +136,7 @@ export default {
       this.$emit('sidebarChanged', this.show);
     },
     logOut() {
+      this.loggedIn = false;
       localStorage.removeItem('jwt');
       localStorage.removeItem('user');
       this.$router.push({ path: '/' });
