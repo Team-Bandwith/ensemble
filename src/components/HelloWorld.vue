@@ -43,6 +43,13 @@ export default {
   },
   methods: {
     getAllSongs() {
+      if (!this.loggedIn) {
+        this.songs = [
+          { id: 1, name: 'test1', url: 'http://#1' },
+          { id: 2, name: 'test2', url: 'http://#2' },
+        ];
+        return;
+      }
       const query = `query {
       getAllSongs {
         id, 
@@ -61,25 +68,11 @@ export default {
     },
   },
   created() {
-    if (this.loggedIn) {
-      this.getAllSongs();
-    } else {
-      this.songs = [
-        { id: 1, name: 'test1', url: 'http://#1' },
-        { id: 2, name: 'test2', url: 'http://#2' },
-      ];
-    }
+    this.getAllSongs();
   },
   watch: {
-    loggedIn(val) {
-      if (val) {
-        this.getAllSongs();
-      } else {
-        this.songs = [
-          { id: 1, name: 'test1', url: 'http://#1' },
-          { id: 2, name: 'test2', url: 'http://#2' },
-        ];
-      }
+    loggedIn() {
+      this.getAllSongs();
     },
   },
 };
