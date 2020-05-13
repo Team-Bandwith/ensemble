@@ -8,9 +8,17 @@
             <div class="song-id">id:{{ song.id }}</div>
             <div class="song-title">title:{{ song.name }}</div>
             <div class="song-url">
-              url:{{ song.url }}
+              <div>
+                <b-button id="play-btn" @click="playSong(song.url)">Play</b-button>
+                <div v-if="isPlaying">
+                  <!-- Implement Pause Song  -->
+                  <b-button @click="playSong()">Pause</b-button>
+                </div>
+              </div>
             </div>
-            <div class="song-likes">#likes:{{ song.count_likes }}</div>
+            <div class="song-likes">
+              #likes:{{ song.count_likes }}
+            </div>
             <div class="song-likes">
               created at:
               {{ handleMoment(song.created_at).fromNow() }}
@@ -39,9 +47,21 @@ export default {
     return {
       handleMoment: moment,
       songs: [],
+      isPlaying: false,
+      player: null,
     };
   },
   methods: {
+    playSong(src) {
+      if (this.isPlaying) {
+        this.player.pause();
+        this.isPlaying = false;
+      } else {
+        this.player = new Audio(src);
+        this.player.play();
+        this.isPlaying = true;
+      }
+    },
     getAllSongs() {
       if (!this.loggedIn) {
         this.songs = [
