@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const expressGraphQl = require('express-graphql');
+const socketio = require('socket.io');
 
 const { GraphQLSchema } = graphql;
 const { query } = require('./db/schemas/query');
@@ -38,4 +39,28 @@ app.post('/verify', (req, res) => {
   });
 })
 
-app.listen(process.env.S_PORT, () => console.log(`GraphQL server running on ${process.env.S_PORT}`));
+const server = app.listen(process.env.S_PORT, () => console.log(`GraphQL server running on ${process.env.S_PORT}`));
+
+const io = socketio(server);
+
+io.on('connection', socket => {
+  console.log('A new client has connected!');
+  console.log(socket.id);
+  socket.on('join', ({ room, user}) => {
+    console.log(room, user);
+    socket.join(room);
+    io.to(room).emit('newUser', user);
+  });
+
+  socket.on('startNote', (note) => {
+    socket.broadcast.to('room').emit('receiveStart', note);
+  })
+
+  socket.on('stopNote', (note) => {
+    socket.broadcast.to('room').emit('receiveStop', note);
+  })
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected')
+  })
+})

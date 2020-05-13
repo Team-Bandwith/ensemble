@@ -37,6 +37,11 @@ export default Vue.extend({
       this.loggedIn = false;
     },
   },
+  sockets: {
+    connect() {
+      console.log('connect');
+    },
+  },
 });
 </script>
 

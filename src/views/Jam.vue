@@ -31,6 +31,9 @@ export default {
     Chat,
     BandMembers,
   },
+  mounted() {
+    this.$socket.emit('join', { room: 'room', user: 'user' });
+  },
 };
 
 </script>

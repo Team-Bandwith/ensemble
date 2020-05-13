@@ -6,7 +6,7 @@
       </b-row>
       <b-row>
         <div class="instrument">
-          <h1>instrument component</h1>
+          <Piano />
         </div>
       </b-row>
       <b-row align-v="end">
@@ -27,10 +27,12 @@
 </template>
 
 <script>
+import Piano from './Piano.vue';
+
 export default {
   name: 'Instrument',
   components: {
-
+    Piano,
   },
 };
 </script>

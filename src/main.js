@@ -7,6 +7,8 @@ import {
   faPhone, faChild, faUser, faMusic,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import socketio from 'socket.io-client';
+import VueSocketIO from 'vue-socket.io';
 import App from './App.vue';
 import { router } from './router';
 import store from './store';
@@ -28,8 +30,13 @@ Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 // Moment.js
 Vue.use(require('vue-moment'));
+
 Vue.use(VueRouter);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
+
+/* eslint-disable import/prefer-default-export */
+export const SocketInstance = socketio('http://localhost:8081');
+Vue.use(VueSocketIO, SocketInstance);
 
 Vue.config.productionTip = false;
 
