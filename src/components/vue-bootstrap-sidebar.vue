@@ -13,9 +13,12 @@
       />
       <!-- eslint-enable -->
       <b-list-group class="items-wrapper">
-      <img alt="Vue logo" class="logo" src="../assets/logo.png" />
-      <SignUp />
-        <Login />
+        <img alt="Vue logo" class="logo" src="../assets/logo.png" />
+            <SignUp />
+            <Login />
+            <div>
+              <b-button @click="logOut">Logout</b-button>
+            </div>
         <template v-for="(link, index) in links">
           <template v-if="link.href !== undefined">
             <b-list-group-item :key="index">
@@ -128,7 +131,11 @@ export default {
       this.show = !this.show;
       this.$emit('sidebarChanged', this.show);
     },
-
+    logOut() {
+      localStorage.removeItem('jwt');
+      localStorage.removeItem('user');
+      this.$router.push({ path: '/' });
+    },
   },
 };
 </script>

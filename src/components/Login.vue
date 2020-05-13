@@ -4,7 +4,7 @@
     <b-modal
       id="login"
       ref="modal1"
-      title="Submit Your Name"
+      title="Please Login"
       @show="resetModal"
       @hidden="resetModal"
       @ok="handleOk"
