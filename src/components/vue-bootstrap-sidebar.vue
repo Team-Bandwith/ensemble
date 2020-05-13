@@ -95,6 +95,7 @@
   </div>
 </template>
 <script>
+import axios from 'axios';
 import HamburgerButton from '@jurajkavka/vue-hamburger-button';
 import Login from './Login.vue';
 import SignUp from './SignUp.vue';
@@ -131,9 +132,11 @@ export default {
     };
   },
   mounted() {
-    if (localStorage.getItem('jwt')) {
-      this.loggedIn = true;
-    }
+    const token = localStorage.getItem('jwt');
+    axios.post('http://localhost:8081/verify', { token })
+      .then(() => {
+        this.loggedIn = true;
+      });
   },
   methods: {
     onButtonClick() {

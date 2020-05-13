@@ -82,10 +82,7 @@ export default {
       const query = `
   query {
     logIn(username: "${this.username}", password: "${this.password}") {
-      id,
-      username,
-      email,
-      url_avatar,
+      auth,
       token
     }
   }
@@ -96,22 +93,9 @@ export default {
             alert('Username not found.');
           }
 
-          if (!res.logIn.token) {
+          if (!res.logIn.auth) {
             alert('Incorrect password.');
           } else {
-            const {
-              id,
-              username,
-              email,
-              url_avatar,
-            } = res.logIn;
-            const user = {
-              id,
-              username,
-              email,
-              url_avatar,
-            };
-            localStorage.setItem('user', JSON.stringify(user));
             localStorage.setItem('jwt', res.logIn.token);
 
             this.$emit('input', true);

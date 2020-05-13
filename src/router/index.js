@@ -1,3 +1,4 @@
+import axios from 'axios';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import Profile from '../views/Profile.vue';
@@ -41,7 +42,13 @@ router.beforeEach((to, from, next) => {
         params: { nextUrl: to.fullPath },
       });
     } else {
-      next();
+      const token = localStorage.getItem('jwt');
+      axios.post('http://localhost:8081/verify', { token })
+        .then(() => next())
+        .catch(() => next({
+          path: '/',
+          params: { nextUrl: to.fullPath },
+        }));
     }
   } else {
     next();
