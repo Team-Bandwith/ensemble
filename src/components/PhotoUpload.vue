@@ -1,8 +1,5 @@
 <template>
   <div class="cl-upload">
-    <div v-show="showProgress">
-      <progress-bar :options="options" :value="progress" />
-    </div>
     <form v-on:submit.prevent="upload">
       <!-- allow the user to select an image file and when they have selected it call a function
       to handle this event-->
@@ -22,6 +19,7 @@
     </form>
   </div>
 </template>
+
 <script>
 import axios from 'axios';
 
@@ -39,8 +37,6 @@ export default {
       cloudName: 'my-ensemble',
       preset: 'ensemble',
       tags: 'browser-upload',
-      progress: 0,
-      showProgress: false,
       fileContents: null,
       formData: null,
     };
@@ -147,8 +143,8 @@ input:focus {
 }
 @media (min-width: 400px) {
   form {
-    grid-template-columns: 150px 1fr;
-    grid-gap: 16px;
+    grid-template-columns: 120px 1fr;
+    grid-gap: 8px;
   }
   label {
     text-align: right;
@@ -156,7 +152,7 @@ input:focus {
   }
   input,
   button {
-    grid-column: 2 / 3;
+    grid-column: 1 / 3;
   }
 }
 button {
