@@ -98,7 +98,7 @@ export default {
           } else {
             localStorage.setItem('jwt', res.logIn.token);
 
-            this.$emit('input', true);
+            this.$emit('log-in');
 
             if (this.$route.params.nextUrl != null) {
               this.$router.push(this.$route.params.nextUrl);

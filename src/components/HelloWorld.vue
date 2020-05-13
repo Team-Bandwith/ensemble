@@ -56,19 +56,24 @@ export default {
         created_at
       }
     }`;
-      request('http://localhost:8081/api', query)
+      request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
         .then((res) => {
           this.songs = res.getAllSongs;
         })
         .catch((err) => console.log(err));
     },
   },
-  mounted() {
-    const loggedIn = true;
-    if (loggedIn) {
-      this.songs = [];
-      this.getAllSongs();
-    }
+  watch: {
+    loggedIn(val) {
+      if (val) {
+        this.getAllSongs();
+      } else {
+        this.songs = [
+          { id: 1, name: 'test1', url: 'http://#1' },
+          { id: 2, name: 'test2', url: 'http://#2' },
+        ];
+      }
+    },
   },
 };
 </script>

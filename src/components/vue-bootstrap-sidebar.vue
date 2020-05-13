@@ -15,7 +15,7 @@
       <b-list-group class="items-wrapper">
         <div v-if="!loggedIn">
           <SignUp />
-          <Login v-model="loggedIn" />
+          <Login v-on:log-in="logIn" />
         </div>
           <div v-if="loggedIn">
             <b-button @click="logOut">Logout</b-button>
@@ -95,7 +95,7 @@
   </div>
 </template>
 <script>
-import axios from 'axios';
+// import axios from 'axios';
 import HamburgerButton from '@jurajkavka/vue-hamburger-button';
 import Login from './Login.vue';
 import SignUp from './SignUp.vue';
@@ -124,20 +124,12 @@ export default {
       type: String,
       default: 'Sidebar',
     },
+    loggedIn: Boolean,
   },
   data() {
     return {
       show: this.initialShow,
-      loggedIn: false,
     };
-  },
-  mounted() {
-    const token = localStorage.getItem('jwt');
-    axios.post(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/verify`, { token })
-      .then(() => {
-        this.loggedIn = true;
-      });
-    console.log(process.env);
   },
   methods: {
     onButtonClick() {
@@ -145,10 +137,13 @@ export default {
       this.$emit('sidebarChanged', this.show);
     },
     logOut() {
-      this.loggedIn = false;
+      this.$emit('log-out');
       localStorage.removeItem('jwt');
       localStorage.removeItem('user');
       this.$router.push({ path: '/' });
+    },
+    logIn() {
+      this.$emit('log-in');
     },
   },
 };
