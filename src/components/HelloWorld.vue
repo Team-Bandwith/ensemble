@@ -13,7 +13,7 @@
             <div class="song-likes">#likes:{{ song.count_likes }}</div>
             <div class="song-likes">
               created at:
-              {{ handleMoment().startOf('hour').fromNow() || song.created_at }}
+              {{ handleMoment(song.created_at).fromNow() }}
             </div>
           </b-col>
         </b-row>
@@ -45,8 +45,18 @@ export default {
     getAllSongs() {
       if (!this.loggedIn) {
         this.songs = [
-          { id: 1, name: 'test1', url: 'http://#1' },
-          { id: 2, name: 'test2', url: 'http://#2' },
+          {
+            id: 1,
+            name: 'test1',
+            url: 'http://#1',
+            created_at: new Date(),
+          },
+          {
+            id: 1,
+            name: 'test2',
+            url: 'http://#2',
+            created_at: new Date(),
+          },
         ];
         return;
       }

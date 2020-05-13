@@ -24,7 +24,7 @@ CREATE TABLE message (
   id_user_to int NOT NULL,
   id_user_from int NOT NULL,
   text VARCHAR (255),
-  created_at time
+  created_at timestamp
 );
 
 CREATE TABLE comment (
@@ -32,7 +32,7 @@ CREATE TABLE comment (
   id_user int NOT NULL,
   id_song int NOT NULL,
   text VARCHAR (255),
-  created_at time
+  created_at timestamp
 );
 
 CREATE TABLE song_user (
@@ -48,5 +48,5 @@ CREATE TABLE song (
   name VARCHAR (50) NOT NULL,
   url VARCHAR (255) NOT NULL,
   count_likes int DEFAULT 0,
-  created_at time
+  created_at timestamp
 );

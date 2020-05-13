@@ -1,4 +1,5 @@
 const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLInt, GraphQLBoolean } = require('graphql');
+const { GraphQLDateTime } = require('graphql-iso-date');
 
 exports.MemberType = new GraphQLObjectType({
   name: "Member",
@@ -32,7 +33,7 @@ exports.MessageType = new GraphQLObjectType({
     id_user_to: { type: GraphQLID },
     id_user_from: { type: GraphQLID },
     text: { type: GraphQLString },
-    created_at: { type: GraphQLString },
+    created_at: { type: GraphQLDateTime },
   }
 });
 
@@ -44,7 +45,7 @@ exports.CommentType = new GraphQLObjectType({
     id_user: { type: GraphQLID },
     id_song: { type: GraphQLID },
     text: { type: GraphQLString },
-    created_at: { type: GraphQLString },
+    created_at: { type: GraphQLDateTime },
   }
 });
 
@@ -55,7 +56,7 @@ exports.SongUserType = new GraphQLObjectType({
     id: { type: GraphQLID },
     id_user: { type: GraphQLID },
     id_song: { type: GraphQLID },
-    created_at: { type: GraphQLString },
+    created_at: { type: GraphQLDateTime },
   }
 });
 
@@ -68,6 +69,6 @@ exports.SongType = new GraphQLObjectType({
     name: { type: GraphQLString },
     url: { type: GraphQLString },
     count_likes: { type: GraphQLInt },
-    created_at: { type: GraphQLString },
+    created_at: { type: GraphQLDateTime },
   },
 });
