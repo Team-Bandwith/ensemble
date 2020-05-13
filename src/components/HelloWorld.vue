@@ -9,10 +9,12 @@
             <div class="song-title">title:{{ song.name }}</div>
             <div class="song-url">
               <div>
-                <b-button id="play-btn" @click="playSong(song.url)">Play</b-button>
                 <div v-if="isPlaying">
                   <!-- Implement Pause Song  -->
                   <b-button @click="playSong()">Pause</b-button>
+                </div>
+                <div v-else>
+                  <b-button @click="playSong(song.url)">Play</b-button>
                 </div>
               </div>
             </div>
