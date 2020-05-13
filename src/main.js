@@ -15,6 +15,7 @@ import store from './store';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 
+
 library.add(faUserSecret);
 library.add(faHome);
 library.add(faTint);

@@ -1,9 +1,10 @@
-const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLInt, GraphQLBoolean } = require('graphql');
-const { GraphQLDateTime } = require('graphql-iso-date');
+const {
+  GraphQLObjectType, GraphQLString, GraphQLID, GraphQLInt, GraphQLBoolean,
+} = require('graphql');
 
 exports.MemberType = new GraphQLObjectType({
-  name: "Member",
-  type: "Query",
+  name: 'Member',
+  type: 'Query',
   fields: {
     id: { type: GraphQLID },
     username: { type: GraphQLString },
@@ -12,57 +13,57 @@ exports.MemberType = new GraphQLObjectType({
     password: { type: GraphQLString },
     auth: { type: GraphQLBoolean },
     token: { type: GraphQLString },
-  }
+  },
 });
 
 exports.FriendType = new GraphQLObjectType({
-  name: "Friend",
-  type: "Query",
+  name: 'Friend',
+  type: 'Query',
   fields: {
     id: { type: GraphQLID },
     id_user_to: { type: GraphQLID },
     id_user_from: { type: GraphQLID },
-  }
+  },
 });
 
 exports.MessageType = new GraphQLObjectType({
-  name: "Message",
-  type: "Query",
+  name: 'Message',
+  type: 'Query',
   fields: {
     id: { type: GraphQLID },
     id_user_to: { type: GraphQLID },
     id_user_from: { type: GraphQLID },
     text: { type: GraphQLString },
-    created_at: { type: GraphQLDateTime },
-  }
+    created_at: { type: GraphQLString },
+  },
 });
 
 exports.CommentType = new GraphQLObjectType({
-  name: "Message",
-  type: "Query",
+  name: 'Message',
+  type: 'Query',
   fields: {
     id: { type: GraphQLID },
     id_user: { type: GraphQLID },
     id_song: { type: GraphQLID },
     text: { type: GraphQLString },
-    created_at: { type: GraphQLDateTime },
-  }
+    created_at: { type: GraphQLString },
+  },
 });
 
 exports.SongUserType = new GraphQLObjectType({
-  name: "SongUser",
-  type: "Query",
+  name: 'SongUser',
+  type: 'Query',
   fields: {
     id: { type: GraphQLID },
     id_user: { type: GraphQLID },
     id_song: { type: GraphQLID },
-    created_at: { type: GraphQLDateTime },
-  }
+    created_at: { type: GraphQLString },
+  },
 });
 
 exports.SongType = new GraphQLObjectType({
-  name: "Song",
-  type: "Query",
+  name: 'Song',
+  type: 'Query',
   fields: {
     id: { type: GraphQLID },
     id_author: { type: GraphQLID },

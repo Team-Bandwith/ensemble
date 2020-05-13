@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { GraphQLObjectType, GraphQLString, GraphQLID } = require('graphql');
 const { db } = require('../pgAdapter');
 const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList } = require("graphql");
 const { 
@@ -9,11 +10,11 @@ const {
   CommentType,
   SongUserType,
   SongType,
-} = require("./types");
+} = require('./types');
 
 exports.query = new GraphQLObjectType({
-  name: "RootQueryType",
-  type: "Query",
+  name: 'RootQueryType',
+  type: 'Query',
   fields: {
     getAllSongs: {
       type: new GraphQLList(SongType),
@@ -26,9 +27,10 @@ exports.query = new GraphQLObjectType({
     },
     logIn: {
       type: MemberType,
-      args: { username: { type: GraphQLString }, password: { type: GraphQLString }},
+      args: { username: { type: GraphQLString }, password: { type: GraphQLString } },
       resolve(parentValue, args) {
-        const query = `SELECT * FROM member WHERE username=$1`;
+        const query = 'SELECT * FROM member WHERE username=$1';
+        console.log(args);
         return db
           .one(query, [args.username])
           .then((member) => bcrypt.compare(args.password, member.password)
@@ -36,19 +38,15 @@ exports.query = new GraphQLObjectType({
               if (result) {
                 return {
                   auth: true,
-                  token: jwt.sign({
-                    id: member.id,
-                    username: member.username,
-                    email: member.email,
-                    url_avatar: member.url_avatar,
-                  }, process.env.secret, { expiresIn: 86400 }),
-                }
+                  username: member.username,
+                  email: member.email,
+                  token: jwt.sign({ id: member.id }, process.env.secret, { expiresIn: 86400 }),
+                };
               }
               return { auth: false, token: null };
-            })
-          )
-          .catch((err) => console.log(err.message))
-      }
-    }
-  }
+            }))
+          .catch((err) => console.log(err.message));
+      },
+    },
+  },
 });
