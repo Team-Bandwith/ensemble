@@ -98,16 +98,19 @@ export default {
       const addMember = `
   mutation {
     signUp(username: "${this.username}", email: "${this.email}", password: "${this.password}") {
-      username
+      token
     }
   }
 `;
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, addMember)
+        .then((res) => {
+          localStorage.setItem('jwt', res.signUp.token);
+          this.$emit('log-in');
+        })
         .catch((err) => console.log(err));
       // Hide the modal manually
       this.$nextTick(() => {
         this.$bvModal.hide('modal-prevent-closing');
-        this.$bvModal.show('login');
       });
     },
   },
