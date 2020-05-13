@@ -38,10 +38,7 @@ export default {
   data() {
     return {
       handleMoment: moment,
-      songs: [
-        { id: 1, name: 'test1', url: 'http://#1' },
-        { id: 2, name: 'test2', url: 'http://#2' },
-      ],
+      songs: [],
     };
   },
   methods: {
@@ -62,6 +59,16 @@ export default {
         })
         .catch((err) => console.log(err));
     },
+  },
+  created() {
+    if (this.loggedIn) {
+      this.getAllSongs();
+    } else {
+      this.songs = [
+        { id: 1, name: 'test1', url: 'http://#1' },
+        { id: 2, name: 'test2', url: 'http://#2' },
+      ];
+    }
   },
   watch: {
     loggedIn(val) {
