@@ -10,7 +10,6 @@
             <div class="song-url">
               <div>
                 <div v-if="isPlaying">
-                  <!-- Implement Pause Song  -->
                   <b-button @click="playSong()">Pause</b-button>
                 </div>
                 <div v-else>
@@ -19,7 +18,8 @@
               </div>
             </div>
             <div class="song-likes">
-              #likes:{{ song.count_likes }}
+              <b-button @click="likeSong(song.count_likes, song.id)">Like</b-button>
+              {{ song.count_likes }}
             </div>
             <div class="song-likes">
               created at:
@@ -63,6 +63,19 @@ export default {
         this.player.play();
         this.isPlaying = true;
       }
+    },
+    likeSong(likes, songId) {
+      console.log('like', likes);
+      const query = `mutation {
+      likeSong(id: ${songId}) {
+        count_likes
+      }
+    }`;
+      request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
+        .then((res) => {
+          console.log('like this song', res);
+        })
+        .catch((err) => console.log(err));
     },
     getAllSongs() {
       if (!this.loggedIn) {
