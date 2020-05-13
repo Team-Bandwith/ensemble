@@ -7,12 +7,12 @@
         </div>
       </b-col>
       <b-col cols="4" class="jam-chat">
-          <h1>chat component</h1>
+         <Chat/>
       </b-col>
     </b-row>
     <b-row align-v="end" >
       <b-col class="jam-band">
-        <h1>band members component</h1>
+        <BandMembers/>
       </b-col>
     </b-row>
   </b-container>
@@ -20,11 +20,16 @@
 
 <script>
 import Instrument from '../components/instrument.vue';
+import Chat from '../components/chat.vue';
+import BandMembers from '../components/band-members.vue';
+
 
 export default {
   name: 'jam',
   components: {
     Instrument,
+    Chat,
+    BandMembers,
   },
 };
 
