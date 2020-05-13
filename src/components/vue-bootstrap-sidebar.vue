@@ -14,7 +14,7 @@
       <!-- eslint-enable -->
       <b-list-group class="items-wrapper">
         <div v-if="!loggedIn">
-          <SignUp />
+          <SignUp v-on:log-in="logIn" />
           <Login v-on:log-in="logIn" />
         </div>
           <div v-if="loggedIn">
