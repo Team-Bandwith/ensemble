@@ -130,6 +130,11 @@ export default {
       loggedIn: false,
     };
   },
+  mounted() {
+    if (localStorage.getItem('jwt')) {
+      this.loggedIn = true;
+    }
+  },
   methods: {
     onButtonClick() {
       this.show = !this.show;
