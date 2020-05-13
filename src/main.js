@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
+import Moment from 'vue-moment';
 import {
   faUserSecret, faHome, faTint, faUsers,
   faPhone, faChild, faUser, faMusic,
@@ -15,7 +16,10 @@ import store from './store';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> upload component renders
 library.add(faUserSecret);
 library.add(faHome);
 library.add(faTint);
@@ -30,8 +34,7 @@ Vue.use(BootstrapVue);
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin);
 // Moment.js
-Vue.use(require('vue-moment'));
-
+Vue.use(Moment);
 Vue.use(VueRouter);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 

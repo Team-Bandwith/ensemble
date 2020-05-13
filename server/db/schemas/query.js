@@ -1,9 +1,10 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { GraphQLObjectType, GraphQLString, GraphQLID } = require('graphql');
+const {
+  GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList,
+} = require('graphql');
 const { db } = require('../pgAdapter');
-const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList } = require("graphql");
-const { 
+const {
   MemberType,
   FriendType,
   MessageType,
@@ -19,10 +20,10 @@ exports.query = new GraphQLObjectType({
     getAllSongs: {
       type: new GraphQLList(SongType),
       resolve() {
-        const query = `SELECT * FROM song`;
+        const query = 'SELECT * FROM song';
         return db.any(query)
-          .then(function(data) { return data })
-          .catch(function(err) { console.log('err', err)})
+          .then((data) => data)
+          .catch((err) => { console.log('err', err); });
       },
     },
     logIn: {
@@ -30,7 +31,6 @@ exports.query = new GraphQLObjectType({
       args: { username: { type: GraphQLString }, password: { type: GraphQLString } },
       resolve(parentValue, args) {
         const query = 'SELECT * FROM member WHERE username=$1';
-        console.log(args);
         return db
           .one(query, [args.username])
           .then((member) => bcrypt.compare(args.password, member.password)
@@ -38,9 +38,12 @@ exports.query = new GraphQLObjectType({
               if (result) {
                 return {
                   auth: true,
-                  username: member.username,
-                  email: member.email,
-                  token: jwt.sign({ id: member.id }, process.env.secret, { expiresIn: 86400 }),
+                  token: jwt.sign({
+                    id: member.id,
+                    username: member.username,
+                    email: member.email,
+                    url_avatar: member.url_avatar,
+                  }, process.env.secret, { expiresIn: 86400 }),
                 };
               }
               return { auth: false, token: null };
