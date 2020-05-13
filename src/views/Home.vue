@@ -2,7 +2,7 @@
   <b-row>
     <b-col>
   <div class="home">
-    <HelloWorld msg="Welcome to Ensemble" />
+    <HelloWorld msg="Welcome to Ensemble" :loggedIn="loggedIn" />
   </div>
     </b-col>
   </b-row>
@@ -16,6 +16,9 @@ export default {
   name: 'Home',
   components: {
     HelloWorld,
+  },
+  props: {
+    loggedIn: Boolean,
   },
 };
 </script>

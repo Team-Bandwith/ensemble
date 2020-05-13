@@ -5,7 +5,7 @@
     <b-modal
       id="modal-prevent-closing"
       ref="modal"
-      title="Submit Your Name"
+      title="Create an Account"
       @show="resetModal"
       @hidden="resetModal"
       @ok="handleOk"
@@ -89,24 +89,25 @@ export default {
       this.handleSubmit();
     },
     handleSubmit() {
+      /* eslint-disable camelcase */
       // Exit when the form isn't valid
       if (!this.checkFormValidity()) {
         return;
       }
 
-      const query = `
+      const addMember = `
   mutation {
     signUp(username: "${this.username}", email: "${this.email}", password: "${this.password}") {
-      id
+      username
     }
   }
 `;
-      request('http://localhost:8081/api', query)
-        .then((res) => console.log(res))
+      request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, addMember)
         .catch((err) => console.log(err));
       // Hide the modal manually
       this.$nextTick(() => {
         this.$bvModal.hide('modal-prevent-closing');
+        this.$bvModal.show('login');
       });
     },
   },

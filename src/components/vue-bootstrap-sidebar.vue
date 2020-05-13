@@ -13,19 +13,24 @@
       />
       <!-- eslint-enable -->
       <b-list-group class="items-wrapper">
-      <img alt="Vue logo" class="logo" src="../assets/logo.png" />
-      <SignUp />
-        <Login />
-        <template v-for="(link, index) in links">
-          <template v-if="link.href !== undefined">
-            <b-list-group-item :key="index">
-              <b-button
-                block
-                :to="link.href"
-                variant="info"
-                class="btn sidebar-menu-item"
-                :squared="true"
-              >
+        <div v-if="!loggedIn">
+          <SignUp />
+          <Login v-on:log-in="logIn" />
+        </div>
+          <div v-if="loggedIn">
+            <b-button @click="logOut">Logout</b-button>
+          </div>
+        <div v-if="loggedIn">
+          <template v-for="(link, index) in links">
+            <template v-if="link.href !== undefined">
+              <b-list-group-item :key="index">
+                <b-button
+                  block
+                  :to="link.href"
+                  variant="info"
+                  class="btn sidebar-menu-item"
+                  :squared="true"
+                >
                 <div class="fa-icon">
                   <component
                     v-if="link.faIcon"
@@ -64,6 +69,7 @@
             </b-list-group-item>
           </template>
         </template>
+        </div>
       </b-list-group> <!--/ .items-wrapper -->
       <HamburgerButton
         id="sidebarButton"
@@ -89,6 +95,7 @@
   </div>
 </template>
 <script>
+// import axios from 'axios';
 import HamburgerButton from '@jurajkavka/vue-hamburger-button';
 import Login from './Login.vue';
 import SignUp from './SignUp.vue';
@@ -117,6 +124,7 @@ export default {
       type: String,
       default: 'Sidebar',
     },
+    loggedIn: Boolean,
   },
   data() {
     return {
@@ -128,7 +136,15 @@ export default {
       this.show = !this.show;
       this.$emit('sidebarChanged', this.show);
     },
-
+    logOut() {
+      this.$emit('log-out');
+      localStorage.removeItem('jwt');
+      localStorage.removeItem('user');
+      this.$router.push({ path: '/' });
+    },
+    logIn() {
+      this.$emit('log-in');
+    },
   },
 };
 </script>
