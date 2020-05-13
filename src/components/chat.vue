@@ -6,7 +6,7 @@
          <h4>Chat</h4>
        </div>
       </b-row>
-      <b-row>
+      <b-row align-v="end">
         <b-form>
           <div>
             <b-form inline>
