@@ -87,7 +87,7 @@ export default {
     }
   }
 `;
-      request('http://localhost:8081/api', query)
+      request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
         .then((res) => {
           if (!res.logIn) {
             alert('Username not found.');

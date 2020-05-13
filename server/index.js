@@ -38,4 +38,4 @@ app.post('/verify', (req, res) => {
   });
 })
 
-app.listen(process.env.S_PORT, () => console.log('GraphQL server running on localhost:8081'));
+app.listen(process.env.S_PORT, () => console.log(`GraphQL server running on ${process.env.S_PORT}`));

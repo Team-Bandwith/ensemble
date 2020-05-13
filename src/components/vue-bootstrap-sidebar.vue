@@ -133,10 +133,11 @@ export default {
   },
   mounted() {
     const token = localStorage.getItem('jwt');
-    axios.post('http://localhost:8081/verify', { token })
+    axios.post(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/verify`, { token })
       .then(() => {
         this.loggedIn = true;
       });
+    console.log(process.env);
   },
   methods: {
     onButtonClick() {

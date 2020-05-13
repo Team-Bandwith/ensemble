@@ -102,7 +102,7 @@ export default {
     }
   }
 `;
-      request('http://localhost:8081/api', addMember)
+      request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, addMember)
         .catch((err) => console.log(err));
       // Hide the modal manually
       this.$nextTick(() => {

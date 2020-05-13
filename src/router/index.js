@@ -43,7 +43,7 @@ router.beforeEach((to, from, next) => {
       });
     } else {
       const token = localStorage.getItem('jwt');
-      axios.post('http://localhost:8081/verify', { token })
+      axios.post(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/verify`, { token })
         .then(() => next())
         .catch(() => next({
           path: '/',
