@@ -16,6 +16,7 @@ export default Vue.extend({
         { name: 'Home', href: { name: 'Home' }, faIcon: ['fas', 'home'] },
         { name: 'Profile', href: { name: 'Profile' }, faIcon: 'user' },
         { name: 'Jam', href: { name: 'Jam' }, faIcon: 'music' },
+        { name: 'Inbox', href: { name: 'Inbox' }, faIcon: 'comments' },
       ],
       loggedIn: false,
     };
