@@ -1,4 +1,5 @@
 <script>
+/* eslint-disable camelcase */
 import axios from 'axios';
 import Vue from 'vue';
 import BootstrapSidebar from './components/vue-bootstrap-sidebar.vue';
@@ -19,23 +20,38 @@ export default Vue.extend({
         { name: 'Inbox', href: { name: 'Inbox' }, faIcon: 'comments' },
       ],
       loggedIn: false,
+      user: null,
     };
   },
   mounted() {
-    const token = localStorage.getItem('jwt');
-    axios.post(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/verify`, { token })
-      .then(() => {
-        this.loggedIn = true;
-      });
+    this.logIn();
   },
   methods: {
     onSidebarChanged() {
     },
     logIn() {
-      this.loggedIn = true;
+      const token = localStorage.getItem('jwt');
+      axios.post(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/verify`, { token })
+        .then((decode) => {
+          this.loggedIn = true;
+          const {
+            id,
+            username,
+            email,
+            url_avatar,
+          } = decode.data;
+          this.user = {
+            id,
+            username,
+            email,
+            url_avatar,
+          };
+        })
+        .catch((err) => err);
     },
     logOut() {
       this.loggedIn = false;
+      this.user = null;
     },
   },
   sockets: {
@@ -55,7 +71,8 @@ export default Vue.extend({
       :links="links"
       :header="header"
       :fa="true"
-      :loggedIn=loggedIn
+      :loggedIn="loggedIn"
+      :user="user"
       @sidebarChanged="onSidebarChanged"
     >
       <template v-slot:navbar>
@@ -76,7 +93,7 @@ export default Vue.extend({
 
       <template v-slot:content>
         <b-container style="margin-top: 56px">
-          <router-view :loggedIn="loggedIn" />
+          <router-view :loggedIn="loggedIn"  :user="user" />
         </b-container>
       </template>
     </BootstrapSidebar>
