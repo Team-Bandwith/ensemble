@@ -1,7 +1,8 @@
 import Vue from 'vue';
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import VueRouter from 'vue-router';
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
+import Moment from 'vue-moment';
 import {
   faUserSecret, faHome, faTint, faUsers,
   faPhone, faChild, faUser, faMusic,
@@ -10,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import socketio from 'socket.io-client';
 import VueSocketIO from 'vue-socket.io';
 import App from './App.vue';
-import { router } from './router';
+import { router } from './router/index';
 import store from './store';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
@@ -29,8 +30,7 @@ Vue.use(BootstrapVue);
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin);
 // Moment.js
-Vue.use(require('vue-moment'));
-
+Vue.use(Moment);
 Vue.use(VueRouter);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
@@ -39,6 +39,7 @@ export const SocketInstance = socketio('http://localhost:8081');
 Vue.use(VueSocketIO, SocketInstance);
 
 Vue.config.productionTip = false;
+Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 new Vue({
   router,
