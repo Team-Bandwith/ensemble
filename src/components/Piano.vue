@@ -3,7 +3,6 @@
 </template>
 
 <script>
-/* eslint-disable prefer-object-spread */
 import Nexus from 'nexusui';
 import Tone from 'tone';
 import note from 'midi-note';
@@ -14,22 +13,6 @@ export default {
     return {
       activeExternalSynths: {},
     };
-  },
-  sockets: {
-    receiveStart(midi) {
-      console.log('start', midi);
-      const synth = new Tone.Synth().toMaster();
-      this.activeExternalSynths = Object.assign({}, this.activeExternalSynths, { [midi]: synth });
-      synth.triggerAttack(note(midi));
-      synth.triggerAttack('C4', '+1.0', 0.25);
-    },
-    receiveStop(midi) {
-      console.log('stop', midi);
-      this.activeExternalSynths[midi].triggerRelease();
-      const removeSynth = { ...this.activeExternalSynths };
-      delete removeSynth[midi];
-      this.activeExternalSynths = removeSynth;
-    },
   },
   mounted() {
     const activeSynths = {};
@@ -44,12 +27,12 @@ export default {
 
       newPiano.on('change', (k) => {
         if (k.state) {
-          this.$socket.emit('startNote', k.note);
+          this.$socket.emit('startNote', { note: k.note, room: window.location.search });
           const synth = new Tone.Synth().toMaster();
           activeSynths[k.note] = synth;
           synth.triggerAttack(note(k.note));
         } else {
-          this.$socket.emit('stopNote', k.note);
+          this.$socket.emit('stopNote', { note: k.note, room: window.location.search });
           activeSynths[k.note].triggerRelease();
           delete activeSynths[k.note];
         }
