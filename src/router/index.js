@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import Profile from '../views/Profile.vue';
 import Jam from '../views/Jam.vue';
+import Inbox from '../views/Inbox.vue';
 
 const routes = [
   {
@@ -22,6 +23,14 @@ const routes = [
     path: '/jam',
     name: 'Jam',
     component: Jam,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: '/inbox',
+    name: 'Inbox',
+    component: Inbox,
     meta: {
       requiresAuth: true,
     },
