@@ -52,12 +52,12 @@ io.on('connection', socket => {
     io.to(room).emit('newUser', user);
   });
 
-  socket.on('startNote', (note) => {
-    socket.broadcast.to('room').emit('receiveStart', note);
+  socket.on('startNote', ({ note, room }) => {
+    socket.broadcast.to(room).emit('receiveStart', note);
   })
 
-  socket.on('stopNote', (note) => {
-    socket.broadcast.to('room').emit('receiveStop', note);
+  socket.on('stopNote', ({ note, room }) => {
+    socket.broadcast.to(room).emit('receiveStop', note);
   })
 
   socket.on('disconnect', () => {

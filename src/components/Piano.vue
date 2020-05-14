@@ -27,12 +27,12 @@ export default {
 
       newPiano.on('change', (k) => {
         if (k.state) {
-          this.$socket.emit('startNote', k.note);
+          this.$socket.emit('startNote', { note: k.note, room: window.location.search });
           const synth = new Tone.Synth().toMaster();
           activeSynths[k.note] = synth;
           synth.triggerAttack(note(k.note));
         } else {
-          this.$socket.emit('stopNote', k.note);
+          this.$socket.emit('stopNote', { note: k.note, room: window.location.search });
           activeSynths[k.note].triggerRelease();
           delete activeSynths[k.note];
         }
