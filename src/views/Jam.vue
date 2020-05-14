@@ -40,17 +40,15 @@ export default {
     user: Object,
   },
   watch: {
-    user() {
-      if (this.user) {
-        this.$socket.emit('join', { room: window.location.search, user: this.user });
-      }
+    user(val) {
+      this.$socket.emit('join', { room: window.location.search, user: val });
+      Tone.start();
     },
   },
   mounted() {
     if (!window.location.search) {
       window.location.search = randomstring.generate();
     }
-    Tone.start();
   },
   sockets: {
     receiveStart(midi) {
