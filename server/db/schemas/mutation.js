@@ -2,7 +2,7 @@ const graphql = require('graphql');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { db } = require('../pgAdapter');
-const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLBoolean } = graphql;
+const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLBoolean, GraphQLInt } = graphql;
 const { 
   MemberType,
   FriendType,
@@ -16,6 +16,18 @@ exports.mutation = new GraphQLObjectType({
   name: "RootMutationType",
   type: "Mutation",
   fields: {
+    likeSong: {
+      type: SongType,
+      args: {
+        id: { type: GraphQLInt },
+      },
+      resolve(parentValue, args) {
+        const query = `UPDATE song SET count_likes = count_likes + 1 WHERE id = $1 RETURNING count_likes`;
+        return db.any(query, [args.id])
+          .then(function(data) { return data })
+          .catch(function(err) { console.log('err', err)})
+      },
+    },
     signUp: {
       type: MemberType,
       args: {
