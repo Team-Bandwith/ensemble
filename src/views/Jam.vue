@@ -24,10 +24,6 @@
 import Tone from 'tone';
 import note from 'midi-note';
 import randomstring from 'randomstring';
-<<<<<<< HEAD
-import axios from 'axios';
-=======
->>>>>>> (feat)
 import Instrument from '../components/instrument.vue';
 import Chat from '../components/chat.vue';
 import BandMembers from '../components/band-members.vue';
@@ -40,12 +36,21 @@ export default {
     Chat,
     BandMembers,
   },
+  props: {
+    user: Object,
+  },
+  watch: {
+    user() {
+      if (this.user) {
+        this.$socket.emit('join', { room: window.location.search, user: this.user });
+      }
+    },
+  },
   mounted() {
-    Tone.start();
     if (!window.location.search) {
       window.location.search = randomstring.generate();
     }
-    this.$socket.emit('join', { room: window.location.search, user: 'user' });
+    Tone.start();
   },
   sockets: {
     receiveStart(midi) {

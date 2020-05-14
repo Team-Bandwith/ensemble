@@ -125,6 +125,7 @@ export default {
       default: 'Sidebar',
     },
     loggedIn: Boolean,
+    user: Object,
   },
   data() {
     return {
@@ -139,7 +140,6 @@ export default {
     logOut() {
       this.$emit('log-out');
       localStorage.removeItem('jwt');
-      localStorage.removeItem('user');
       this.$router.push({ path: '/' });
     },
     logIn() {
