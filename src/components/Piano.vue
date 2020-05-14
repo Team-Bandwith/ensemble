@@ -10,7 +10,7 @@ import note from 'midi-note';
 export default {
   name: 'Piano',
   props: {
-    dest: Object,
+    dest: MediaStreamAudioDestinationNode,
   },
   mounted() {
     const activeSynths = {};

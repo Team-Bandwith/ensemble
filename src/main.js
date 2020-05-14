@@ -5,7 +5,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import Moment from 'vue-moment';
 import {
   faUserSecret, faHome, faTint, faUsers,
-  faPhone, faChild, faUser, faMusic, faComments,
+  faPhone, faChild, faUser, faMusic, faComments, faPlay, faPause,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import socketio from 'socket.io-client';
@@ -25,6 +25,8 @@ library.add(faChild);
 library.add(faUser);
 library.add(faMusic);
 library.add(faComments);
+library.add(faPlay);
+library.add(faPause);
 
 // Install BootstrapVue
 Vue.use(BootstrapVue);
