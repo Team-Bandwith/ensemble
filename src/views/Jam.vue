@@ -20,9 +20,11 @@
 
 <script>
 /* eslint-disable prefer-object-spread */
+/* eslint-disable camelcase */
 import Tone from 'tone';
 import note from 'midi-note';
 import randomstring from 'randomstring';
+import axios from 'axios';
 import Instrument from '../components/instrument.vue';
 import Chat from '../components/chat.vue';
 import BandMembers from '../components/band-members.vue';
@@ -36,11 +38,26 @@ export default {
     BandMembers,
   },
   mounted() {
-    Tone.start();
     if (!window.location.search) {
       window.location.search = randomstring.generate();
+      return;
     }
-    this.$socket.emit('join', { room: window.location.search, user: 'user' });
+    Tone.start();
+    const token = localStorage.getItem('jwt');
+    axios.post(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/verify`, { token })
+      .then((decode) => {
+        const {
+          id,
+          username,
+          url_avatar,
+        } = decode.data;
+        const user = {
+          id,
+          username,
+          url_avatar,
+        };
+        this.$socket.emit('join', { room: window.location.search, user });
+      });
   },
   sockets: {
     receiveStart(midi) {
