@@ -65,7 +65,6 @@ export default {
       const synth = new Tone.Synth().toMaster();
       this.activeExternalSynths = Object.assign({}, this.activeExternalSynths, { [midi]: synth });
       synth.triggerAttack(note(midi));
-      synth.triggerAttack('C4', '+1.0', 0.25);
     },
     receiveStop(midi) {
       console.log('stop', midi);
