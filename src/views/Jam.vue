@@ -19,10 +19,8 @@
 </template>
 
 <script>
-/* eslint-disable prefer-object-spread */
 /* eslint-disable camelcase */
 import Tone from 'tone';
-import note from 'midi-note';
 import randomstring from 'randomstring';
 import Instrument from '../components/instrument.vue';
 import Chat from '../components/chat.vue';
