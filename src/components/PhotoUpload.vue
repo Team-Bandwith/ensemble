@@ -22,6 +22,7 @@
 
 <script>
 import axios from 'axios';
+import { request } from 'graphql-request';
 
 
 export default {
@@ -64,9 +65,8 @@ export default {
         return;
       }
       // clear errors
-
       this.errors = [];
-
+      /* eslint-disable-console */
       const reader = new FileReader();
       // attach listener to be called when data from file
       reader.addEventListener(
@@ -84,13 +84,23 @@ export default {
           this.showProgress = true;
           axios(requestObj)
             .then((response) => {
-              this.results = response.data;
-              console.log(this.results);
+              this.results = response.data.url;
+              console.log(this.results, 'THIS IS THE REPONSE DATA IM LOOKING FOR');
+              const addAvatar = `
+      mutation {
+        storeAvatar( url_avatar: "${this.results}", id: 1 ){
+          url_avatar
+          }
+        }
+        `;
+              request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, addAvatar)
+                .then((res) => console.log(res.storeAvatar.url_avatar, 'SUCCESSING RECEIVING AVATAR'))
+                .catch((err) => console.error('error handling avatar', err));
               console.log('public_id', this.results.public_id);
             })
             .catch((error) => {
               this.errors.push(error);
-              console.log(this.error);
+              console.log(this.error, 'ERROR IN HANDLING AVATAR');
             })
             .finally(() => {
               setTimeout(
@@ -110,6 +120,7 @@ export default {
     },
   },
 };
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
