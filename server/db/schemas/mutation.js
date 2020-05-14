@@ -54,5 +54,18 @@ exports.mutation = new GraphQLObjectType({
           .catch((err) => console.log(err));
       },
     },
+    storeAvatar: {
+      type: MemberType,
+      args: {
+        id: { type: GraphQLInt },
+        url_avatar: { type: GraphQLString },
+      },
+      resolve(parentValue, args) {
+        const query = 'UPDATE member SET url_avatar = $1 WHERE id = $2 RETURNING url_avatar';
+        return db.one(query, [args.url_avatar, args.id])
+          .then((data) => data)
+          .catch((err) => console.error('avatar error', err));
+      },
+    },
   },
 });
