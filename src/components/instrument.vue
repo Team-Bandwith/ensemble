@@ -2,11 +2,12 @@
    <b-container fluid>
     <div class="jam">
       <b-row>
-        <b-button>Select instrument</b-button>
+        <b-button @click="openModal">Select instrument</b-button>
       </b-row>
       <b-row>
+        <SelectInstrument v-model="modalOpen" v-on:select="select" />
         <div class="instrument">
-          <Piano />
+          <Piano v-if="selected === 'piano'" />
         </div>
       </b-row>
       <b-row align-v="end">
@@ -28,11 +29,27 @@
 
 <script>
 import Piano from './Piano.vue';
+import SelectInstrument from './SelectInstrument.vue';
 
 export default {
   name: 'Instrument',
   components: {
     Piano,
+    SelectInstrument,
+  },
+  data() {
+    return {
+      selected: null,
+      modalOpen: false,
+    };
+  },
+  methods: {
+    select(instr) {
+      this.selected = instr;
+    },
+    openModal() {
+      this.modalOpen = !this.modalOpen;
+    },
   },
 };
 </script>

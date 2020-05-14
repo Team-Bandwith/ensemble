@@ -22,6 +22,7 @@
 /* eslint-disable prefer-object-spread */
 import Tone from 'tone';
 import note from 'midi-note';
+import randomstring from 'randomstring';
 import Instrument from '../components/instrument.vue';
 import Chat from '../components/chat.vue';
 import BandMembers from '../components/band-members.vue';
@@ -35,7 +36,11 @@ export default {
     BandMembers,
   },
   mounted() {
-    this.$socket.emit('join', { room: 'room', user: 'user' });
+    Tone.start();
+    if (!window.location.search) {
+      window.location.search = randomstring.generate();
+    }
+    this.$socket.emit('join', { room: window.location.search, user: 'user' });
   },
   sockets: {
     receiveStart(midi) {
