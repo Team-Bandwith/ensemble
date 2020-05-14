@@ -19,6 +19,9 @@
 </template>
 
 <script>
+/* eslint-disable prefer-object-spread */
+import Tone from 'tone';
+import note from 'midi-note';
 import Instrument from '../components/instrument.vue';
 import Chat from '../components/chat.vue';
 import BandMembers from '../components/band-members.vue';
@@ -33,6 +36,22 @@ export default {
   },
   mounted() {
     this.$socket.emit('join', { room: 'room', user: 'user' });
+  },
+  sockets: {
+    receiveStart(midi) {
+      console.log('start', midi);
+      const synth = new Tone.Synth().toMaster();
+      this.activeExternalSynths = Object.assign({}, this.activeExternalSynths, { [midi]: synth });
+      synth.triggerAttack(note(midi));
+      synth.triggerAttack('C4', '+1.0', 0.25);
+    },
+    receiveStop(midi) {
+      console.log('stop', midi);
+      this.activeExternalSynths[midi].triggerRelease();
+      const removeSynth = { ...this.activeExternalSynths };
+      delete removeSynth[midi];
+      this.activeExternalSynths = removeSynth;
+    },
   },
 };
 
