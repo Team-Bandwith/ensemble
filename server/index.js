@@ -15,6 +15,8 @@ const { GraphQLSchema } = graphql;
 const { query } = require('./db/schemas/query');
 const { mutation } = require('./db/schemas/mutation');
 
+const { addUser, getUsers } = require('./users');
+
 const schema = new GraphQLSchema({
   query,
   mutation,
@@ -98,9 +100,10 @@ io.on('connection', (socket) => {
   console.log('A new client has connected!');
   console.log(socket.id);
   socket.on('join', ({ room, user }) => {
-    console.log(room, user);
     socket.join(room);
-    io.to(room).emit('newUser', user);
+    addUser({ room, user });
+    io.to(room).emit('receiveMessage', { user: 'Ensemble', message: `${user.username} has joined the band!`});
+    io.to(room).emit('updateUsers', getUsers(room));
   });
 
   socket.on('startNote', ({ note, room }) => {
