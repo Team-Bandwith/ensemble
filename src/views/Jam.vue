@@ -34,6 +34,11 @@ export default {
     Chat,
     BandMembers,
   },
+  data() {
+    return {
+      users: [],
+    };
+  },
   props: {
     user: Object,
   },
@@ -49,6 +54,11 @@ export default {
     if (!window.location.search) {
       window.location.search = randomstring.generate();
     }
+  },
+  sockets: {
+    updateUsers(currUsers) {
+      this.users = currUsers;
+    },
   },
 };
 

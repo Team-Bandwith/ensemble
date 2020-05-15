@@ -1,10 +1,18 @@
-const users = [];
+const usersOnline = [];
+const usersInRooms = {};
 
-const addUser = (user) => users.push(user);
+const logUser = (user) => usersOnline.push(user);
 
-const getUsers = (room) => users.filter((user) => user.room === room).map((user) => user.user); 
+const getOnlineUsers = () => usersOnline;
+
+const addUserToRoom = (user) => usersInRooms[user.room]
+  ? usersInRooms[user.room].push(user.user) : usersInRooms[user.room] = [user.user];
+
+const getUsersInRoom = (room) => usersInRooms[room];
 
 module.exports = {
-  addUser,
-  getUsers,
+  logUser,
+  getOnlineUsers,
+  addUserToRoom,
+  getUsersInRoom,
 };

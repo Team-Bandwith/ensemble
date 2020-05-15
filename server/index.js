@@ -15,7 +15,7 @@ const { GraphQLSchema } = graphql;
 const { query } = require('./db/schemas/query');
 const { mutation } = require('./db/schemas/mutation');
 
-const { addUser, getUsers } = require('./users');
+const { logUser, addUserToRoom, getUsersInRoom } = require('./users');
 
 const schema = new GraphQLSchema({
   query,
@@ -97,13 +97,19 @@ const server = app.listen(process.env.S_PORT, () => console.log(`GraphQL server 
 const io = socketio(server);
 
 io.on('connection', (socket) => {
-  console.log('A new client has connected!');
-  console.log(socket.id);
+  socket.on('login', (user) => {
+    userWithId = { ...user };
+    userWithId[socketId] = socket.id;
+    logUser(userWithId);
+  });
+
   socket.on('join', ({ room, user }) => {
     socket.join(room);
-    addUser({ room, user });
+    const userWithId = { ...user };
+    userWithId[socketId] = socket.id;
+    addUserToRoom({ room, userWithId });
     io.to(room).emit('receiveMessage', { user: 'Ensemble', message: `${user.username} has joined the band!`});
-    io.to(room).emit('updateUsers', getUsers(room));
+    io.to(room).emit('updateUsers', getUsersInRoom(room));
   });
 
   socket.on('startNote', ({ note, room }) => {
@@ -117,5 +123,9 @@ io.on('connection', (socket) => {
   socket.on('sendMessage', ({ message, room }) => {
     console.log(message, 'server message');
     io.to(room).emit('receiveMessage', message);
+  });
+
+  socket.on('disconnect', () => {
+    console.log(socket.id, 'disconnect');
   });
 });
