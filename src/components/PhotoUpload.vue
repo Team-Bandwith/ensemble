@@ -22,7 +22,7 @@
         @change="handleFileChange($event)"
       />
       <!-- submit button is disabled until a file is selected -->
-      <button type="submit" :disabled="filesSelected < 1">Upload</button>
+      <button type="submit" :disabled="filesSelected < 1" >Upload</button>
     </form>
    </b-modal>
   </div>
@@ -36,6 +36,9 @@ import { request } from 'graphql-request';
 export default {
   name: 'PhotoUpload',
   components: {
+  },
+  props: {
+    user: Object,
   },
   data() {
     return {
@@ -96,13 +99,17 @@ export default {
               console.log(this.results.url, 'THIS IS THE REPONSE DATA IM LOOKING FOR');
               const addAvatar = `
       mutation {
-        storeAvatar( url_avatar: "${this.results.url}", id: 1 ){
-          url_avatar
+        storeAvatar( url_avatar: "${this.results.url}", id: ${this.user.id} ){
+          url_avatar, token
           }
         }
         `;
               request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, addAvatar)
-                .then((res) => console.log(res.storeAvatar.url_avatar, 'SUCCESSING RECEIVING AVATAR'))
+                .then((res) => {
+                  this.$emit('new-avatar', res.storeAvatar.url_avatar);
+                  localStorage.setItem('jwt', res.storeAvatar.token);
+                  this.$bvModal.hide('modal-prevent-closing');
+                })
                 .catch((err) => console.error('error handling avatar', err));
               console.log('public_id', this.results.public_id);
             })
