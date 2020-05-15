@@ -48,5 +48,6 @@ CREATE TABLE song (
   name VARCHAR (50) NOT NULL,
   url VARCHAR (255) NOT NULL,
   count_likes int DEFAULT 0,
+  public BOOLEAN NOT NULL,
   created_at timestamp
 );

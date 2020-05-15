@@ -5,6 +5,9 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const expressGraphQl = require('express-graphql');
 const socketio = require('socket.io');
+const cloudinary = require('cloudinary').v2;
+const fs = require('fs');
+const randomstring = require('randomstring');
 
 const { GraphQLSchema } = graphql;
 const { query } = require('./db/schemas/query');
@@ -18,7 +21,7 @@ const schema = new GraphQLSchema({
 const app = express();
 
 app.use(cors());
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '50mb'}));
 app.use(express.static('dist'));
 
 app.use(
@@ -36,6 +39,35 @@ app.post('/verify', (req, res) => {
       return res.status(500).send();
     }
     return res.status(200).send(decoded);
+  });
+});
+
+app.post('/song', (req, res) => {
+  const { url } = req.body
+  const songName = randomstring.generate();
+  fs.writeFile(`${songName}.ogg`, Buffer.from(url.replace('data:audio/ogg; codecs=opus;base64,', ''), 'base64'), (err) => {
+    if(err) {
+      console.log(err);
+    } else {
+      cloudinary.uploader.unsigned_upload(`${songName}.ogg`, 'ensemble-sound',
+        {
+          cloud_name: 'my-ensemble',
+          resource_type: 'video',
+        },
+        (err, data) => {
+          if (err) {
+            res.status(500).send(err);
+          } else {
+            fs.unlink(`${songName}.ogg`, (err) => {
+              if (err) {
+                console.log(err);
+              } else {
+                res.status(201).send(data);
+              }
+            })
+          }
+      });
+    }
   });
 });
 
