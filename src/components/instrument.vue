@@ -38,7 +38,7 @@
           />
         </b-col>
         <b-col>
-          <b-button> save </b-button>
+          <b-button v-if="!recording && !playing && playback" @click="uploadSong"> save </b-button>
         </b-col>
         </b-row>
       </div>
@@ -50,6 +50,7 @@
 /* eslint-disable no-param-reassign */
 import Tone from 'tone';
 import note from 'midi-note';
+import axios from 'axios';
 import Piano from './Piano.vue';
 import SelectInstrument from './SelectInstrument.vue';
 
@@ -69,6 +70,7 @@ export default {
       playback: false,
       recording: false,
       playing: false,
+      dataURI: null,
     };
   },
   mounted() {
@@ -88,6 +90,11 @@ export default {
           const blob = new Blob(this.chunks, { type: 'audio/ogg; codecs=opus' });
           document.querySelector('audio').src = URL.createObjectURL(blob);
           this.playback = true;
+          const reader = new FileReader();
+          reader.readAsDataURL(blob);
+          reader.onloadend = () => {
+            this.dataURI = reader.result;
+          };
         }
       };
     },
@@ -115,6 +122,11 @@ export default {
     pauseSong() {
       this.playing = false;
       document.querySelector('audio').pause();
+    },
+    uploadSong() {
+      axios.post(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/song`, { url: this.dataURI })
+        .then((res) => console.log(res))
+        .catch((err) => console.error(err));
     },
   },
   sockets: {

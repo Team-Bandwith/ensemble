@@ -27,7 +27,6 @@ export default {
         if (k.state) {
           this.$socket.emit('startNote', { note: k.note, room: window.location.search });
           const synth = new Tone.Synth().toMaster();
-          console.log('connecting to ', this.dest);
           synth.connect(this.dest);
           activeSynths[k.note] = synth;
           synth.triggerAttack(note(k.note));
