@@ -2,7 +2,7 @@
   <b-row>
     <b-col>
   <div class="home">
-    <HelloWorld msg="Welcome to Ensemble" :loggedIn="loggedIn" />
+    <SongsList msg="Welcome to Ensemble" :loggedIn="loggedIn" />
   </div>
     </b-col>
   </b-row>
@@ -10,12 +10,12 @@
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
+import SongsList from '@/components/SongsList.vue';
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld,
+    SongsList,
   },
   props: {
     loggedIn: Boolean,
