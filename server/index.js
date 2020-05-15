@@ -8,6 +8,8 @@ const socketio = require('socket.io');
 const cloudinary = require('cloudinary').v2;
 const fs = require('fs');
 const randomstring = require('randomstring');
+const history = require('connect-history-api-fallback');
+const path = require('path');
 
 const { GraphQLSchema } = graphql;
 const { query } = require('./db/schemas/query');
@@ -22,7 +24,16 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json({ limit: '50mb'}));
-app.use(express.static('dist'));
+
+const staticFileMiddleware = express.static('dist');
+
+app.use(staticFileMiddleware);
+
+// app.use(history({
+//   index: '/dist/index.html'
+// }));
+
+// app.use(staticFileMiddleware);
 
 app.use(
   '/api',
@@ -69,6 +80,14 @@ app.post('/song', (req, res) => {
       });
     }
   });
+});
+
+app.all("*", (_req, res) => {
+  try {
+    res.sendFile(path.resolve(__dirname, '../dist/index.html'));
+  } catch (error) {
+    res.json({ success: false, message: "Something went wrong" });
+  }
 });
 
 const server = app.listen(process.env.S_PORT, () => console.log(`GraphQL server running on ${process.env.S_PORT}`));
