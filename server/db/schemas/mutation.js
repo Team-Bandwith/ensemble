@@ -26,7 +26,7 @@ exports.mutation = new GraphQLObjectType({
       },
       resolve(parentValue, args) {
         const query = 'UPDATE song SET count_likes = count_likes + 1 WHERE id = $1 RETURNING count_likes';
-        return db.any(query, [args.id])
+        return db.one(query, [args.id])
           .then((data) => data)
           .catch((err) => { console.log('err', err); });
       },
