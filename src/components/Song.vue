@@ -1,8 +1,6 @@
 <template>
   <b-container fluid>
-
-    <div v-for="song in songs" :key="song.id">
-        <div class="song-item">
+    <div class="song-item">
         <b-row cols="12">
           <b-col>
             <div class="song-id">id:{{ song.id }}</div>
@@ -19,53 +17,61 @@
             </div>
             <div class="song-likes">
               <b-button @click="likeSong(song.count_likes, song.id)">Like</b-button>
-              {{ song.count_likes }}
+                {{ this.likes || song.count_likes }}
             </div>
-            <div class="song-likes">
-              created at:
-              {{ handleMoment(song.created_at).fromNow() }}
+          <div class="song-created-at"> posted: {{ handleMoment(song.created_at).fromNow() }} </div>
+            <div class="song-comments">
+              <Comment></Comment>
             </div>
           </b-col>
         </b-row>
       </div>
-      <hr>
-    </div>
-
   </b-container>
 </template>
 
 <script>
+
 import { request } from 'graphql-request';
+import Comment from './Comment.vue';
 
 const moment = require('moment');
 
 export default {
-  name: 'HelloWorld',
+  name: 'Song',
   props: {
     msg: String,
     loggedIn: Boolean,
+    song: Object,
+  },
+  components: {
+    Comment,
   },
   data() {
     return {
       handleMoment: moment,
-      songs: [],
+      likes: null,
       isPlaying: false,
       player: null,
     };
   },
   methods: {
+    created() {
+      this.$watch();
+    },
     playSong(src) {
       if (this.isPlaying) {
         this.player.pause();
         this.isPlaying = false;
       } else {
-        this.player = new Audio(src);
+        if (!this.player) {
+          this.player = new Audio(src);
+        }
         this.player.play();
         this.isPlaying = true;
       }
     },
     likeSong(likes, songId) {
-      console.log('like', likes);
+      // console.log('like', likes);
       const query = `mutation {
       likeSong(id: ${songId}) {
         count_likes
@@ -73,58 +79,22 @@ export default {
     }`;
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
         .then((res) => {
-          console.log('like this song', res);
+          console.log(res.likeSong);
+          this.likes = res.likeSong.count_likes;
+          // console.log('like this song', res);
         })
         .catch((err) => console.log(err));
     },
-    getAllSongs() {
-      if (!this.loggedIn) {
-        this.songs = [
-          {
-            id: 1,
-            name: 'test1',
-            url: 'http://#1',
-            created_at: new Date(),
-          },
-          {
-            id: 2,
-            name: 'test2',
-            url: 'http://#2',
-            created_at: new Date(),
-          },
-        ];
-        return;
-      }
-      const query = `query {
-      getAllSongs {
-        id, 
-        id_author, 
-        name, 
-        url, 
-        count_likes,
-        created_at
-      }
-    }`;
-      request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
-        .then((res) => {
-          this.songs = res.getAllSongs;
-        })
-        .catch((err) => console.log(err));
-    },
-  },
-  created() {
-    this.getAllSongs();
   },
   watch: {
-    loggedIn() {
-      this.getAllSongs();
+    song(val) {
+      this.likes = val.count_likes;
     },
   },
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
 .song-item{
   padding: 1em;
 }
