@@ -22,7 +22,7 @@
           </div>
         </div>
           <div v-if="loggedIn">
-          <img :src="user.url_avatar" />
+          <img v-if="user.url_avatar" :src="user.url_avatar" />
           <div class='user-name'><b>{{ user.username }}</b></div>
           <div class='logout-btn'>
             <b-button @click="logOut">Logout</b-button>

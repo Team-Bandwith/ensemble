@@ -53,6 +53,10 @@ export default Vue.extend({
       this.loggedIn = false;
       this.user = null;
     },
+    newAvatar(avatar) {
+      const update = { url_avatar: avatar };
+      this.user = { ...this.user, ...update };
+    },
   },
   sockets: {
     connect() {
@@ -93,7 +97,7 @@ export default Vue.extend({
 
       <template v-slot:content>
         <b-container style="margin-top: 56px">
-          <router-view :loggedIn="loggedIn"  :user="user" />
+          <router-view :loggedIn="loggedIn"  :user="user" v-on:new-avatar='newAvatar'/>
         </b-container>
       </template>
     </BootstrapSidebar>

@@ -61,9 +61,17 @@ exports.mutation = new GraphQLObjectType({
         url_avatar: { type: GraphQLString },
       },
       resolve(parentValue, args) {
-        const query = 'UPDATE member SET url_avatar = $1 WHERE id = $2 RETURNING url_avatar';
+        const query = 'UPDATE member SET url_avatar = $1 WHERE id = $2 RETURNING id, username, email, url_avatar';
         return db.one(query, [args.url_avatar, args.id])
-          .then((data) => data)
+          .then((res) => ({
+            token: jwt.sign({
+              id: res.id,
+              username: res.username,
+              email: res.email,
+              url_avatar: res.url_avatar,
+            }, process.env.secret, { expiresIn: 86400 }),
+            url_avatar: res.url_avatar,
+          }))
           .catch((err) => console.error('avatar error', err));
       },
     },
