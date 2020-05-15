@@ -54,13 +54,14 @@ io.on('connection', (socket) => {
 
   socket.on('startNote', ({ note, room }) => {
     socket.broadcast.to(room).emit('receiveStart', note);
-  })
+  });
 
   socket.on('stopNote', ({ note, room }) => {
     socket.broadcast.to(room).emit('receiveStop', note);
-  })
+  });
 
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
+  socket.on('sendMessage', ({ message, room }) => {
+    console.log(message, 'server message');
+    io.to(room).emit('receiveMessage', message);
   });
 });
