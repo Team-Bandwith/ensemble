@@ -7,7 +7,7 @@
         </div>
       </b-col>
       <b-col cols="4" class="jam-chat">
-         <Chat/>
+         <Chat :user="user"/>
       </b-col>
     </b-row>
     <b-row align-v="end" >
@@ -63,6 +63,19 @@ export default {
       const removeSynth = { ...this.activeExternalSynths };
       delete removeSynth[midi];
       this.activeExternalSynths = removeSynth;
+    },
+    connect() {
+      // Fired when the socket connects.
+      console.log('there is a connection');
+    },
+
+    disconnect() {
+      console.log('connection lost');
+    },
+
+    // Fired when the server sends something on the "messageChannel" channel.
+    messageChannel(data) {
+      this.socketMessage = data;
     },
   },
 };
