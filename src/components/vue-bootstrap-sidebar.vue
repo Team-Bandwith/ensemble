@@ -14,11 +14,19 @@
       <!-- eslint-enable -->
       <b-list-group class="items-wrapper">
         <div v-if="!loggedIn">
+          <div class='signup-btn'>
           <SignUp v-on:log-in="logIn" />
+          </div>
+          <div class='login-btn'>
           <Login v-on:log-in="logIn" />
+          </div>
         </div>
           <div v-if="loggedIn">
+          <img v-if="user.url_avatar" :src="user.url_avatar" />
+          <div class='user-name'><b>{{ user.username }}</b></div>
+          <div class='logout-btn'>
             <b-button @click="logOut">Logout</b-button>
+          </div>
           </div>
         <div v-if="loggedIn">
           <template v-for="(link, index) in links">
@@ -156,5 +164,36 @@ export default {
   width: 100px;
   margin: 0 auto;
   background: #000;
+}
+
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  max-width: 120px;
+  height: 120px;
+  border-radius: 50%;
+}
+.user-name {
+  text-align: center;
+}
+
+.logout-btn {
+   position:fixed;
+   right:10px;
+   top:7px;
+}
+
+.signup-btn {
+   position:fixed;
+   right:10px;
+   top:7px;
+}
+
+.login-btn {
+   position:fixed;
+   right:90px;
+   top:7px;
 }
 </style>

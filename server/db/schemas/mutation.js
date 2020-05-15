@@ -54,5 +54,26 @@ exports.mutation = new GraphQLObjectType({
           .catch((err) => console.log(err));
       },
     },
+    storeAvatar: {
+      type: MemberType,
+      args: {
+        id: { type: GraphQLInt },
+        url_avatar: { type: GraphQLString },
+      },
+      resolve(parentValue, args) {
+        const query = 'UPDATE member SET url_avatar = $1 WHERE id = $2 RETURNING id, username, email, url_avatar';
+        return db.one(query, [args.url_avatar, args.id])
+          .then((res) => ({
+            token: jwt.sign({
+              id: res.id,
+              username: res.username,
+              email: res.email,
+              url_avatar: res.url_avatar,
+            }, process.env.secret, { expiresIn: 86400 }),
+            url_avatar: res.url_avatar,
+          }))
+          .catch((err) => console.error('avatar error', err));
+      },
+    },
   },
 });

@@ -1,5 +1,16 @@
 <template>
   <div class="cl-upload">
+    <b-button v-b-modal.modal-prevent-closing>Upload</b-button>
+    <b-modal
+      class='upload-modal'
+      id="modal-prevent-closing"
+      size="lg"
+      ref="modal"
+      title="Upload your Avatar photo here"
+      @show="resetModal"
+      @hidden="resetModal"
+      @ok="handleOk"
+      >
     <form v-on:submit.prevent="upload">
       <!-- allow the user to select an image file and when they have selected it call a function
       to handle this event-->
@@ -11,22 +22,23 @@
         @change="handleFileChange($event)"
       />
       <!-- submit button is disabled until a file is selected -->
-      <button type="submit" :disabled="filesSelected < 1">Upload</button>
-    <!-- display uploaded image if successful -->
-    <section v-if="results && results.secure_url">
-      <img :src="results.secure_url" :alt="results.public_id" />
-    </section>
+      <button type="submit" :disabled="filesSelected < 1" >Upload</button>
     </form>
+   </b-modal>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import { request } from 'graphql-request';
 
 
 export default {
   name: 'PhotoUpload',
   components: {
+  },
+  props: {
+    user: Object,
   },
   data() {
     return {
@@ -64,9 +76,8 @@ export default {
         return;
       }
       // clear errors
-
       this.errors = [];
-
+      /* eslint-disable-console */
       const reader = new FileReader();
       // attach listener to be called when data from file
       reader.addEventListener(
@@ -85,12 +96,26 @@ export default {
           axios(requestObj)
             .then((response) => {
               this.results = response.data;
-              console.log(this.results);
+              console.log(this.results.url, 'THIS IS THE REPONSE DATA IM LOOKING FOR');
+              const addAvatar = `
+      mutation {
+        storeAvatar( url_avatar: "${this.results.url}", id: ${this.user.id} ){
+          url_avatar, token
+          }
+        }
+        `;
+              request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, addAvatar)
+                .then((res) => {
+                  this.$emit('new-avatar', res.storeAvatar.url_avatar);
+                  localStorage.setItem('jwt', res.storeAvatar.token);
+                  this.$bvModal.hide('modal-prevent-closing');
+                })
+                .catch((err) => console.error('error handling avatar', err));
               console.log('public_id', this.results.public_id);
             })
             .catch((error) => {
               this.errors.push(error);
-              console.log(this.error);
+              console.log(this.error, 'ERROR IN HANDLING AVATAR');
             })
             .finally(() => {
               setTimeout(
@@ -110,10 +135,14 @@ export default {
     },
   },
 };
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+cl-upload {
+  width: 180%;
+}
 form input {
   background: #fff;
   border: 1px solid #9c9c9c;
@@ -174,7 +203,8 @@ section {
   margin: 10px 0;
 }
 img {
-  max-width: 300px;
-  height: auto;
+  max-width: 150px;
+  height: 150px;
+  border-radius: 50%;
 }
 </style>
