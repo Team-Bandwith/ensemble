@@ -22,17 +22,31 @@
 </template>
 
 <script>
+import Message from './message.vue';
+
 export default {
+  name: 'Chat',
+  components: {
+    Message,
+  },
+
+  props: {
+    user: Object,
+  },
+
   data() {
     return {
       username: '',
       message: '',
       messages: [],
+      typing: false,
+      ready: false,
     };
   },
   methods: {
     sendMessage() {
-      console.log(this.message);
+      this.messages.push(this.message);
+      console.log(this.messages);
       this.$socket.emit('message', this.message);
       this.message = '';
     },
