@@ -1,5 +1,6 @@
 <template>
    <b-container fluid>
+    <SaveSong :cloudURL="cloudURL" :id="id" />
     <div class="jam">
       <b-row>
         <b-button @click="openModal">Select instrument</b-button>
@@ -38,7 +39,7 @@
           />
         </b-col>
         <b-col>
-          <b-button v-if="!recording && !playing && playback" @click="uploadSong"> save </b-button>
+          <b-button v-if="!recording && !playing && playback" @click="uploadSong">save</b-button>
         </b-col>
         </b-row>
       </div>
@@ -51,14 +52,20 @@
 import Tone from 'tone';
 import note from 'midi-note';
 import axios from 'axios';
+// import { request } from 'graphql-request';
 import Piano from './Piano.vue';
 import SelectInstrument from './SelectInstrument.vue';
+import SaveSong from './SaveSong.vue';
 
 export default {
   name: 'Instrument',
   components: {
     Piano,
     SelectInstrument,
+    SaveSong,
+  },
+  props: {
+    id: Number,
   },
   data() {
     return {
@@ -71,6 +78,7 @@ export default {
       recording: false,
       playing: false,
       dataURI: null,
+      cloudURL: null,
     };
   },
   mounted() {
@@ -125,7 +133,10 @@ export default {
     },
     uploadSong() {
       axios.post(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/song`, { url: this.dataURI })
-        .then((res) => console.log(res))
+        .then((res) => {
+          this.cloudURL = res.data.url;
+          this.$bvModal.show('save-song');
+        })
         .catch((err) => console.error(err));
     },
   },

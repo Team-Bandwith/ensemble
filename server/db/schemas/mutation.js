@@ -75,5 +75,21 @@ exports.mutation = new GraphQLObjectType({
           .catch((err) => console.error('avatar error', err));
       },
     },
+    addSong: {
+      type: SongType,
+      args: {
+        id_author: { type: GraphQLInt },
+        name: { type: GraphQLString },
+        url: { type: GraphQLString },
+        public: { type: GraphQLBoolean },
+      },
+      resolve(parentValue, args) {
+        const query = 'INSERT INTO song(id_author, name, url, public, created_at) VALUES ($1, $2, $3, $4, now()) RETURNING id, id_author';
+        const values = [args.id_author, args.name, args.url, args.public];
+        return db.one(query, values)
+          .then((res) => res)
+          .catch((err) => console.log(err));
+      }
+    },
   },
 });
