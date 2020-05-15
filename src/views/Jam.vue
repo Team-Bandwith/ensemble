@@ -39,6 +39,8 @@ export default {
   },
   watch: {
     user(val) {
+      console.log(val);
+      console.log(this.$socket);
       this.$socket.emit('join', { room: window.location.search, user: val });
       Tone.start();
     },
