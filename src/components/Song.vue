@@ -17,12 +17,7 @@
             </div>
             <div class="song-likes">
               <b-button @click="likeSong(song.count_likes, song.id)">Like</b-button>
-              <div v-if="this.likes">
-                {{this.likes}}
-               </div>
-              <div v-else>
-                {{ song.count_likes }}
-              </div>
+                {{ this.likes || song.count_likes }}
             </div>
           <div class="song-created-at"> posted: {{ handleMoment(song.created_at).fromNow() }} </div>
             <div class="song-comments">
@@ -54,24 +49,26 @@ export default {
   data() {
     return {
       handleMoment: moment,
-      likes: this.song.likes,
+      likes: null,
       isPlaying: false,
       player: null,
     };
   },
   methods: {
+    created() {
+      this.$watch();
+    },
     playSong(src) {
       if (this.isPlaying) {
         this.player.pause();
         this.isPlaying = false;
       } else {
-        this.player = new Audio(src);
+        if (!this.player) {
+          this.player = new Audio(src);
+        }
         this.player.play();
         this.isPlaying = true;
       }
-    },
-    handleUpdateLikes() {
-      console.log('render new likes');
     },
     likeSong(likes, songId) {
       // console.log('like', likes);
@@ -82,10 +79,16 @@ export default {
     }`;
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
         .then((res) => {
+          console.log(res.likeSong);
           this.likes = res.likeSong.count_likes;
           // console.log('like this song', res);
         })
         .catch((err) => console.log(err));
+    },
+  },
+  watch: {
+    song(val) {
+      this.likes = val.count_likes;
     },
   },
 };
