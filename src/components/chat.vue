@@ -1,9 +1,16 @@
 <template>
   <b-container fluid>
     <div class="chat">
+      <p>User is {{user.username}}</p>
       <b-row>
        <div class="messages">
-         <Message/>
+         <ul>
+          <div v-for="message in messages"
+          v-bind:key=message.message>
+          <span >{{message.message}}<small>:{{message.user}}</small>
+          </span>
+          </div>
+        </ul>
        </div>
       </b-row>
       <b-row align-v="end">
@@ -22,12 +29,12 @@
 </template>
 
 <script>
-import Message from './message.vue';
+// import Message from './message.vue';
 
 export default {
   name: 'Chat',
   components: {
-    Message,
+    // Message,
   },
 
   props: {
@@ -36,7 +43,6 @@ export default {
 
   data() {
     return {
-      username: '',
       message: '',
       messages: [],
       typing: false,
@@ -45,9 +51,14 @@ export default {
   },
   methods: {
     sendMessage() {
-      this.messages.push(this.message);
-      console.log(this.messages);
-      this.$socket.emit('message', this.message);
+      const message = {
+        message: this.message,
+        user: this.user.username,
+
+      };
+      console.log(message);
+      this.messages.push(message);
+      this.$socket.emit('message', message);
       this.message = '';
     },
   },
