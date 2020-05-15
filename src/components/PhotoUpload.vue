@@ -1,5 +1,16 @@
 <template>
   <div class="cl-upload">
+    <b-button v-b-modal.modal-prevent-closing>Upload</b-button>
+    <b-modal
+      class='upload-modal'
+      id="modal-prevent-closing"
+      size="lg"
+      ref="modal"
+      title="Upload your Avatar photo here"
+      @show="resetModal"
+      @hidden="resetModal"
+      @ok="handleOk"
+      >
     <form v-on:submit.prevent="upload">
       <!-- allow the user to select an image file and when they have selected it call a function
       to handle this event-->
@@ -12,11 +23,8 @@
       />
       <!-- submit button is disabled until a file is selected -->
       <button type="submit" :disabled="filesSelected < 1">Upload</button>
-    <!-- display uploaded image if successful -->
-    <section v-if="results && results.secure_url">
-      <img :src="results.secure_url" :alt="results.public_id" />
-    </section>
     </form>
+   </b-modal>
   </div>
 </template>
 
@@ -84,11 +92,11 @@ export default {
           this.showProgress = true;
           axios(requestObj)
             .then((response) => {
-              this.results = response.data.url;
-              console.log(this.results, 'THIS IS THE REPONSE DATA IM LOOKING FOR');
+              this.results = response.data;
+              console.log(this.results.url, 'THIS IS THE REPONSE DATA IM LOOKING FOR');
               const addAvatar = `
       mutation {
-        storeAvatar( url_avatar: "${this.results}", id: 1 ){
+        storeAvatar( url_avatar: "${this.results.url}", id: 1 ){
           url_avatar
           }
         }
@@ -125,6 +133,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+cl-upload {
+  width: 180%;
+}
 form input {
   background: #fff;
   border: 1px solid #9c9c9c;
@@ -185,7 +196,8 @@ section {
   margin: 10px 0;
 }
 img {
-  max-width: 300px;
-  height: auto;
+  max-width: 150px;
+  height: 150px;
+  border-radius: 50%;
 }
 </style>
