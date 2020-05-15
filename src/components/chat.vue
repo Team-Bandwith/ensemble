@@ -54,12 +54,15 @@ export default {
       const message = {
         message: this.message,
         user: this.user.username,
-
       };
-      console.log(message);
-      this.messages.push(message);
-      this.$socket.emit('message', message);
+      // console.log(message);
+      this.$socket.emit('sendMessage', { message, room: window.location.search });
       this.message = '';
+    },
+  },
+  sockets: {
+    receiveMessage(message) {
+      this.messages = [...this.messages, message];
     },
   },
 };
