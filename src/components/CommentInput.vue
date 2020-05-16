@@ -38,6 +38,8 @@ export default {
     handleComment() {
       if (this.commentText) {
         console.log('comment made', this.commentText);
+        this.commentText = '';
+        this.commentState = null;
       } else {
         alert('Please enter a comment');
         console.log('empty message');
