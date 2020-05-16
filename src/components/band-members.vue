@@ -5,7 +5,8 @@
     </b-row>
     <b-row>
       <b-col v-for="user in users" v-bind:key="user.id">
-        {{ user.username }}
+        <span>{{ user.username }}</span>
+        <img v-if="user.url_avatar" :src="user.url_avatar" />
       </b-col>
     </b-row>
   </b-container>
