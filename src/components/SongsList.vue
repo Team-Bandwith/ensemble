@@ -1,5 +1,6 @@
+/* eslint-disable max-len */
 <template>
-  <b-container fluid style="background-color:#98AC9E;">
+  <b-container fluid style="background-color:#98AC9E; width: 50%; margin-right: 50%;">
     <div v-for="song in songs" :key="song.id">
        <Song
         :song="song"
@@ -11,10 +12,8 @@
     </div>
   </b-container>
 </template>
-
 <script>
 import { request } from 'graphql-request';
-
 import Song from './Song.vue';
 
 export default {
@@ -69,7 +68,8 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+b-container {
+  height: 50px;
+}
 </style>
