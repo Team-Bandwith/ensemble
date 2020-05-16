@@ -181,6 +181,8 @@ export default {
   .record:hover {
     cursor: pointer;
     background-color: rgb(201, 5, 5);
+    border: #3a3836;
+    border-block-color: #3a3836;
   }
 
   .active {

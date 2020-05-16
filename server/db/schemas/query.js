@@ -27,9 +27,19 @@ exports.query = new GraphQLObjectType({
           .catch((err) => { console.log('err', err); });
       },
     },
+    getUserSongs: {
+      type: new GraphQLList(SongType),
+      args: { id: { type: GraphQLInt } },
+      resolve(parentValue, args) {
+        const query = 'SELECT * FROM song WHERE id_author = $1 ORDER BY created_at DESC ';
+        return db.any(query, [args.id])
+          .then((data) => data)
+          .catch((err) => { console.log('err', err); });
+      },
+    },
     getLikedSongs: {
       type: new GraphQLList(SongType),
-      args: { id: { type: GraphQLInt }},
+      args: { id: { type: GraphQLInt } },
       resolve(parentValue, args) {
         const query = `SELECT song.* FROM song, song_user
           WHERE id_song=song.id

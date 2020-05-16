@@ -171,8 +171,8 @@ img {
   margin-left: auto;
   margin-right: auto;
   width: 50%;
-  max-width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
 }
 .user-name {

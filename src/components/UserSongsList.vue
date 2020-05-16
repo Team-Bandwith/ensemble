@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 <template>
-  <b-container fluid style="background-color:#98AC9E; width: 50%; margin-right: 50%; margin: 1px">
+<div class='listcontainer'>
+  <b-container fluid>
     <div v-for="song in songs" :key="song.id">
        <Song
         :song="song"
@@ -11,13 +12,14 @@
       <hr>
     </div>
   </b-container>
+</div>
 </template>
 <script>
 import { request } from 'graphql-request';
 import Song from './Song.vue';
 
 export default {
-  name: 'SongsList',
+  name: 'UserSongsList',
   props: {
     loggedIn: Boolean,
     liked: Array,
@@ -32,13 +34,13 @@ export default {
     };
   },
   methods: {
-    getAllSongs() {
+    getUserSongs() {
       if (!this.loggedIn) {
         this.songs = [];
         return;
       }
       const query = `query {
-      getAllSongs {
+      getUserSongs(id: ${this.user.id}) {
         id, 
         id_author, 
         name, 
@@ -49,7 +51,7 @@ export default {
     }`;
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
         .then((res) => {
-          this.songs = res.getAllSongs;
+          this.songs = res.getUserSongs;
         })
         .catch((err) => console.log(err));
     },
@@ -58,18 +60,21 @@ export default {
     },
   },
   created() {
-    this.getAllSongs();
+    this.getUserSongs();
   },
   watch: {
     loggedIn() {
-      this.getAllSongs();
+      this.getUserSongs();
     },
   },
 };
 </script>
 
 <style scoped>
-b-container {
-  height: 50px;
+.listcontainer {
+  background-color:#98AC9E;
+  width: 50%;
+  margin-right: 50%;
+  margin: 1px;
 }
 </style>
