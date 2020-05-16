@@ -120,6 +120,7 @@ export default Vue.extend({
             :user="user"
             :liked="liked"
             v-on:new-avatar='newAvatar'
+            v-on:new-like="getUserLikes(user.id)"
           />
         </b-container>
       </template>

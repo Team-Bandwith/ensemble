@@ -6,6 +6,7 @@
       :loggedIn="loggedIn"
       :liked="liked"
       :user="user"
+      v-on:new-like="newLike"
     />
   </div>
     </b-col>
@@ -25,6 +26,11 @@ export default {
     loggedIn: Boolean,
     liked: Array,
     user: Object,
+  },
+  methods: {
+    newLike() {
+      this.$emit('new-like');
+    },
   },
 };
 </script>

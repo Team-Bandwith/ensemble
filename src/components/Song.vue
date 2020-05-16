@@ -20,7 +20,7 @@
                 v-if="user && !liked.map((like) => like.id).includes(song.id)"
                 @click="likeSong(song.count_likes, song.id)">Like</b-button>
               <b-button v-else-if="user" @click="unlikeSong(song.id)">Unlike</b-button>
-                {{ this.likes || song.count_likes }}
+                {{ this.likes }}
             </div>
           <div class="song-created-at"> posted: {{ handleMoment(song.created_at).fromNow() }} </div>
             <div class="song-comments">
@@ -59,6 +59,9 @@ export default {
       player: null,
     };
   },
+  mounted() {
+    this.likes = this.song.count_likes;
+  },
   methods: {
     created() {
       this.$watch();
@@ -84,14 +87,12 @@ export default {
     }`;
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
         .then((res) => {
-          console.log(res.likeSong);
           this.likes = res.likeSong.count_likes;
-          // console.log('like this song', res);
+          this.$emit('new-like');
         })
         .catch((err) => console.log(err));
     },
     unlikeSong(songId) {
-      console.log(this.user.id, songId);
       const query = `mutation {
       unlikeSong(id: ${songId}, id_user: ${this.user.id}) {
         count_likes
@@ -100,13 +101,9 @@ export default {
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
         .then((res) => {
           this.likes = res.unlikeSong.count_likes;
+          this.$emit('new-like');
         })
         .catch((err) => console.log(err));
-    },
-  },
-  watch: {
-    song(val) {
-      this.likes = val.count_likes;
     },
   },
 };
