@@ -23,10 +23,13 @@ exports.mutation = new GraphQLObjectType({
       type: SongType,
       args: {
         id: { type: GraphQLInt },
+        id_user: { type: GraphQLInt },
       },
       resolve(parentValue, args) {
-        const query = 'UPDATE song SET count_likes = count_likes + 1 WHERE id = $1 RETURNING count_likes';
-        return db.one(query, [args.id])
+        const insertLike = `INSERT INTO song_user(id_user, id_song, type) VALUES ($1, $2, 'like') RETURNING id`;
+        const updateCount = 'UPDATE song SET count_likes = count_likes + 1 WHERE id = $1 RETURNING count_likes';
+        return db.one(insertLike, [args.id_user, args.id])
+          .then(() => db.one(updateCount, [args.id]))
           .then((data) => data)
           .catch((err) => { console.log('err', err); });
       },
