@@ -78,7 +78,7 @@ exports.SongType = new GraphQLObjectType({
 });
 
 exports.InviteType = new GraphQLObjectType({
-  name: '',
+  name: 'Invite',
   type: 'Query',
   fields: {
     id: { type: GraphQLID },
