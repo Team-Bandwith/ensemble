@@ -1,6 +1,7 @@
 <script>
 /* eslint-disable camelcase */
 import axios from 'axios';
+import { request } from 'graphql-request';
 import Vue from 'vue';
 import BootstrapSidebar from './components/vue-bootstrap-sidebar.vue';
 
@@ -21,6 +22,7 @@ export default Vue.extend({
       ],
       loggedIn: false,
       user: null,
+      liked: [],
     };
   },
   mounted() {
@@ -46,6 +48,8 @@ export default Vue.extend({
             email,
             url_avatar,
           };
+
+          return this.getUserLikes(id);
         })
         .catch((err) => err);
     },
@@ -56,6 +60,20 @@ export default Vue.extend({
     newAvatar(avatar) {
       const update = { url_avatar: avatar };
       this.user = { ...this.user, ...update };
+    },
+    getUserLikes(id) {
+      const query = `
+  query {
+    getLikedSongs(id: ${id}) {
+      id, id_author, name, url, count_likes, public, created_at
+    }
+  }
+`;
+      request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
+        .then((result) => {
+          this.liked = result.getLikedSongs;
+        })
+        .catch((err) => console.log(err));
     },
   },
   sockets: {
@@ -97,7 +115,13 @@ export default Vue.extend({
 
       <template v-slot:content>
         <b-container style="margin-top: 56px">
-          <router-view :loggedIn="loggedIn"  :user="user" v-on:new-avatar='newAvatar'/>
+          <router-view
+            :loggedIn="loggedIn"
+            :user="user"
+            :liked="liked"
+            v-on:new-avatar='newAvatar'
+            v-on:new-like="getUserLikes(user.id)"
+          />
         </b-container>
       </template>
     </BootstrapSidebar>

@@ -2,7 +2,12 @@
   <b-row>
     <b-col>
   <div class="home">
-    <SongsList msg="Welcome to Ensemble" :loggedIn="loggedIn" />
+    <SongsList msg="Welcome to Ensemble"
+      :loggedIn="loggedIn"
+      :liked="liked"
+      :user="user"
+      v-on:new-like="newLike"
+    />
   </div>
     </b-col>
   </b-row>
@@ -19,6 +24,13 @@ export default {
   },
   props: {
     loggedIn: Boolean,
+    liked: Array,
+    user: Object,
+  },
+  methods: {
+    newLike() {
+      this.$emit('new-like');
+    },
   },
 };
 </script>

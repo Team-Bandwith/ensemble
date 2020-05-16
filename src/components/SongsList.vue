@@ -1,7 +1,12 @@
 <template>
   <b-container fluid>
     <div v-for="song in songs" :key="song.id">
-       <Song :song="song"></Song>
+       <Song
+        :song="song"
+        :liked="liked"
+        :user="user"
+        v-on:new-like="newLike"
+      />
       <hr>
     </div>
   </b-container>
@@ -16,6 +21,8 @@ export default {
   name: 'SongsList',
   props: {
     loggedIn: Boolean,
+    liked: Array,
+    user: Object,
   },
   components: {
     Song,
@@ -46,6 +53,9 @@ export default {
           this.songs = res.getAllSongs;
         })
         .catch((err) => console.log(err));
+    },
+    newLike() {
+      this.$emit('new-like');
     },
   },
   created() {

@@ -58,6 +58,7 @@ exports.SongUserType = new GraphQLObjectType({
     id: { type: GraphQLID },
     id_user: { type: GraphQLID },
     id_song: { type: GraphQLID },
+    type: { type: GraphQLString },
     created_at: { type: GraphQLDateTime },
   },
 });
