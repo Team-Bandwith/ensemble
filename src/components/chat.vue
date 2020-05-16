@@ -18,7 +18,13 @@
           <div>
             <b-form @submit.prevent="sendMessage" inline>
               <label class="sr-only" for="inline-form-input-name">Name</label>
-                <b-input type="text" placeholder="Message..." v-model="message"/>
+                <b-input
+                  type="text"
+                  placeholder="Message..."
+                  v-model="message"
+                  @focus="chat"
+                  @blur="doneChat"
+                />
                 <b-button type='submit' variant="primary">Send</b-button>
             </b-form>
           </div>
@@ -58,6 +64,12 @@ export default {
       // console.log(message);
       this.$socket.emit('sendMessage', { message, room: window.location.search });
       this.message = '';
+    },
+    chat() {
+      this.$emit('deact');
+    },
+    doneChat() {
+      this.$emit('active');
     },
   },
   sockets: {

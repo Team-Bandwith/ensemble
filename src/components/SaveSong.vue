@@ -4,8 +4,8 @@
       id="save-song"
       ref="modal"
       title="Create an Account"
-      @show="resetModal"
-      @hidden="resetModal"
+      @show="showModal"
+      @hidden="closeModal"
       @ok="handleOk"
     >
       <form ref="form" @submit.stop.prevent="handleSubmit">
@@ -62,11 +62,18 @@ export default {
       this.publicState = valid;
       return valid;
     },
-    resetModal() {
+    showModal() {
       this.name = '';
       this.nameState = null;
       this.sharePublic = true;
       this.publicState = null;
+    },
+    closeModal() {
+      this.name = '';
+      this.nameState = null;
+      this.sharePublic = true;
+      this.publicState = null;
+      this.$emit('active');
     },
     handleOk(bvModalEvt) {
       // Prevent modal from closing
@@ -93,6 +100,7 @@ export default {
         .catch((err) => console.log(err));
       // Hide the modal manually
       this.$nextTick(() => {
+        this.$emit('active');
         this.$bvModal.hide('save-song');
       });
     },

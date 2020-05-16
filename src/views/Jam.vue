@@ -3,11 +3,20 @@
     <b-row v-align="start">
       <b-col cols="8" >
         <div class="jam-instrument">
-          <Instrument :id="user.id" />
+          <Instrument
+            :id="user.id"
+            :active="active"
+            v-on:active="activate"
+            v-on:deact="deactivate"
+          />
         </div>
       </b-col>
       <b-col cols="4" class="jam-chat">
-         <Chat :user="user"/>
+         <Chat
+          :user="user"
+          v-on:active="activate"
+          v-on:deact="deactivate"
+        />
       </b-col>
     </b-row>
     <b-row align-v="end" >
@@ -37,6 +46,7 @@ export default {
   data() {
     return {
       users: [],
+      active: true,
     };
   },
   props: {
@@ -52,6 +62,14 @@ export default {
     if (!window.location.search) {
       window.location.search = randomstring.generate();
     }
+  },
+  methods: {
+    activate() {
+      this.active = true;
+    },
+    deactivate() {
+      this.active = false;
+    },
   },
   sockets: {
     updateUsers(currUsers) {

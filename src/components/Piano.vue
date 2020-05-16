@@ -11,6 +11,7 @@ export default {
   name: 'Piano',
   props: {
     dest: MediaStreamAudioDestinationNode,
+    active: Boolean,
   },
   mounted() {
     const activeSynths = {};
@@ -62,6 +63,9 @@ export default {
 
 
     document.addEventListener('keydown', (event) => {
+      if (!this.active) {
+        return;
+      }
       const keyIndex = keyMapper[event.key];
       /* eslint-disable no-unused-expressions */
       /* eslint-disable  no-underscore-dangle */
