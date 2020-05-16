@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const {
-  GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList,
+  GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList, GraphQLInt,
 } = require('graphql');
 const { db } = require('../pgAdapter');
 const {
@@ -25,6 +25,20 @@ exports.query = new GraphQLObjectType({
           .then((data) => data)
           .catch((err) => { console.log('err', err); });
       },
+    },
+    getLikedSongs: {
+      type: new GraphQLList(SongType),
+      args: { id: { type: GraphQLInt }},
+      resolve(parentValue, args) {
+        const query = `SELECT song.* FROM song, song_user
+          WHERE id_song=song.id
+          AND id_user=$1
+          AND type='like'`;
+        
+          return db.any(query, [args.id])
+            .then((res) => res)
+            .catch((err) => console.log(err));
+      }
     },
     logIn: {
       type: MemberType,
