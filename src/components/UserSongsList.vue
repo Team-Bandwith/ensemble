@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 <template>
-  <b-container fluid style="background-color:#98AC9E; width: 50%; margin-right: 50%; margin: 1px">
+<div class='listcontainer'>
+  <b-container fluid>
     <div v-for="song in songs" :key="song.id">
        <Song
         :song="song"
@@ -11,6 +12,7 @@
       <hr>
     </div>
   </b-container>
+</div>
 </template>
 <script>
 import { request } from 'graphql-request';
@@ -69,7 +71,10 @@ export default {
 </script>
 
 <style scoped>
-b-container {
-  height: 50px;
+.listcontainer {
+  background-color:#98AC9E;
+  width: 50%;
+  margin-right: 50%;
+  margin: 1px;
 }
 </style>
