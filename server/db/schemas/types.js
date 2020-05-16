@@ -85,5 +85,7 @@ exports.InviteType = new GraphQLObjectType({
     id_user_from: { type: GraphQLID },
     link: { type: GraphQLString },
     created_at: { type: GraphQLDateTime },
+    username: { type: GraphQLString },
+    url_avatar: { type: GraphQLString },
   },
 });
