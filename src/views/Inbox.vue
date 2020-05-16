@@ -3,10 +3,10 @@
     <b-col>
 
   <div class="inbox">
-    <h1>This is the inbox page</h1>
+    <h1>Notifications</h1>
   </div>
   <div class="jam-invite">
-    <JamInvite/>
+    <JamInvite :id="user.id"/>
   </div>
     <div class="friend-request">
     <FriendRequest/>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import JamInvite from '../components/JamInvite.vue';
+import JamInvite from '@/components/JamInvite.vue';
 import FriendRequest from '../components/FriendRequest.vue';
 import DirectMessage from '../components/DirectMessage.vue';
 
@@ -29,6 +29,10 @@ export default {
     JamInvite,
     FriendRequest,
     DirectMessage,
+  },
+  props: {
+    loggedIn: Boolean,
+    user: Object,
   },
 };
 </script>

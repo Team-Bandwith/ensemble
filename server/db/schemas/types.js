@@ -76,3 +76,17 @@ exports.SongType = new GraphQLObjectType({
     created_at: { type: GraphQLDateTime },
   },
 });
+
+exports.InviteType = new GraphQLObjectType({
+  name: 'Invite',
+  type: 'Query',
+  fields: {
+    id: { type: GraphQLID },
+    id_user_to: { type: GraphQLID },
+    id_user_from: { type: GraphQLID },
+    link: { type: GraphQLString },
+    created_at: { type: GraphQLDateTime },
+    username: { type: GraphQLString },
+    url_avatar: { type: GraphQLString },
+  },
+});

@@ -27,6 +27,14 @@ CREATE TABLE message (
   created_at timestamp
 );
 
+CREATE TABLE invite (
+  id serial PRIMARY KEY,
+  id_user_to int NOT NULL,
+  id_user_from int NOT NULL,
+  link VARCHAR (255),
+  created_at timestamp
+);
+
 CREATE TABLE comment (
   id serial PRIMARY KEY,
   id_user int NOT NULL,
@@ -51,3 +59,7 @@ CREATE TABLE song (
   public BOOLEAN NOT NULL,
   created_at timestamp
 );
+
+-- dummy data
+
+
