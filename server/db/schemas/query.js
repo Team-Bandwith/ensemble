@@ -50,6 +50,7 @@ exports.query = new GraphQLObjectType({
           .then((data) => data)
           .catch((err) => { console.log('err', err); });
     },
+  },
     logIn: {
       type: MemberType,
       args: { username: { type: GraphQLString }, password: { type: GraphQLString } },
