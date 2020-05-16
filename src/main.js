@@ -39,11 +39,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 /* eslint-disable import/prefer-default-export */
 export const SocketInstance = socketio(process.env.NODE_ENV === 'development'
-<<<<<<< HEAD
   ? ':8081' : window.location.origin);
-=======
-  ? ':8081' : window.location.href);
->>>>>>> (feat) Keep track of logged in users
 Vue.use(VueSocketIO, SocketInstance);
 
 Vue.config.productionTip = false;

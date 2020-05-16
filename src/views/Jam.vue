@@ -12,7 +12,7 @@
     </b-row>
     <b-row align-v="end" >
       <b-col class="jam-band">
-        <BandMembers/>
+        <BandMembers :users="users" />
       </b-col>
     </b-row>
   </b-container>
@@ -44,8 +44,6 @@ export default {
   },
   watch: {
     user(val) {
-      console.log(val);
-      console.log(this.$socket);
       this.$socket.emit('join', { room: window.location.search, user: val });
       Tone.start();
     },
@@ -57,7 +55,7 @@ export default {
   },
   sockets: {
     updateUsers(currUsers) {
-      this.users = currUsers;
+      this.users = currUsers.filter((user) => user.id !== this.user.id);
     },
   },
 };

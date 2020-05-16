@@ -7,7 +7,7 @@
          <ul>
           <div v-for="message in messages"
           v-bind:key=message.message>
-          <span >{{message.message}}<small>:{{message.user}}</small>
+          <span >{{message.user}}<small>: {{message.message}}</small>
           </span>
           </div>
         </ul>

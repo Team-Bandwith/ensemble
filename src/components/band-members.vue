@@ -4,7 +4,9 @@
       <b-button variant="primary">Invite</b-button>
     </b-row>
     <b-row>
-
+      <b-col v-for="user in users" v-bind:key="user.id">
+        {{ user.username }}
+      </b-col>
     </b-row>
   </b-container>
 </template>
@@ -12,8 +14,8 @@
 <script>
 export default {
   name: 'BandMembers',
-  components: {
-
+  props: {
+    users: Array,
   },
 };
 </script>

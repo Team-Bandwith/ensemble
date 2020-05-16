@@ -99,15 +99,15 @@ const io = socketio(server);
 io.on('connection', (socket) => {
   socket.on('login', (user) => {
     userWithId = { ...user };
-    userWithId[socketId] = socket.id;
+    userWithId.socketId = socket.id;
     logUser(userWithId);
   });
 
   socket.on('join', ({ room, user }) => {
     socket.join(room);
     const userWithId = { ...user };
-    userWithId[socketId] = socket.id;
-    addUserToRoom({ room, userWithId });
+    userWithId.socketId = socket.id;
+    addUserToRoom({ room, user: userWithId });
     io.to(room).emit('receiveMessage', { user: 'Ensemble', message: `${user.username} has joined the band!`});
     io.to(room).emit('updateUsers', getUsersInRoom(room));
   });
