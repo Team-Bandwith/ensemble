@@ -6,7 +6,7 @@
     <ProfileCard v-on:new-avatar='newAvatar' :user='user'/>
   </div>
   <div class="user-song">
-    <SongsList msg="Welcome to Ensemble"
+    <UserSongsList msg="Welcome to Ensemble"
       :loggedIn="loggedIn"
       :liked="liked"
       :user="user"
@@ -20,13 +20,13 @@
 
 <script>
 import ProfileCard from '@/components/ProfileCard.vue';
-import SongsList from '@/components/SongsList.vue';
+import UserSongsList from '../components/UserSongsList.vue';
 
 export default {
   name: 'Profile',
   components: {
     ProfileCard,
-    SongsList,
+    UserSongsList,
   },
   props: {
     user: Object,
