@@ -3,8 +3,19 @@
     <div class="song-item">
         <b-row cols="12">
           <b-col>
-            <div class="song-id">id:{{ song.id }}</div>
-            <div class="song-title">title:{{ song.name }}</div>
+            <div class="song-title">{{ song.name }}</div>
+          </b-col>
+        <div class="song-created-at">
+          <em>{{ handleMoment(song.created_at).fromNow() }}</em>
+        </div>
+        </b-row>
+        <b-row cols="12">
+          <b-col>
+            <div class="created-by">created by:{{ song.id }}</div>
+          </b-col>
+        </b-row>
+        <b-row cols="12">
+         <b-col>
             <div class="song-url">
               <div>
                 <div v-if="isPlaying">
@@ -15,6 +26,8 @@
                 </div>
               </div>
             </div>
+         </b-col>
+         <b-col>
             <div class="song-likes">
               <b-button
                 v-if="user && !liked.map((like) => like.id).includes(song.id)"
@@ -22,20 +35,23 @@
               <b-button v-else-if="user" @click="unlikeSong(song.id)">Unlike</b-button>
                 {{ this.likes }}
             </div>
-          <div class="song-created-at"> posted: {{ handleMoment(song.created_at).fromNow() }} </div>
-            <div class="song-comments">
-              <Comment></Comment>
-            </div>
           </b-col>
         </b-row>
       </div>
+      <b-row>
+        <b-col>
+        <div class="song-comments">
+          <CommentsList></CommentsList>
+        </div>
+        </b-col>
+      </b-row>
   </b-container>
 </template>
 
 <script>
 
 import { request } from 'graphql-request';
-import Comment from './Comment.vue';
+import CommentsList from './CommentsList.vue';
 
 const moment = require('moment');
 
@@ -49,7 +65,7 @@ export default {
     user: Object,
   },
   components: {
-    Comment,
+    CommentsList,
   },
   data() {
     return {

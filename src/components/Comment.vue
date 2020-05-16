@@ -1,6 +1,6 @@
 <template>
   <b-container fluid>
-    Comments!
+    {{comment.text}}
   </b-container>
 </template>
 
