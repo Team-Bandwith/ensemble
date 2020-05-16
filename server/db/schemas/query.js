@@ -35,9 +35,9 @@ exports.query = new GraphQLObjectType({
           AND id_user=$1
           AND type='like'`;
         
-          return db.any(query, [args.id])
-            .then((res) => res)
-            .catch((err) => console.log(err));
+        return db.any(query, [args.id])
+          .then((res) => res)
+          .catch((err) => console.log(err));
       }
     },
     logIn: {
