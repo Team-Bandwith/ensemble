@@ -2,7 +2,11 @@
   <b-row>
     <b-col>
   <div class="home">
-    <SongsList msg="Welcome to Ensemble" :loggedIn="loggedIn" />
+    <SongsList msg="Welcome to Ensemble"
+      :loggedIn="loggedIn"
+      :liked="liked"
+      :user="user"
+    />
   </div>
     </b-col>
   </b-row>
@@ -19,6 +23,8 @@ export default {
   },
   props: {
     loggedIn: Boolean,
+    liked: Array,
+    user: Object,
   },
 };
 </script>

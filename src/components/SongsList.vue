@@ -1,7 +1,7 @@
 <template>
   <b-container fluid>
     <div v-for="song in songs" :key="song.id">
-       <Song :song="song"></Song>
+       <Song :song="song" :liked="liked" :user="user"></Song>
       <hr>
     </div>
   </b-container>
@@ -16,6 +16,8 @@ export default {
   name: 'SongsList',
   props: {
     loggedIn: Boolean,
+    liked: Array,
+    user: Object,
   },
   components: {
     Song,

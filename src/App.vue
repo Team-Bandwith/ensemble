@@ -22,7 +22,7 @@ export default Vue.extend({
       ],
       loggedIn: false,
       user: null,
-      likes: [],
+      liked: [],
     };
   },
   mounted() {
@@ -71,7 +71,7 @@ export default Vue.extend({
 `;
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
         .then((result) => {
-          this.likes = result.getLikedSongs;
+          this.liked = result.getLikedSongs;
         })
         .catch((err) => console.log(err));
     },
@@ -115,7 +115,12 @@ export default Vue.extend({
 
       <template v-slot:content>
         <b-container style="margin-top: 56px">
-          <router-view :loggedIn="loggedIn"  :user="user" v-on:new-avatar='newAvatar'/>
+          <router-view
+            :loggedIn="loggedIn"
+            :user="user"
+            :liked="liked"
+            v-on:new-avatar='newAvatar'
+          />
         </b-container>
       </template>
     </BootstrapSidebar>
