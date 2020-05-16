@@ -6,7 +6,7 @@
     <ProfileCard v-on:new-avatar='newAvatar' :user='user'/>
   </div>
   <div class="user-song">
-    <UserSongsList msg="Welcome to Ensemble"
+    <UserSongsList
       :loggedIn="loggedIn"
       :liked="liked"
       :user="user"
