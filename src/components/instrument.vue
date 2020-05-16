@@ -8,7 +8,7 @@
       <b-row>
         <SelectInstrument v-model="modalOpen" v-on:select="select" />
         <div class="instrument">
-          <Piano v-if="selected === 'piano'" :dest="dest" />
+          <Piano v-if="selected === 'piano'" :dest="dest" :active="active" />
         </div>
         <audio controls />
       </b-row>
@@ -66,6 +66,7 @@ export default {
   },
   props: {
     id: Number,
+    active: Boolean,
   },
   data() {
     return {
