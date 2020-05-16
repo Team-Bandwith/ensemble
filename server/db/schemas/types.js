@@ -40,7 +40,7 @@ exports.MessageType = new GraphQLObjectType({
 });
 
 exports.CommentType = new GraphQLObjectType({
-  name: 'Message',
+  name: 'Comment',
   type: 'Query',
   fields: {
     id: { type: GraphQLID },
