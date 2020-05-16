@@ -89,7 +89,7 @@ exports.mutation = new GraphQLObjectType({
         return db.one(query, values)
           .then((res) => res)
           .catch((err) => console.log(err));
-      }
+      },
     },
   },
 });
