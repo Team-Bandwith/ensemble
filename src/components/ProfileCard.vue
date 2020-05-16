@@ -19,9 +19,8 @@
     </b-card-body>
 
     <b-list-group flush>
-      <b-list-group-item>Cras justo odio</b-list-group-item>
-      <b-list-group-item>Dapibus ac facilisis in</b-list-group-item>
-      <b-list-group-item>Vestibulum at eros</b-list-group-item>
+      <b-list-group-item>Likous(99)  Contribulous(21)</b-list-group-item>
+      <b-list-group-item>Contact: Emailious@gmailious.comulous</b-list-group-item>
     </b-list-group>
 
     <b-card-body>
