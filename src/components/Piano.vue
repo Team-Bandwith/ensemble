@@ -1,5 +1,5 @@
 <template>
-  <div id="piano-keyboard" />
+  <div id="piano-keyboard" style="background-color:#0; width:400px; height:210px;"/>
 </template>
 
 <script>
@@ -18,7 +18,7 @@ export default {
 
     const createPiano = (lowNote, highNote) => {
       const newPiano = new Nexus.Piano('#piano-keyboard', {
-        size: [300, 125],
+        size: [400, 200],
         mode: 'toggle',
         lowNote,
         highNote,

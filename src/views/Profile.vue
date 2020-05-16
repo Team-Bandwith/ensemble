@@ -6,7 +6,12 @@
     <ProfileCard v-on:new-avatar='newAvatar' :user='user'/>
   </div>
   <div class="user-song">
-    <SongsList :loggedIn="loggedIn" />
+    <SongsList msg="Welcome to Ensemble"
+      :loggedIn="loggedIn"
+      :liked="liked"
+      :user="user"
+      v-on:new-like="newLike"
+      />
   </div>
     </b-col>
   </b-row>
@@ -26,10 +31,14 @@ export default {
   props: {
     user: Object,
     loggedIn: Boolean,
+    liked: Array,
   },
   methods: {
     newAvatar(avatar) {
       this.$emit('new-avatar', avatar);
+    },
+    newLike() {
+      this.$emit('new-like');
     },
   },
 };

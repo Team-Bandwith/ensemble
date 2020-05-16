@@ -7,9 +7,6 @@
       size="lg"
       ref="modal"
       title="Upload your Avatar photo here"
-      @show="resetModal"
-      @hidden="resetModal"
-      @ok="handleOk"
       >
     <form v-on:submit.prevent="upload">
       <!-- allow the user to select an image file and when they have selected it call a function
