@@ -4,7 +4,7 @@
       <b-button variant="primary" @click="toggleInv">Invite</b-button>
     </b-row>
     <b-row align-h="end">
-      <SendInvite v-model="invOpen" :online="online" />
+      <SendInvite v-model="invOpen" :online="online" :you="you" />
     </b-row>
     <b-row>
       <b-col v-for="user in users" v-bind:key="user.id">
@@ -31,6 +31,7 @@ export default {
   props: {
     users: Array,
     online: Array,
+    you: Object,
   },
   methods: {
     toggleInv() {

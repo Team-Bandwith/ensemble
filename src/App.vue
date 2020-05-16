@@ -23,6 +23,7 @@ export default Vue.extend({
       loggedIn: false,
       user: null,
       liked: [],
+      online: [],
     };
   },
   mounted() {
@@ -48,7 +49,12 @@ export default Vue.extend({
             email,
             url_avatar,
           };
-
+          this.$socket.emit('login', {
+            id,
+            username,
+            email,
+            url_avatar,
+          });
           return this.getUserLikes(id);
         })
         .catch((err) => err);
@@ -56,6 +62,7 @@ export default Vue.extend({
     logOut() {
       this.loggedIn = false;
       this.user = null;
+      this.$socket.emit('logout');
     },
     newAvatar(avatar) {
       const update = { url_avatar: avatar };
@@ -79,6 +86,9 @@ export default Vue.extend({
   sockets: {
     connect() {
       console.log('connect');
+    },
+    updateOnlineUsers(users) {
+      this.online = users;
     },
   },
 });
@@ -117,6 +127,7 @@ export default Vue.extend({
             :loggedIn="loggedIn"
             :user="user"
             :liked="liked"
+            :online="online"
             v-on:new-avatar='newAvatar'
             v-on:new-like="getUserLikes(user.id)"
           />

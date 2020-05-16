@@ -21,7 +21,11 @@
     </b-row>
     <b-row align-v="end" >
       <b-col class="jam-band">
-        <BandMembers :users="users" />
+        <BandMembers
+          :users="users"
+          :you="user"
+          :online="online.filter((usr) => usr.id !== user.id)"
+        />
       </b-col>
     </b-row>
   </b-container>
@@ -51,6 +55,7 @@ export default {
   },
   props: {
     user: Object,
+    online: Array,
   },
   watch: {
     user(val) {

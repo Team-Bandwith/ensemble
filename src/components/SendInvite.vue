@@ -13,10 +13,13 @@
       >
       {{ user.username }}
     </div>
+    <b-button @click="send">Send</b-button>
   </div>
 </template>
 
 <script>
+import { request } from 'graphql-request';
+
 export default {
   name: 'SendInvite',
   data() {
@@ -29,6 +32,7 @@ export default {
       required: true,
     },
     online: Array,
+    you: Object,
   },
   methods: {
     rsvp(user) {
@@ -37,10 +41,19 @@ export default {
     unrsvp(user) {
       this.toInvite = this.toInvite.filter((usr) => usr.id !== user.id);
     },
-  },
-  watch: {
-    toInvite(val) {
-      console.log(val);
+    send() {
+      Promise.all(this.toInvite.map((usr) => {
+        const query = `
+  mutation {
+    sendInvite(id_user_to: ${usr.id}, id_user_from: ${this.you.id}, link: "${window.location.search}") {
+      id
+    }
+  }
+`;
+        return request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query);
+      }))
+        .then(() => this.$emit('input', false))
+        .catch((err) => console.log(err));
     },
   },
 };

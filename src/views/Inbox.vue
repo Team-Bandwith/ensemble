@@ -38,5 +38,18 @@ export default {
 </script>
 
 <style>
+  .inbox {
+    color: white;
+  }
+  .jam-invite {
+    color: white;
+  }
 
+  .friend-request {
+    color: white;
+  }
+
+  .direct-message {
+    color: white;
+  }
 </style>

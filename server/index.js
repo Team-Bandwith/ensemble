@@ -15,7 +15,7 @@ const { GraphQLSchema } = graphql;
 const { query } = require('./db/schemas/query');
 const { mutation } = require('./db/schemas/mutation');
 
-const { logUser, addUserToRoom, getUsersInRoom } = require('./users');
+const { logUser, logOutUser, addUserToRoom, getUsersInRoom, getOnlineUsers } = require('./users');
 
 const schema = new GraphQLSchema({
   query,
@@ -101,6 +101,7 @@ io.on('connection', (socket) => {
     userWithId = { ...user };
     userWithId.socketId = socket.id;
     logUser(userWithId);
+    io.sockets.emit('updateOnlineUsers', getOnlineUsers());
   });
 
   socket.on('join', ({ room, user }) => {
@@ -125,7 +126,13 @@ io.on('connection', (socket) => {
     io.to(room).emit('receiveMessage', message);
   });
 
+  socket.on('logout', () => {
+    logOutUser(socket.id);
+    io.sockets.emit('updateOnlineUsers', getOnlineUsers());
+  });
+
   socket.on('disconnect', () => {
-    console.log(socket.id, 'disconnect');
+    logOutUser(socket.id);
+    io.sockets.emit('updateOnlineUsers', getOnlineUsers());
   });
 });
