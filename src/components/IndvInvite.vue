@@ -2,8 +2,8 @@
   <b-container >
     <b-list-group flush>
       <div class="indv-invite">
-        <b-list-group-item>
-          <b-avatar variant="info" :src="invite.url_avatar" class="mr-3"></b-avatar>
+        <b-list-group-item variant="dark">
+          <b-avatar :src="invite.url_avatar" class="mr-3"></b-avatar>
             <span class="mr-auto">
               {{ invite.username }} invited you to join their
               <a :href="'jam' + invite.link">jam room</a>
