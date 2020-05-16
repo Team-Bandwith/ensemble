@@ -12,7 +12,7 @@
     </b-row>
     <b-row align-v="end" >
       <b-col class="jam-band">
-        <BandMembers/>
+        <BandMembers :users="users" />
       </b-col>
     </b-row>
   </b-container>
@@ -34,13 +34,17 @@ export default {
     Chat,
     BandMembers,
   },
+  data() {
+    return {
+      users: [],
+    };
+  },
   props: {
     user: Object,
   },
   watch: {
     user(val) {
-      console.log(val);
-      console.log(this.$socket);
+      console.log(val, 'joining', window.location.search);
       this.$socket.emit('join', { room: window.location.search, user: val });
       Tone.start();
     },
@@ -49,6 +53,11 @@ export default {
     if (!window.location.search) {
       window.location.search = randomstring.generate();
     }
+  },
+  sockets: {
+    updateUsers(currUsers) {
+      this.users = currUsers.filter((user) => user.id !== this.user.id);
+    },
   },
 };
 
