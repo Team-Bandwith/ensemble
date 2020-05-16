@@ -1,6 +1,6 @@
 <template>
    <b-container fluid>
-    <SaveSong :cloudURL="cloudURL" :id="id" />
+    <SaveSong :cloudURL="cloudURL" :id="id" v-on:active="activate" />
     <div class="jam">
       <b-row>
         <b-button @click="openModal">Select instrument</b-button>
@@ -136,9 +136,13 @@ export default {
       axios.post(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/song`, { url: this.dataURI })
         .then((res) => {
           this.cloudURL = res.data.url;
+          this.$emit('deact');
           this.$bvModal.show('save-song');
         })
         .catch((err) => console.error(err));
+    },
+    activate() {
+      this.$emit('active');
     },
   },
   sockets: {

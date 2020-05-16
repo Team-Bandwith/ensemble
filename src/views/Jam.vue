@@ -3,7 +3,12 @@
     <b-row v-align="start">
       <b-col cols="8" >
         <div class="jam-instrument">
-          <Instrument :id="user.id" :active="active" />
+          <Instrument
+            :id="user.id"
+            :active="active"
+            v-on:active="activate"
+            v-on:deact="deactivate"
+          />
         </div>
       </b-col>
       <b-col cols="4" class="jam-chat">
