@@ -63,7 +63,7 @@ export default {
 
 
     document.addEventListener('keydown', (event) => {
-      if (!this.active) {
+      if (!this.active || window.location.pathname !== '/jam') {
         return;
       }
       const keyIndex = keyMapper[event.key];
