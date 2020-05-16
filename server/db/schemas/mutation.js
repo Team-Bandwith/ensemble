@@ -94,6 +94,21 @@ exports.mutation = new GraphQLObjectType({
           .catch((err) => console.error('avatar error', err));
       },
     },
+    addComment: {
+      type: CommentType,
+      args: {
+        id: { type: GraphQLID },
+        id_user: { type: GraphQLID },
+        id_song: { type: GraphQLID },
+        text: { type: GraphQLString },
+      },
+      resolve(parentValue, args) {
+        const insertComment = 'INSERT INTO comment(id_user, id_song, text, created_at) VALUES ($1, $2, $3, now()) RETURNING id, text';
+        return db.one(insertComment, [args.id_user, args.id_song, args.text])
+          .then((data) => data)
+          .catch((err) => { console.log('err', err); });
+      },
+    },
     addSong: {
       type: SongType,
       args: {

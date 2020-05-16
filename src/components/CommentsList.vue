@@ -21,7 +21,7 @@ export default {
   },
   data() {
     return {
-      comments: [{ id: 1, text: 'this is a comment' }, { id: 2, text: 'this is a comment2' }],
+      comments: [],
     };
   },
 };
