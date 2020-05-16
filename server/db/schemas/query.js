@@ -11,6 +11,7 @@ const {
   CommentType,
   SongUserType,
   SongType,
+  InviteType,
 } = require('./types');
 
 exports.query = new GraphQLObjectType({
@@ -34,11 +35,19 @@ exports.query = new GraphQLObjectType({
           WHERE id_song=song.id
           AND id_user=$1
           AND type='like'`;
-        
         return db.any(query, [args.id])
           .then((res) => res)
           .catch((err) => console.log(err));
       }
+    },
+    getAllInvites: {
+      type: new GraphQLList(InviteType),
+      args: { id: { type: GraphQLInt } },
+      resolve(parentValue, args) {
+        const query = 'SELECT * FROM invite WHERE id_user_to = $1 ORDER BY created_at DESC';
+        return db.any(query, [args.id])
+          .then((data) => data)
+          .catch((err) => { console.log('err', err); });
     },
     logIn: {
       type: MemberType,
