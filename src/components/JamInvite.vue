@@ -34,7 +34,9 @@ export default {
         id_user_to,
         id_user_from,
         link,
-        created_at
+        created_at,
+        username,
+        url_avatar
       }
     }`;
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
