@@ -3,6 +3,10 @@
 
 .default-theme {
 
+  body {
+    color: $body;
+  }
+
   background: $bg-color;
   color: $color;
 

@@ -1,23 +1,22 @@
 <template>
+<div class="profileBody">
   <b-row>
     <b-col>
-
   <div class="profile">
-    <h1>This is the profile page</h1>
-    <PhotoUpload v-on:new-avatar='newAvatar' :user='user'/>
+    <ProfileCard v-on:new-avatar='newAvatar' :user='user'/>
   </div>
     </b-col>
   </b-row>
+</div>
 </template>
 
 <script>
-import PhotoUpload from '@/components/PhotoUpload.vue';
-
+import ProfileCard from '@/components/ProfileCard.vue';
 
 export default {
   name: 'Profile',
   components: {
-    PhotoUpload,
+    ProfileCard,
   },
   props: {
     user: Object,
@@ -29,3 +28,6 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+</style>

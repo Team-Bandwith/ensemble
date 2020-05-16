@@ -101,13 +101,11 @@ export default Vue.extend({
         <b-navbar
           id="mainNavbar"
           toggleable="lg"
-          type="light"
-          variant="light"
           fixed="top"
+          background-color="#1f1e1d"
         >
           <b-navbar-nav>
             <b-nav-item>
-              Ensemble
             </b-nav-item>
           </b-navbar-nav>
         </b-navbar>
