@@ -1,8 +1,10 @@
 <template>
   <b-container fluid>
-    <div v-for="invite in invites" :key="invite.id">
+    <h3>Jam Room Invites</h3>
+    <div>
+      <span v-for="invite in invites" :key="invite.id">
         <IndvInvite :invite="invite"></IndvInvite>
-      <hr>
+      </span>
     </div>
   </b-container>
 </template>
