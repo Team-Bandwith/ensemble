@@ -13,6 +13,7 @@ const {
   CommentType,
   SongUserType,
   SongType,
+  InviteType,
 } = require('./types');
 
 exports.mutation = new GraphQLObjectType({
@@ -107,7 +108,23 @@ exports.mutation = new GraphQLObjectType({
         return db.one(query, values)
           .then((res) => res)
           .catch((err) => console.log(err));
-      },
+      }
     },
+    sendInvite: {
+      type: InviteType,
+      args: {
+        id_user_to: { type: GraphQLInt },
+        id_user_from: { type: GraphQLInt },
+        link: { type: GraphQLString },
+      },
+      resolve(parentValue, args) {
+        const query = `INSERT INTO invite(id_user_to, id_user_from, link, created_at) VALUES ($1, $2, $3, now()) RETURNING id`;
+        const values = [args.id_user_to, args.id_user_from, args.link];
+        return db.one(query, values)
+          .then((res) => res)
+          .catch((err) => console.log(err));
+      }
+    },
+
   },
 });

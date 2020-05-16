@@ -1,7 +1,12 @@
-const usersOnline = [];
+let usersOnline = [];
 const usersInRooms = {};
 
 const logUser = (user) => usersOnline.push(user);
+
+const logOutUser = (sockId) => {
+  usersOnline = usersOnline.filter((user) => user.socketId !== sockId);
+  console.log(usersOnline);
+} 
 
 const getOnlineUsers = () => usersOnline;
 
@@ -12,6 +17,7 @@ const getUsersInRoom = (room) => usersInRooms[room];
 
 module.exports = {
   logUser,
+  logOutUser,
   getOnlineUsers,
   addUserToRoom,
   getUsersInRoom,
