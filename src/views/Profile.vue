@@ -5,6 +5,9 @@
   <div class="profile">
     <ProfileCard v-on:new-avatar='newAvatar' :user='user'/>
   </div>
+  <div class="user-song">
+    <SongsList :loggedIn="loggedIn" />
+  </div>
     </b-col>
   </b-row>
 </div>
@@ -12,14 +15,17 @@
 
 <script>
 import ProfileCard from '@/components/ProfileCard.vue';
+import SongsList from '@/components/SongsList.vue';
 
 export default {
   name: 'Profile',
   components: {
     ProfileCard,
+    SongsList,
   },
   props: {
     user: Object,
+    loggedIn: Boolean,
   },
   methods: {
     newAvatar(avatar) {
@@ -30,4 +36,7 @@ export default {
 </script>
 
 <style scoped>
+user-song {
+  overflow: hidden;
+}
 </style>
