@@ -73,6 +73,9 @@ export default {
       } else {
         if (!this.player) {
           this.player = new Audio(src);
+          this.player.onended = () => {
+            this.isPlaying = false;
+          };
         }
         this.player.play();
         this.isPlaying = true;
