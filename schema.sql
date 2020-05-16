@@ -59,3 +59,7 @@ CREATE TABLE song (
   public BOOLEAN NOT NULL,
   created_at timestamp
 );
+
+-- dummy data
+
+
