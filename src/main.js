@@ -39,7 +39,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 /* eslint-disable import/prefer-default-export */
 export const SocketInstance = socketio(process.env.NODE_ENV === 'development'
-  ? ':8081' : window.location.hostname);
+  ? ':8081' : window.location.origin);
 Vue.use(VueSocketIO, SocketInstance);
 
 Vue.config.productionTip = false;
