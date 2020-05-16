@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const {
-  GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList,
+  GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList, GraphQLInt,
 } = require('graphql');
 const { db } = require('../pgAdapter');
 const {
@@ -11,6 +11,7 @@ const {
   CommentType,
   SongUserType,
   SongType,
+  InviteType,
 } = require('./types');
 
 exports.query = new GraphQLObjectType({
@@ -22,6 +23,16 @@ exports.query = new GraphQLObjectType({
       resolve() {
         const query = 'SELECT * FROM song';
         return db.any(query)
+          .then((data) => data)
+          .catch((err) => { console.log('err', err); });
+      },
+    },
+    getAllInvites: {
+      type: new GraphQLList(InviteType),
+      args: { id: { type: GraphQLInt } },
+      resolve(parentValue, args) {
+        const query = 'SELECT * FROM invite WHERE id_user_to = $1 ORDER BY created_at DESC';
+        return db.any(query, [args.id])
           .then((data) => data)
           .catch((err) => { console.log('err', err); });
       },
