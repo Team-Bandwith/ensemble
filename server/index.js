@@ -59,7 +59,7 @@ app.post('/song', (req, res) => {
   const { url } = req.body
   const songName = randomstring.generate();
   fs.writeFile(`${songName}.ogg`, Buffer.from(url.replace('data:audio/ogg; codecs=opus;base64,', ''), 'base64'), (err) => {
-    if(err) {
+    if (err) {
       console.log(err);
     } else {
       cloudinary.uploader.unsigned_upload(`${songName}.ogg`, 'ensemble-sound',
@@ -77,9 +77,9 @@ app.post('/song', (req, res) => {
               } else {
                 res.status(201).send(data);
               }
-            })
+            });
           }
-      });
+        });
     }
   });
 });
