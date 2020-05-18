@@ -104,5 +104,41 @@ exports.query = new GraphQLObjectType({
           .catch((err) => console.log(err));
       },
     },
+    getUserDMs: {
+      type: new GraphQLList(MessageType),
+      args: {
+        id: { type: GraphQLInt },
+      },
+      resolve(parentValue, args) {
+        const query = `SELECT message.*, member.username, member.url_avatar
+        FROM message, member
+        WHERE id_user_to = $1
+        AND id_user_from = member.id
+        AND type = 'dm'
+        ORDER BY created_at DESC`;
+        
+        return db.any(query, [args.id])
+          .then((res) => res)
+          .catch((err) => console.log(err));
+      },
+    },
+    messageHistory: {
+      type: new GraphQLList(MessageType),
+      args: {
+        user_id: { type: GraphQLInt },
+        friend_id: { type: GraphQLInt },
+      },
+      resolve(parentValue, args) {
+        const query = `SELECT * from message
+        WHERE type = 'dm'
+        AND ((id_user_to = $1 AND id_user_from = $2)
+        OR (id_user_to = $2 AND id_user_from = $1))
+        ORDER BY created_at ASC`;
+        const values = [args.user_id, args.friend_id];
+        return db.any(query, values)
+          .then((res) => res)
+          .catch((err) => console.log(err));
+      },
+    },
   },
 });
