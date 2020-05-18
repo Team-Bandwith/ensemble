@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS message;
 DROP TABLE IF EXISTS comment;
 DROP TABLE IF EXISTS song_user;
 DROP TABLE IF EXISTS song;
+DROP TABLE IF EXISTS invite;
 
 CREATE TABLE member (
   id serial PRIMARY KEY,
@@ -16,7 +17,8 @@ CREATE TABLE member (
 CREATE TABLE friend (
   id serial PRIMARY KEY,
   id_user_to int NOT NULL,
-  id_user_from int NOT NULL
+  id_user_from int NOT NULL,
+  created_at timestamp
 );
 
 CREATE TABLE message (

@@ -140,6 +140,37 @@ exports.mutation = new GraphQLObjectType({
           .catch((err) => console.log(err));
       }
     },
-
+    addFriend: {
+      type: FriendType,
+      args: {
+        id_user_to: { type: GraphQLInt },
+        id_user_from: { type: GraphQLInt },
+      },
+      resolve(parentValue, args) {
+        const query = `INSERT INTO friend(id_user_to, id_user_from, created_at)
+        VALUES($1, $2, now()) RETURNING id`;
+        const values = [args.id_user_to, args.id_user_from];
+        return db.one(query, values)
+          .then((res) => res)
+          .catch((err) => console.log(err));
+      },
+    },
+    removeFriend: {
+      type: FriendType,
+      args: {
+        id_user_to: { type: GraphQLInt },
+        id_user_from: { type: GraphQLInt },
+      },
+      resolve(parentValue, args) {
+        const query = `DELETE FROM friend
+        WHERE id_user_to = $1
+        AND id_user_from = $2
+        RETURNING id`;
+        const values = [args.id_user_to, args.id_user_from];
+        return db.one(query, values)
+          .then((res) => res)
+          .catch((err) => console.log(err));
+      },
+    }
   },
 });

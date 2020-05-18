@@ -86,5 +86,23 @@ exports.query = new GraphQLObjectType({
           .catch((err) => console.log(err.message));
       },
     },
+    getUserFriends: {
+      type: new GraphQLList(MemberType),
+      args: {
+        id: { type: GraphQLInt },
+      },
+      resolve(parentValue, args) {
+        const query = `SELECT member.* from friend, member
+        WHERE id_user_from = $1
+        AND id_user_to = ANY(
+          SELECT id_user_from FROM friend WHERE id_user_to = $1
+        )
+        AND id_user_to = member.id`;
+
+        return db.any(query, [args.id])
+          .then((res) => res)
+          .catch((err) => console.log(err));
+      },
+    },
   },
 });
