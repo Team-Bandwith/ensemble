@@ -78,6 +78,23 @@
           </template>
         </template>
         </div>
+<div>
+  <div>
+    <b-button v-b-modal.modal-prevent-closing>Open Modal</b-button>
+
+
+    <b-modal
+      id="modal-prevent-closing"
+      ref="modal"
+      title="Find Friends"
+      @show="resetModal"
+      @hidden="resetModal"
+      @ok="handleOk"
+    >
+
+    </b-modal>
+  </div>
+</div>
       </b-list-group> <!--/ .items-wrapper -->
       <HamburgerButton
         id="sidebarButton"
@@ -138,21 +155,51 @@ export default {
   data() {
     return {
       show: this.initialShow,
+      name: '',
+      nameState: null,
+      submittedNames: [],
     };
   },
   methods: {
-    onButtonClick() {
-      this.show = !this.show;
-      this.$emit('sidebarChanged', this.show);
+    checkFormValidity() {
+      const valid = this.$refs.form.checkValidity();
+      this.nameState = valid;
+      return valid;
     },
-    logOut() {
-      this.$emit('log-out');
-      localStorage.removeItem('jwt');
-      this.$router.push({ path: '/' });
+    resetModal() {
+      this.name = '';
+      this.nameState = null;
     },
-    logIn() {
-      this.$emit('log-in');
+    handleOk(bvModalEvt) {
+      // Prevent modal from closing
+      bvModalEvt.preventDefault();
+      // Trigger submit handler
+      this.handleSubmit();
     },
+    handleSubmit() {
+      // Exit when the form isn't valid
+      if (!this.checkFormValidity()) {
+        return;
+      }
+      // Push the name to submitted names
+      this.submittedNames.push(this.name);
+      // Hide the modal manually
+      this.$nextTick(() => {
+        this.$bvModal.hide('modal-prevent-closing');
+      });
+    },
+  },
+  onButtonClick() {
+    this.show = !this.show;
+    this.$emit('sidebarChanged', this.show);
+  },
+  logOut() {
+    this.$emit('log-out');
+    localStorage.removeItem('jwt');
+    this.$router.push({ path: '/' });
+  },
+  logIn() {
+    this.$emit('log-in');
   },
 };
 </script>
