@@ -26,6 +26,7 @@ CREATE TABLE message (
   id_user_to int NOT NULL,
   id_user_from int NOT NULL,
   text VARCHAR (255),
+  type VARCHAR (50),
   created_at timestamp
 );
 

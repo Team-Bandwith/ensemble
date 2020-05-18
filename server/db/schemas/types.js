@@ -36,6 +36,7 @@ exports.MessageType = new GraphQLObjectType({
     id_user_to: { type: GraphQLID },
     id_user_from: { type: GraphQLID },
     text: { type: GraphQLString },
+    type: { type: GraphQLString },
     created_at: { type: GraphQLDateTime },
   },
 });

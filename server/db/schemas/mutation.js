@@ -171,6 +171,22 @@ exports.mutation = new GraphQLObjectType({
           .then((res) => res)
           .catch((err) => console.log(err));
       },
-    }
+    },
+    sendMessage: {
+      type: MessageType,
+      args: {
+        id_user_to: { type: GraphQLInt },
+        id_user_from: { type: GraphQLInt },
+        text: { type: GraphQLString },
+      },
+      resolve(parentValue, args) {
+        const query = `INSERT INTO message (id_user_to, id_user_from, text, type, created_at)
+        VALUES ($1, $2, $3, 'dm', now()) RETURNING id`;
+        const values = [args.id_user_to, args.id_user_from, args.text];
+        return db.one(query, values)
+          .then((res) => res)
+          .catch((err) => console.log(err));
+      },
+    },
   },
 });
