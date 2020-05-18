@@ -104,7 +104,13 @@
             :state="nameState"
             required
           ></b-form-input>
-
+    <div class="mt-3">
+      Names:
+      <div v-if="submittedNames.length === 0"></div>
+      <ul v-else class="mb-0 pl-3">
+        <li v-bind:key="name" v-for="name in submittedNames">{{ name }}</li>
+      </ul>
+    </div>
 
         </b-form-group>
       </form>
