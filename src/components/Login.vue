@@ -25,6 +25,7 @@
         </b-form-group>
         <b-form-group
           :state="pwdState"
+
           label="Password"
           label-for="password-input"
           invalid-feedback="Password is required"
@@ -32,6 +33,7 @@
           <b-form-input
             id="password-input"
             v-model="password"
+            type="password"
             :state="pwdState"
             required
           ></b-form-input>
