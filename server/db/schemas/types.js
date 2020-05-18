@@ -24,6 +24,7 @@ exports.FriendType = new GraphQLObjectType({
     id: { type: GraphQLID },
     id_user_to: { type: GraphQLID },
     id_user_from: { type: GraphQLID },
+    created_at: { type: GraphQLDateTime },
   },
 });
 
