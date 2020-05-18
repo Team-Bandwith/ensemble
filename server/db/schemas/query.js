@@ -48,7 +48,7 @@ exports.query = new GraphQLObjectType({
         return db.any(query, [args.id])
           .then((res) => res)
           .catch((err) => console.log(err));
-      }
+      },
     },
     getAllInvites: {
       type: new GraphQLList(InviteType),
@@ -59,8 +59,8 @@ exports.query = new GraphQLObjectType({
         return db.any(query, [args.id])
           .then((data) => data)
           .catch((err) => { console.log('err', err); });
+      },
     },
-  },
     logIn: {
       type: MemberType,
       args: { username: { type: GraphQLString }, password: { type: GraphQLString } },

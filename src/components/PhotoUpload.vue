@@ -62,7 +62,7 @@ export default {
     prepareFormData() {
       this.formData = new FormData();
       this.formData.append('upload_preset', this.preset);
-      this.formData.append('tags', this.tags); // Optional - add tag for image admin in Cloudinary
+      this.formData.append('tags', this.tags);
       this.formData.append('file', this.fileContents);
     },
     // function to handle form submit
