@@ -51,7 +51,7 @@
 <script>
 
 import { request } from 'graphql-request';
-import CommentsList from './CommentsList.vue';
+import CommentsList from './Comments/CommentsList.vue';
 
 const moment = require('moment');
 
