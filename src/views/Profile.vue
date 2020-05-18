@@ -3,13 +3,14 @@
   <b-row>
     <b-col>
   <div class="profile">
-    <ProfileCard v-on:new-avatar='newAvatar' :user='user'/>
+    <ProfileCard v-if='user' v-on:new-avatar='newAvatar' :user='profileUser || user'/>
   </div>
   <div class="user-song">
     <UserSongsList
+      v-if='user'
       :loggedIn="loggedIn"
       :liked="liked"
-      :user="user"
+      :user="profileUser || user"
       v-on:new-like="newLike"
       />
   </div>
@@ -19,11 +20,17 @@
 </template>
 
 <script>
+import { request } from 'graphql-request';
 import ProfileCard from '@/components/ProfileCard.vue';
 import UserSongsList from '../components/UserSongsList.vue';
 
 export default {
   name: 'Profile',
+  data() {
+    return {
+      profileUser: null,
+    };
+  },
   components: {
     ProfileCard,
     UserSongsList,
@@ -40,6 +47,29 @@ export default {
     newLike() {
       this.$emit('new-like');
     },
+    getUserInfo(id) {
+      const query = `query {
+        getUserId(id:${id}){
+          id, username, url_avatar, email
+        }
+      }`;
+      return request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
+        .then((res) => {
+          this.profileUser = res.getUserId;
+        });
+    },
+  },
+  mounted() {
+    console.log(this.$route.params.id, 'params ID');
+  },
+  beforeRouteUpdate(to, from, next) {
+    console.log('BEFORE ROUTE UPDATE');
+    this.getUserInfo(to.params.id)
+      .then(() => next());
+  },
+  created() {
+    console.log('CREATED HOOK');
+    this.getUserInfo(this.$route.params.id);
   },
 };
 </script>
