@@ -15,7 +15,7 @@ const { GraphQLSchema } = graphql;
 const { query } = require('./db/schemas/query');
 const { mutation } = require('./db/schemas/mutation');
 
-const { logUser, logOutUser, addUserToRoom, getUsersInRoom, getOnlineUsers } = require('./users');
+const { logUser, logOutUser, addUserToRoom, getUsersInRoom, getOnlineUsers, removeUserFromRoom, } = require('./users');
 
 const schema = new GraphQLSchema({
   query,
@@ -113,6 +113,12 @@ io.on('connection', (socket) => {
     io.to(room).emit('updateUsers', getUsersInRoom(room));
   });
 
+  socket.on('leaveRoom', (room) => {
+    const user = removeUserFromRoom(socket.id, room).left;
+    io.to(room).emit('receiveMessage', { user: 'Ensemble', message: `${user.username} has left the band!` });
+    io.to(room).emit('updateUsers', getUsersInRoom(room));
+  });
+
   socket.on('startNote', ({ note, room }) => {
     socket.broadcast.to(room).emit('receiveStart', note);
   });
@@ -122,7 +128,6 @@ io.on('connection', (socket) => {
   });
 
   socket.on('sendMessage', ({ message, room }) => {
-    console.log(message, 'server message');
     io.to(room).emit('receiveMessage', message);
   });
 
@@ -133,6 +138,11 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     logOutUser(socket.id);
+    const info = removeUserFromRoom(socket.id);
+    if (info) {
+      io.to(info.room).emit('receiveMessage', { user: 'Ensemble', message: `${info.left.username} has left the band!` });
+      io.to(info.room).emit('updateUsers', getUsersInRoom(info.room));
+    }
     io.sockets.emit('updateOnlineUsers', getOnlineUsers());
   });
 });

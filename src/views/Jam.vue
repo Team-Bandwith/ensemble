@@ -81,6 +81,12 @@ export default {
       this.users = currUsers.filter((user) => user.id !== this.user.id);
     },
   },
+  beforeRouteLeave(to, from, next) {
+    if (to.name !== 'Jam' && window.location.search) {
+      this.$socket.emit('leaveRoom', window.location.search);
+    }
+    next();
+  },
 };
 
 </script>
