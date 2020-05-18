@@ -38,6 +38,8 @@ exports.MessageType = new GraphQLObjectType({
     text: { type: GraphQLString },
     type: { type: GraphQLString },
     created_at: { type: GraphQLDateTime },
+    username: { type: GraphQLString },
+    url_avatar: { type: GraphQLString },
   },
 });
 

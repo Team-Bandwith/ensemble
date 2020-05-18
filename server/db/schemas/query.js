@@ -104,5 +104,22 @@ exports.query = new GraphQLObjectType({
           .catch((err) => console.log(err));
       },
     },
+    getUserDMs: {
+      type: new GraphQLList(MessageType),
+      args: {
+        id: { type: GraphQLInt },
+      },
+      resolve(parentValue, args) {
+        const query = `SELECT message.*, member.username, member.url_avatar
+        FROM message, member
+        WHERE id_user_to = $1
+        AND id_user_from = member.id
+        ORDER BY created_at DESC`;
+        
+        return db.any(query, [args.id])
+          .then((res) => res)
+          .catch((err) => console.log(err));
+      },
+    },
   },
 });
