@@ -11,8 +11,8 @@
     <div class="friend-request">
     <FriendRequest :id="user.id" v-on:friend="newFriend" :user="user" />
   </div>
-  <div class="direct-message">
-    <DirectMessage/>
+  <div class="direct-message-list">
+    <DirectMessageList/>
   </div>
     </b-col>
   </b-row>
@@ -21,14 +21,15 @@
 <script>
 import JamInvite from '@/components/JamInvite.vue';
 import FriendRequest from '../components/FriendRequest.vue';
-import DirectMessage from '../components/DirectMessage.vue';
+import DirectMessageList from '../components/DirectMessageList.vue';
+
 
 export default {
   name: 'inbox',
   components: {
     JamInvite,
     FriendRequest,
-    DirectMessage,
+    DirectMessageList,
   },
   props: {
     loggedIn: Boolean,
@@ -57,7 +58,7 @@ export default {
     color: white;
   }
 
-  .direct-message {
+  .direct-message-list {
     color: white;
   }
 </style>
