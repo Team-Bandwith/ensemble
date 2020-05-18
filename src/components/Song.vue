@@ -41,7 +41,7 @@
       <b-row>
         <b-col>
         <div class="song-comments">
-          <CommentsList></CommentsList>
+          <CommentsList :song="song" :user="user"></CommentsList>
         </div>
         </b-col>
       </b-row>
