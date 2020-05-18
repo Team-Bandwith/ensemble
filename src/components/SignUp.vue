@@ -47,6 +47,7 @@
           <b-form-input
             id="pwd-input"
             v-model="password"
+            type="password"
             :state="pwdState"
             required
           ></b-form-input>
