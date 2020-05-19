@@ -7,7 +7,7 @@
     </b-row>
     <b-row>
       <b-col cols="1">
-        <a :href="`/profile/${comment.id_user}`"> {{ comment.username }}</a>:
+        <router-link :to="`/profile/${comment.id_user}`"> {{ comment.username }}</router-link>:
       </b-col>
     </b-row>
     <b-row>
