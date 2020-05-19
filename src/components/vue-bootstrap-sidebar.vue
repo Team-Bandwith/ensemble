@@ -191,18 +191,18 @@ export default {
         this.$bvModal.hide('modal-prevent-closing');
       });
     },
-  },
-  onButtonClick() {
-    this.show = !this.show;
-    this.$emit('sidebarChanged', this.show);
-  },
-  logOut() {
-    this.$emit('log-out');
-    localStorage.removeItem('jwt');
-    this.$router.push({ path: '/' });
-  },
-  logIn() {
-    this.$emit('log-in');
+    onButtonClick() {
+      this.show = !this.show;
+      this.$emit('sidebarChanged', this.show);
+    },
+    logOut() {
+      this.$emit('log-out');
+      localStorage.removeItem('jwt');
+      this.$router.push({ path: '/' });
+    },
+    logIn() {
+      this.$emit('log-in');
+    },
   },
 };
 </script>
