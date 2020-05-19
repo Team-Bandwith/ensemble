@@ -16,7 +16,7 @@ export default Vue.extend({
       header: '<h3>Ensemble</h3>',
       links: [
         { name: 'Home', href: { name: 'Home' }, faIcon: ['fas', 'home'] },
-        { name: 'Profile', href: { name: 'Profile' }, faIcon: 'user' },
+        { name: 'Profile', href: '', faIcon: 'user' },
         { name: 'Jam', href: { name: 'Jam' }, faIcon: 'music' },
         { name: 'Inbox', href: { name: 'Inbox' }, faIcon: 'comments' },
       ],
@@ -55,6 +55,7 @@ export default Vue.extend({
             email,
             url_avatar,
           });
+          this.links[1].href = `/profile/${id}`;
           return this.getUserLikes(id);
         })
         .catch((err) => err);
