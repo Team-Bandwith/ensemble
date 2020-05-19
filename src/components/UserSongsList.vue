@@ -53,7 +53,6 @@ export default {
         .then((res) => {
           this.songs = res.getUserSongs.map((song) => {
             const userInfo = {
-              id: this.user.id,
               username: this.user.username,
               url_avatar: this.user.url_avatar,
             };
@@ -69,11 +68,11 @@ export default {
   created() {
     this.getUserSongs();
   },
-  beforeUpdate() {
-    this.getUserSongs();
-  },
   watch: {
     loggedIn() {
+      this.getUserSongs();
+    },
+    user() {
       this.getUserSongs();
     },
   },
