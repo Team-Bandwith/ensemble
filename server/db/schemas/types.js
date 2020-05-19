@@ -52,6 +52,8 @@ exports.CommentType = new GraphQLObjectType({
     id_song: { type: GraphQLID },
     text: { type: GraphQLString },
     created_at: { type: GraphQLDateTime },
+    username: { type: GraphQLString },
+    url_avatar: { type: GraphQLString },
   },
 });
 

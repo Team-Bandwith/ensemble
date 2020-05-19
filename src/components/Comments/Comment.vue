@@ -1,6 +1,16 @@
 <template>
   <b-container fluid>
     <b-row>
+      <b-col cols="1">
+        <img v-if="comment.url_avatar" :src="comment.url_avatar" />
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col cols="1">
+        <a :href="`/profile/${comment.id_user}`"> {{ comment.username }}</a>:
+      </b-col>
+    </b-row>
+    <b-row>
       <b-col>
        {{comment.text}}
       </b-col>

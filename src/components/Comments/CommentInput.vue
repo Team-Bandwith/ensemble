@@ -60,7 +60,6 @@ export default {
         .then((res) => {
           this.newUserComment = res.addComment;
           this.$emit('new-comment');
-          this.$emit('scroll-down');
         })
         .catch((err) => console.log(err));
     },
