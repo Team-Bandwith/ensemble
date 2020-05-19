@@ -34,13 +34,13 @@ export default {
     };
   },
   methods: {
-    getUserSongs() {
+    getUserSongs(id) {
       if (!this.loggedIn) {
         this.songs = [];
         return;
       }
       const query = `query {
-      getUserSongs(id: ${this.$route.params.id}) {
+      getUserSongs(id: ${id}) {
         id, 
         id_author, 
         name, 
@@ -66,14 +66,11 @@ export default {
     },
   },
   created() {
-    this.getUserSongs();
+    this.getUserSongs(this.$route.params.id);
   },
   watch: {
-    loggedIn() {
-      this.getUserSongs();
-    },
-    user() {
-      this.getUserSongs();
+    user(val) {
+      this.getUserSongs(val.id);
     },
   },
 };

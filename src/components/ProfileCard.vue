@@ -9,8 +9,17 @@
   >
     <template v-slot:header>
       <img v-if="user.url_avatar" :src="user.url_avatar" />
-      <h4 class="mb-0">{{user.username}}</h4>
-      <b-button @click="addFriend">Add Friend</b-button>
+      <h4 class="mb-0"
+        :style="friends[user.id] ? { color: 'green' } : {}"
+      >
+        {{user.username}}
+      </h4>
+      <b-button
+        v-if="myId !== parseInt(user.id) && !friends[user.id]"
+        @click="addFriend"
+      >
+        Add Friend
+      </b-button>
     </template>
     <b-card-body>
       <b-card-text>
@@ -52,6 +61,7 @@ export default {
   props: {
     user: Object,
     myId: Number,
+    friends: Object,
   },
   methods: {
     newAvatar(avatar) {

@@ -24,7 +24,7 @@ export default Vue.extend({
       user: null,
       liked: [],
       online: [],
-      friends: [],
+      friends: {},
     };
   },
   mounted() {
@@ -96,8 +96,11 @@ export default Vue.extend({
 
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
         .then((result) => {
-          console.log('FRIENDS', result.getUserFriends);
-          this.friends = result.getUserFriends;
+          const friends = {};
+          result.getUserFriends.forEach((friend) => {
+            friends[friend.id] = friend;
+          });
+          this.friends = friends;
         })
         .catch((err) => console.log(err));
     },
@@ -147,6 +150,7 @@ export default Vue.extend({
             :user="user"
             :liked="liked"
             :online="online"
+            :friends="friends"
             v-on:new-avatar='newAvatar'
             v-on:new-like="getUserLikes(user.id)"
           />

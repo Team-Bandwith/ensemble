@@ -7,7 +7,9 @@
     <ProfileCard v-if='user'
      v-on:new-avatar='newAvatar'
      :user='profileUser || user'
-     :myId='user.id'/>
+     :myId='user.id'
+     :friends="friends"
+    />
   </div>
   <div class="user-song">
     <UserSongsList
@@ -43,6 +45,7 @@ export default {
     user: Object,
     loggedIn: Boolean,
     liked: Array,
+    friends: Object,
   },
   methods: {
     newAvatar(avatar) {
@@ -67,7 +70,6 @@ export default {
     console.log(this.$route.params.id, 'params ID');
   },
   beforeRouteUpdate(to, from, next) {
-    console.log('BEFORE ROUTE UPDATE');
     this.getUserInfo(to.params.id)
       .then(() => next());
   },
