@@ -62,6 +62,7 @@ export default {
           console.log('comment added');
           // this.comments = res.data;
           this.$emit('new-comment');
+          this.$emit('scroll-down');
         })
         .catch((err) => console.log(err));
     },
