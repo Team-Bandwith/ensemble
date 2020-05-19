@@ -2,14 +2,12 @@
   <div>
     <b-button v-b-modal.direct-message>Send Message</b-button>
     <b-modal
-      id="direct-message"
+      id="message-history"
       title="Message with Username"
       hide-footer>
       <b-card>
         <b-card-text>
-          <span v-for="message in messages" :key="message.id">
-            <DirectMessage :message="message"/>
-          </span>
+
         </b-card-text>
       </b-card>
       <b-form-input v-model="text" placeholder="send a message"></b-form-input>
@@ -21,8 +19,6 @@
 <script>
 import { request } from 'graphql-request';
 
-import DirectMessage from './DirectMessage.vue';
-
 export default {
   data() {
     return {
@@ -31,12 +27,12 @@ export default {
       username: '',
     };
   },
-  name: 'MessageHistory',
+  name: 'message-history',
   props: {
     id: Number,
   },
   components: {
-    DirectMessage,
+
   },
   methods: {
     handleOk(bvModalEvt) {
