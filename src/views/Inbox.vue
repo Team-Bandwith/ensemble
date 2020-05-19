@@ -12,7 +12,10 @@
     <FriendRequest :id="user.id" v-on:friend="newFriend" :user="user" />
   </div>
   <div class="direct-message-list">
-    <DirectMessageList/>
+    <DirectMessageList
+      :user="user"
+      :id="user.id"
+    />
   </div>
     </b-col>
   </b-row>
