@@ -80,21 +80,11 @@
         </div>
 <div>
   <div>
-    <b-button v-b-modal.modal-prevent-closing>Open Modal</b-button>
-
-
-    <b-modal
-      id="modal-prevent-closing"
-      ref="modal"
-      title="Find Friends"
-      @show="resetModal"
-      @hidden="resetModal"
-      @ok="handleOk"
-    >
-      <form ref="form" @submit.stop.prevent="handleSubmit">
+      <font-awesome-icon icon='AddressBook'></font-awesome-icon>
+      <form ref="form" >
         <b-form-group
           :state="nameState"
-          label="Enter a Name or User Name"
+          label="Search"
           label-for="name-input"
           invalid-feedback="Name is required"
         >
@@ -104,17 +94,8 @@
             :state="nameState"
             required
           ></b-form-input>
-    <div class="mt-3">
-      Names:
-      <div v-if="submittedNames.length === 0"></div>
-      <ul v-else class="mb-0 pl-3">
-        <li v-bind:key="name" v-for="name in submittedNames">{{ name }}</li>
-      </ul>
-    </div>
-
         </b-form-group>
       </form>
-    </b-modal>
   </div>
 </div>
       </b-list-group> <!--/ .items-wrapper -->
