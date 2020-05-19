@@ -9,7 +9,7 @@
     <JamInvite :id="user.id"/>
   </div>
     <div class="friend-request">
-    <FriendRequest/>
+    <FriendRequest :id="user.id" />
   </div>
   <div class="direct-message">
     <DirectMessage/>
