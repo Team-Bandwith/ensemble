@@ -80,6 +80,8 @@ exports.SongType = new GraphQLObjectType({
     count_likes: { type: GraphQLInt },
     public: { type: GraphQLBoolean },
     created_at: { type: GraphQLDateTime },
+    username: { type: GraphQLString },
+    url_avatar: { type: GraphQLString },
   },
 });
 

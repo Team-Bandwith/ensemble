@@ -40,7 +40,7 @@ export default {
         return;
       }
       const query = `query {
-      getUserSongs(id: ${this.user.id}) {
+      getUserSongs(id: ${this.$route.params.id}) {
         id, 
         id_author, 
         name, 
@@ -51,7 +51,14 @@ export default {
     }`;
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
         .then((res) => {
-          this.songs = res.getUserSongs;
+          this.songs = res.getUserSongs.map((song) => {
+            const userInfo = {
+              id: this.user.id,
+              username: this.user.username,
+              url_avatar: this.user.url_avatar,
+            };
+            return { ...song, ...userInfo };
+          });
         })
         .catch((err) => console.log(err));
     },
@@ -60,6 +67,9 @@ export default {
     },
   },
   created() {
+    this.getUserSongs();
+  },
+  beforeUpdate() {
     this.getUserSongs();
   },
   watch: {

@@ -21,7 +21,10 @@ exports.query = new GraphQLObjectType({
     getAllSongs: {
       type: new GraphQLList(SongType),
       resolve() {
-        const query = 'SELECT * FROM song ORDER BY created_at DESC';
+        const query = `SELECT song.*, member.username, member.url_avatar
+        FROM song, member
+        WHERE id_author = member.id
+        ORDER BY created_at DESC`;
         return db.any(query)
           .then((data) => data)
           .catch((err) => { console.log('err', err); });

@@ -10,8 +10,13 @@
         </div>
         </b-row>
         <b-row cols="12">
-          <b-col>
-            <div class="created-by">created by:{{ song.id }}</div>
+          <b-col cols="3">
+            <img v-if="song.url_avatar" :src="song.url_avatar" />
+          </b-col>
+          <b-col cols="2">
+            <div class="created-by">
+              created by: <a :href="`/profile/${song.id_author}`">{{ song.username }}</a>
+            </div>
           </b-col>
         </b-row>
         <b-row cols="12">
