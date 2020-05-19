@@ -19,14 +19,15 @@
     </b-card-body>
 
     <b-list-group flush>
-      <b-list-group-item>Likous(99)  Contribulous(21)</b-list-group-item>
-      <b-list-group-item>Contact: Emailious@gmailious.comulous</b-list-group-item>
+      <b-list-group-item>Likous(99) contributous(21)</b-list-group-item>
+      <b-list-group-item>contact: <b>{{user.email}}</b></b-list-group-item>
     </b-list-group>
-
+    <div class='loader' v-if="myId === parseInt($route.params.id)">
     <b-card-body>
       Upload your Photo Here:
       <PhotoUpload v-on:new-avatar='newAvatar' :user='user'/>
     </b-card-body>
+    </div>
 
     <b-card-footer>Friends</b-card-footer>
 
@@ -49,10 +50,14 @@ export default {
   },
   props: {
     user: Object,
+    myId: Number,
   },
   methods: {
     newAvatar(avatar) {
       this.$emit('new-avatar', avatar);
+    },
+    mounted() {
+      console.log(this.user.id, 'params id');
     },
   },
 };
