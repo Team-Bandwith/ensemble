@@ -72,6 +72,13 @@ export default {
       this.$emit('new-avatar', avatar);
     },
     addFriend() {
+      const query = `
+      query {
+        checkRequest(id_user_to: ${this.$route.params.id}, id_user_from: ${this.myId}) {
+          id
+        }
+      }`;
+
       const mutation = `
       mutation {
         addFriend(id_user_to: ${this.$route.params.id}, id_user_from: ${this.myId}) {
@@ -79,7 +86,9 @@ export default {
         }
       }`;
 
-      request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, mutation)
+      request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
+        .then(() => alert("You've already sent this user a friend request."))
+        .catch(() => request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, mutation))
         .then(() => {
           this.$emit('friend');
         })

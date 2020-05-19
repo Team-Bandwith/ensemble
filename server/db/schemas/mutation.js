@@ -147,10 +147,10 @@ exports.mutation = new GraphQLObjectType({
         id_user_from: { type: GraphQLInt },
       },
       resolve(parentValue, args) {
-        const query = `INSERT INTO friend(id_user_to, id_user_from, created_at)
+        const insert = `INSERT INTO friend(id_user_to, id_user_from, created_at)
         VALUES($1, $2, now()) RETURNING id`;
         const values = [args.id_user_to, args.id_user_from];
-        return db.one(query, values)
+        return db.one(insert, values)
           .then((res) => res)
           .catch((err) => console.log(err));
       },
