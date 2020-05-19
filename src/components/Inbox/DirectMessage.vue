@@ -3,9 +3,10 @@
     <b-list-group flush>
       <div class="direct-message">
         <b-list-group-item variant="dark">
-          <b-avatar :src="invite.url_avatar" class="mr-3"></b-avatar>
+          <b-avatar :src="dm.url_avatar" class="mr-3"></b-avatar>
             <span class="mr-auto">
-              <MessageHistory/>
+              {{ dm.username }} sent you a
+              <MessageHistory>message</MessageHistory>
             </span>
         </b-list-group-item>
       </div>
@@ -19,10 +20,11 @@ import MessageHistory from './MessageHistory.vue';
 // import { request } from 'graphql-request';
 
 export default {
-  name: 'IndvInvite',
+  name: 'DirectMessage',
   props: {
     loggedIn: Boolean,
-    message: Object,
+    dm: Object,
+    id: Number,
   },
   components: {
     MessageHistory,
