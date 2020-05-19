@@ -1,9 +1,18 @@
 <template>
 <b-container>
-   <div v-for="comment in comments" :key="comment.id">
-       <Comment :comment="comment"></Comment>
+  <div class="comments-list overflow-auto">
+    <div v-for="comment in comments" :key="comment.id">
+      <Comment :comment="comment" :user="user"></Comment>
+    </div>
   </div>
-  <CommentInput v-on:new-comment="getSongComments" :song="song" :user="user"></CommentInput>
+
+  <CommentInput
+    v-on:new-comment="getSongComments"
+    v-on:scroll-down="scrollDown"
+    :song="song"
+    :user="user">
+  </CommentInput>
+
 </b-container>
 </template>
 
@@ -32,6 +41,10 @@ export default {
     this.getSongComments();
   },
   methods: {
+    scrollDown() {
+      const container = this.$el.querySelector('.comments-list');
+      container.scrollTop = container.scrollHeight;
+    },
     getSongComments() {
       const query = `query {
       getSongComments(id_song: ${this.song.id}) {
@@ -52,5 +65,10 @@ export default {
 };
 </script>
 <style scoped>
-
+.comments-list {
+  border: 1px solid red;
+  height: 100px;
+  margin-bottom: 10px;
+  padding-bottom: 20px;
+}
 </style>
