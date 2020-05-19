@@ -44,7 +44,9 @@ export default {
         name, 
         url, 
         count_likes,
-        created_at
+        created_at,
+        username,
+        url_avatar
       }
     }`;
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)

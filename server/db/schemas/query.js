@@ -21,7 +21,10 @@ exports.query = new GraphQLObjectType({
     getAllSongs: {
       type: new GraphQLList(SongType),
       resolve() {
-        const query = 'SELECT * FROM song ORDER BY created_at DESC';
+        const query = `SELECT song.*, member.username, member.url_avatar
+        FROM song, member
+        WHERE id_author = member.id
+        ORDER BY created_at DESC`;
         return db.any(query)
           .then((data) => data)
           .catch((err) => { console.log('err', err); });
@@ -31,7 +34,10 @@ exports.query = new GraphQLObjectType({
       type: new GraphQLList(CommentType),
       args: { id_song: { type: GraphQLInt } },
       resolve(parentValue, args) {
-        const query = 'SELECT * FROM comment WHERE id_song = $1 ORDER BY created_at ASC';
+        const query = `SELECT comment.*, member.username, member.url_avatar FROM comment, member
+        WHERE id_song = $1 
+        AND id_user = member.id
+        ORDER BY created_at ASC`;
         return db.any(query, [args.id_song])
           .then((data) => data)
           .catch((err) => { console.log('err', err); });

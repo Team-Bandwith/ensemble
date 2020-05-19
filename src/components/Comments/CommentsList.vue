@@ -8,7 +8,6 @@
 
   <CommentInput
     v-on:new-comment="getSongComments"
-    v-on:scroll-down="scrollDown"
     :song="song"
     :user="user">
   </CommentInput>
@@ -53,14 +52,20 @@ export default {
         id_song, 
         text,
         created_at
+        username
+        url_avatar
       }
     }`;
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
         .then((res) => {
+          console.log(res.getSongComments);
           this.comments = res.getSongComments;
         })
         .catch((err) => console.log(err));
     },
+  },
+  updated() {
+    this.scrollDown();
   },
 };
 </script>
