@@ -4,7 +4,6 @@
     <b-modal
       id="direct-message"
       title="Message with Username"
-      @ok="handleOk"
       hide-footer>
       <b-card>
         <b-card-text>
@@ -14,7 +13,7 @@
         </b-card-text>
       </b-card>
       <b-form-input v-model="text" placeholder="send a message"></b-form-input>
-      <b-button class="mt-3" block>Send</b-button>
+      <b-button class="mt-3" block @click="handleOk">Send</b-button>
     </b-modal>
   </div>
 </template>
@@ -25,13 +24,6 @@ import { request } from 'graphql-request';
 import DirectMessage from './DirectMessage.vue';
 
 export default {
-  name: 'MessageHistory',
-  props: {
-    id: Number,
-  },
-  components: {
-    DirectMessage,
-  },
   data() {
     return {
       messages: [],
@@ -39,21 +31,25 @@ export default {
       username: '',
     };
   },
+  name: 'MessageHistory',
+  props: {
+    id: Number,
+  },
+  components: {
+    DirectMessage,
+  },
   methods: {
     handleOk(bvModalEvt) {
       // Prevent modal from closing
       bvModalEvt.preventDefault();
       // Trigger submit handler
-      this.handleClick();
+      this.handleSubmit();
     },
-    handleClick() {
+    handleSubmit() {
+      console.log('click');
       const sendMessage = `mutation {
-        sendMessage(id_user_to:, id_user_from: ${this.id}, text: ${this.text}, type: direct-message, created_at: ) {
-          id_user_to,
-          id_user_from,
-          text,
-          type,
-          created_at
+        sendMessage(id_user_to: 1, id_user_from: ${this.id}, text: "${this.text}") {
+          id
         }
       }`;
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, sendMessage)
