@@ -6,6 +6,7 @@
   <div class="profile">
     <ProfileCard v-if='user'
      v-on:new-avatar='newAvatar'
+     v-on:friend='newFriend'
      :user='profileUser || user'
      :myId='user.id'
      :friends="friends"
@@ -65,9 +66,12 @@ export default {
           this.profileUser = res.getUserId;
         });
     },
+    newFriend() {
+      this.$emit('friend');
+    },
   },
   mounted() {
-    console.log(this.$route.params.id, 'params ID');
+    this.$emit('friend');
   },
   beforeRouteUpdate(to, from, next) {
     this.getUserInfo(to.params.id)

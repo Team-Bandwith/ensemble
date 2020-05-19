@@ -3,7 +3,11 @@
     <h3>Friend Requests</h3>
     <div>
       <span v-for="request in requests" :key="request.id">
-        <IndvRequest :request="request" />
+        <IndvRequest
+          :request="request"
+          :id="id"
+          v-on:friend="newFriend"
+        />
       </span>
     </div>
   </b-container>
@@ -42,6 +46,10 @@ export default {
           this.requests = res.getFriendRequests;
         })
         .catch((err) => console.log(err));
+    },
+    newFriend() {
+      this.getFriendRequests(this.id);
+      this.$emit('friend');
     },
   },
   created() {

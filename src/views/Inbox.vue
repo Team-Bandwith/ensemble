@@ -9,7 +9,7 @@
     <JamInvite :id="user.id"/>
   </div>
     <div class="friend-request">
-    <FriendRequest :id="user.id" />
+    <FriendRequest :id="user.id" v-on:friend="newFriend" />
   </div>
   <div class="direct-message">
     <DirectMessage/>
@@ -33,6 +33,11 @@ export default {
   props: {
     loggedIn: Boolean,
     user: Object,
+  },
+  methods: {
+    newFriend() {
+      this.$emit('friend');
+    },
   },
 };
 </script>

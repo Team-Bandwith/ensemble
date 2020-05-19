@@ -153,6 +153,7 @@ export default Vue.extend({
             :friends="friends"
             v-on:new-avatar='newAvatar'
             v-on:new-like="getUserLikes(user.id)"
+            v-on:friend="getUserFriends(user.id)"
           />
         </b-container>
       </template>

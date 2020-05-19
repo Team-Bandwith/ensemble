@@ -20,7 +20,7 @@
       >
         Add Friend
       </b-button>
-      <div v-else>
+      <div v-else-if="myId !== parseInt(user.id)">
         <b-button @click="removeFriend">Remove Friend</b-button>
         <b-button>Send Message</b-button>
       </div>
@@ -80,7 +80,9 @@ export default {
       }`;
 
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, mutation)
-        .then((res) => console.log(res))
+        .then(() => {
+          this.$emit('friend');
+        })
         .catch((err) => console.log(err));
     },
     removeFriend() {
@@ -92,7 +94,9 @@ export default {
       }`;
 
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, mutation)
-        .then((res) => console.log(res))
+        .then(() => {
+          this.$emit('friend');
+        })
         .catch((err) => console.log(err));
     },
   },
