@@ -41,7 +41,16 @@
       <b-row>
         <b-col>
         <div class="song-comments">
-          <CommentsList></CommentsList>
+          <div>
+
+            <!-- Using value -->
+            <b-button v-b-toggle="'collapse-2'" class="m-1">Comments</b-button>
+
+            <!-- Element to collapse -->
+            <b-collapse id="collapse-2">
+              <CommentsList :song="song" :user="user"></CommentsList>
+            </b-collapse>
+          </div>
         </div>
         </b-col>
       </b-row>
@@ -51,7 +60,7 @@
 <script>
 
 import { request } from 'graphql-request';
-import CommentsList from './CommentsList.vue';
+import CommentsList from './Comments/CommentsList.vue';
 
 const moment = require('moment');
 

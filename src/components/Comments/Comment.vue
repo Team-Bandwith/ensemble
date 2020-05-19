@@ -1,6 +1,13 @@
 <template>
   <b-container fluid>
-    {{comment.text}}
+    <b-row>
+      <b-col>
+       {{comment.text}}
+      </b-col>
+      <b-col>
+        <em>{{handleMoment(comment.created_at).fromNow()}}</em>
+      </b-col>
+    </b-row>
   </b-container>
 </template>
 

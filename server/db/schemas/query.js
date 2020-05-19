@@ -27,6 +27,16 @@ exports.query = new GraphQLObjectType({
           .catch((err) => { console.log('err', err); });
       },
     },
+    getSongComments: {
+      type: new GraphQLList(CommentType),
+      args: { id_song: { type: GraphQLInt } },
+      resolve(parentValue, args) {
+        const query = 'SELECT * FROM comment WHERE id_song = $1 ORDER BY created_at ASC';
+        return db.any(query, [args.id_song])
+          .then((data) => data)
+          .catch((err) => { console.log('err', err); });
+      },
+    },
     getUserSongs: {
       type: new GraphQLList(SongType),
       args: { id: { type: GraphQLInt } },

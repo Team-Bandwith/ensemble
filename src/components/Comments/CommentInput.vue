@@ -13,7 +13,7 @@
       </form>
       </b-col>
       <b-col>
-        <b-button @click="handleComment">submit</b-button>
+        <b-button @click="handleComment(user.id, song.id)">submit</b-button>
       </b-col>
     </b-row>
   </b-container>
@@ -27,24 +27,25 @@ export default {
   props: {
     loggedIn: Boolean,
     comment: Object,
+    user: Object,
+    song: Object,
   },
   data() {
     return {
       commentText: '',
       commentState: null,
       handleMoment: moment,
+      newUserComment: null,
     };
   },
   methods: {
-    handleComment() {
+    handleComment(userId, songId) {
       if (this.commentText) {
-        console.log('comment made', this.commentText);
-        this.addComment(1, 2, this.commentText);
+        this.addComment(userId, songId, this.commentText);
         this.commentText = '';
         this.commentState = null;
       } else {
-        alert('Please enter a comment');
-        console.log('empty message');
+        console.log('please enter a comment');
       }
     },
     addComment(user, songId, text) {
@@ -57,8 +58,9 @@ export default {
     }`;
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
         .then((res) => {
-          console.log('hey', res);
-          // this.comments = res.data;
+          this.newUserComment = res.addComment;
+          this.$emit('new-comment');
+          this.$emit('scroll-down');
         })
         .catch((err) => console.log(err));
     },
