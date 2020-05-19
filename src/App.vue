@@ -24,6 +24,7 @@ export default Vue.extend({
       user: null,
       liked: [],
       online: [],
+      friends: [],
     };
   },
   mounted() {
@@ -33,6 +34,7 @@ export default Vue.extend({
     onSidebarChanged() {
     },
     logIn() {
+      console.log('login');
       const token = localStorage.getItem('jwt');
       axios.post(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/verify`, { token })
         .then((decode) => {
@@ -56,7 +58,8 @@ export default Vue.extend({
             url_avatar,
           });
           this.links[1].href = `/profile/${id}`;
-          return this.getUserLikes(id);
+          return this.getUserLikes(id)
+            .then(() => this.getUserFriends(id));
         })
         .catch((err) => err);
     },
@@ -77,9 +80,24 @@ export default Vue.extend({
     }
   }
 `;
-      request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
+      return request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
         .then((result) => {
           this.liked = result.getLikedSongs;
+        })
+        .catch((err) => console.log(err));
+    },
+    getUserFriends(id) {
+      const query = `
+      query {
+        getUserFriends(id: ${id}) {
+          id, username, email, url_avatar
+          }
+        }`;
+
+      request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
+        .then((result) => {
+          console.log('FRIENDS', result.getUserFriends);
+          this.friends = result.getUserFriends;
         })
         .catch((err) => console.log(err));
     },
