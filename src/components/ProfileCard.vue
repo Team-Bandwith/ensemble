@@ -10,6 +10,7 @@
     <template v-slot:header>
       <img v-if="user.url_avatar" :src="user.url_avatar" />
       <h4 class="mb-0">{{user.username}}</h4>
+      <b-button @click="addFriend">Add Friend</b-button>
     </template>
     <b-card-body>
       <b-card-text>
@@ -40,8 +41,8 @@
 </template>
 
 <script>
+import { request } from 'graphql-request';
 import PhotoUpload from '@/components/PhotoUpload.vue';
-
 
 export default {
   name: 'ProfileCard',
@@ -56,8 +57,17 @@ export default {
     newAvatar(avatar) {
       this.$emit('new-avatar', avatar);
     },
-    mounted() {
-      console.log(this.user.id, 'params id');
+    addFriend() {
+      const mutation = `
+      mutation {
+        addFriend(id_user_to: ${this.$route.params.id}, id_user_from: ${this.myId}) {
+          id
+        }
+      }`;
+
+      request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, mutation)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
     },
   },
 };
