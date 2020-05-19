@@ -41,7 +41,16 @@
       <b-row>
         <b-col>
         <div class="song-comments">
-          <CommentsList :song="song" :user="user"></CommentsList>
+          <div>
+
+            <!-- Using value -->
+            <b-button v-b-toggle="'collapse-2'" class="m-1">Comments</b-button>
+
+            <!-- Element to collapse -->
+            <b-collapse id="collapse-2">
+              <CommentsList :song="song" :user="user"></CommentsList>
+            </b-collapse>
+          </div>
         </div>
         </b-col>
       </b-row>
@@ -134,5 +143,8 @@ export default {
 }
 .song-title{
   font-weight: bold;
+}
+.song-comments {
+  border: 1px solid #fff;
 }
 </style>
