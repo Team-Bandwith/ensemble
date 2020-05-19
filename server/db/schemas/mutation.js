@@ -163,11 +163,11 @@ exports.mutation = new GraphQLObjectType({
       },
       resolve(parentValue, args) {
         const query = `DELETE FROM friend
-        WHERE id_user_to = $1
-        AND id_user_from = $2
+        WHERE (id_user_to = $1 AND id_user_from = $2)
+        OR (id_user_to = $2 AND id_user_from = $1)
         RETURNING id`;
         const values = [args.id_user_to, args.id_user_from];
-        return db.one(query, values)
+        return db.any(query, values)
           .then((res) => res)
           .catch((err) => console.log(err));
       },
