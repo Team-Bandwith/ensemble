@@ -1,9 +1,13 @@
+/* eslint-disable max-len */
 <template>
 <div class="profileBody">
   <b-row>
     <b-col>
   <div class="profile">
-    <ProfileCard v-if='user' v-on:new-avatar='newAvatar' :user='profileUser || user'/>
+    <ProfileCard v-if='user'
+     v-on:new-avatar='newAvatar'
+     :user='profileUser || user'
+     :myId='user.id'/>
   </div>
   <div class="user-song">
     <UserSongsList
@@ -68,7 +72,6 @@ export default {
       .then(() => next());
   },
   created() {
-    console.log('CREATED HOOK');
     this.getUserInfo(this.$route.params.id);
   },
 };
