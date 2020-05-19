@@ -20,6 +20,10 @@
       >
         Add Friend
       </b-button>
+      <div v-else>
+        <b-button @click="removeFriend">Remove Friend</b-button>
+        <b-button>Send Message</b-button>
+      </div>
     </template>
     <b-card-body>
       <b-card-text>
@@ -71,6 +75,18 @@ export default {
       const mutation = `
       mutation {
         addFriend(id_user_to: ${this.$route.params.id}, id_user_from: ${this.myId}) {
+          id
+        }
+      }`;
+
+      request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, mutation)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+    },
+    removeFriend() {
+      const mutation = `
+      mutation {
+        removeFriend(id_user_to: ${this.$route.params.id}, id_user_from: ${this.myId}) {
           id
         }
       }`;
