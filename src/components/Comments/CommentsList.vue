@@ -66,8 +66,7 @@ export default {
 </script>
 <style scoped>
 .comments-list {
-  border: 1px solid red;
-  height: 100px;
+  height: 120px;
   margin-bottom: 10px;
   padding-bottom: 20px;
 }

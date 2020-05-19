@@ -144,7 +144,4 @@ export default {
 .song-title{
   font-weight: bold;
 }
-.song-comments {
-  border: 1px solid #fff;
-}
 </style>

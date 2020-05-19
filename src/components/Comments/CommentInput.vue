@@ -59,8 +59,6 @@ export default {
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
         .then((res) => {
           this.newUserComment = res.addComment;
-          console.log('comment added');
-          // this.comments = res.data;
           this.$emit('new-comment');
           this.$emit('scroll-down');
         })
