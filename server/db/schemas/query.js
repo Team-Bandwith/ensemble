@@ -132,7 +132,6 @@ exports.query = new GraphQLObjectType({
         AND id_user_from = member.id
         AND type = 'dm'
         ORDER BY created_at DESC`;
-
         return db.any(query, [args.id])
           .then((res) => res)
           .catch((err) => console.log(err));
