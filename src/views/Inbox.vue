@@ -22,9 +22,9 @@
 </template>
 
 <script>
-import JamInvite from '@/components/JamInvite.vue';
-import FriendRequest from '../components/FriendRequest.vue';
-import DirectMessageList from '../components/DirectMessageList.vue';
+import JamInvite from '@/components/Inbox/JamInvite.vue';
+import FriendRequest from '@/components/Inbox/FriendRequest.vue';
+import DirectMessageList from '@/components/Inbox/DirectMessageList.vue';
 
 
 export default {
