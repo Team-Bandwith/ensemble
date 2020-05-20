@@ -119,6 +119,9 @@ export default Vue.extend({
     notified() {
       this.notifications += 1;
     },
+    backlog(num) {
+      this.notifications = num;
+    },
   },
 });
 </script>

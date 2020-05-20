@@ -1,5 +1,6 @@
-let usersOnline = {};
+const usersOnline = {};
 const usersInRooms = {};
+const notifications = {};
 
 const logUser = (user) => usersOnline[user.id] = user;
 
@@ -31,6 +32,12 @@ const removeUserFromRoom = (sockId, room) => {
 
 const getUsersInRoom = (room) => usersInRooms[room];
 
+const addNotification = (userId) => notifications[userId] ? notifications[userId]++ : notifications[userId] = 1;
+
+const clearNotifications = (userId) => notifications[userId] = 0;
+
+const getNotifications = (userId) => notifications[userId];
+
 module.exports = {
   logUser,
   logOutUser,
@@ -38,4 +45,7 @@ module.exports = {
   addUserToRoom,
   removeUserFromRoom,
   getUsersInRoom,
+  addNotification,
+  clearNotifications,
+  getNotifications,
 };
