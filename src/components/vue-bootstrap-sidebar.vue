@@ -88,7 +88,7 @@
     </template>
     <template slot="option" slot-scope="option">
       <div class="d-center">
-        <!-- <img :src='option.owner.avatar_url'/> -->
+        <img :src='option.owner.avatar_url'/>
         {{ option.full_name }}
         </div>
     </template>
@@ -174,7 +174,7 @@ export default {
       loading(true);
       this.search(loading, search, this);
     },
-    search: _.debounce((loading, search) => {
+    search: _.debounce((loading, search, vm) => {
       const query = `query {
         getUserName(name:"${search}"){
               id, username, url_avatar
@@ -182,7 +182,7 @@ export default {
           }`;
       return request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
         .then((res) => {
-          console.log(res);
+          console.log(res.getUserName);
           loading(false);
         });
     }, 350),
