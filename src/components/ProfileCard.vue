@@ -45,10 +45,16 @@
       <PhotoUpload v-on:new-avatar='newAvatar' :user='user'/>
     </b-card-body>
     </div>
-
-    <b-card-footer>Friends</b-card-footer>
-
-    <b-card-img src="https://placekitten.com/480/210" alt="Image"></b-card-img>
+    <b-card-footer
+    v-for="friend in friends"
+    :key="friend.id">
+    <div></div>
+    <b-avatar class="friendimg" :src="friend.url_avatar"/>
+    <router-link
+    :to="`/profile/${friend.id}`">
+    {{ friend.username }}
+    </router-link>
+    </b-card-footer>
   </b-card>
 </div>
   </div>
