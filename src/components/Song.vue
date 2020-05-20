@@ -15,7 +15,8 @@
           </b-col>
           <b-col cols="2">
             <div class="created-by">
-              created by: <a :href="`/profile/${song.id_author}`">{{ song.username }}</a>
+              created by: <router-link
+                :to="`/profile/${song.id_author}`">{{ song.username }}</router-link>
             </div>
           </b-col>
         </b-row>

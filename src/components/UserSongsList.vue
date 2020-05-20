@@ -34,13 +34,13 @@ export default {
     };
   },
   methods: {
-    getUserSongs() {
+    getUserSongs(id) {
       if (!this.loggedIn) {
         this.songs = [];
         return;
       }
       const query = `query {
-      getUserSongs(id: ${this.$route.params.id}) {
+      getUserSongs(id: ${id}) {
         id, 
         id_author, 
         name, 
@@ -53,7 +53,6 @@ export default {
         .then((res) => {
           this.songs = res.getUserSongs.map((song) => {
             const userInfo = {
-              id: this.user.id,
               username: this.user.username,
               url_avatar: this.user.url_avatar,
             };
@@ -67,14 +66,11 @@ export default {
     },
   },
   created() {
-    this.getUserSongs();
-  },
-  beforeUpdate() {
-    this.getUserSongs();
+    this.getUserSongs(this.$route.params.id);
   },
   watch: {
-    loggedIn() {
-      this.getUserSongs();
+    user(val) {
+      this.getUserSongs(val.id);
     },
   },
 };

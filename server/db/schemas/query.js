@@ -168,5 +168,32 @@ exports.query = new GraphQLObjectType({
           .catch((err) => console.log(err, "error obtaining user's id"));
       },
     },
+    getFriendRequests: {
+      type: new GraphQLList(MemberType),
+      args: {
+        id: { type: GraphQLInt },
+      },
+      resolve(parentValue, args) {
+        const query = `SELECT member.* FROM friend, member
+        WHERE id_user_to = $1
+        AND NOT id_user_from = ANY(SELECT id_user_to FROM friend WHERE id_user_from = $1)
+        AND id_user_from = member.id`;
+        return db.any(query, [args.id])
+          .then((res) => res)
+          .catch((err) => console.log(err));
+      },
+    },
+    checkRequest: {
+      type: FriendType,
+      args: {
+        id_user_to: { type: GraphQLInt },
+        id_user_from: { type: GraphQLInt },
+      },
+      resolve(parentValue, args) {
+        const query = `SELECT * FROM friend WHERE id_user_to = $1 AND id_user_from = $2`;
+        const values = [args.id_user_to, args.id_user_from];
+        return db.one(query, values);
+      },
+    },
   },
 });

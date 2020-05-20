@@ -6,8 +6,11 @@
   <div class="profile">
     <ProfileCard v-if='user'
      v-on:new-avatar='newAvatar'
+     v-on:friend='newFriend'
      :user='profileUser || user'
-     :myId='user.id'/>
+     :myId='user.id'
+     :friends="friends"
+    />
   </div>
   <div class="user-song">
     <UserSongsList
@@ -43,6 +46,7 @@ export default {
     user: Object,
     loggedIn: Boolean,
     liked: Array,
+    friends: Object,
   },
   methods: {
     newAvatar(avatar) {
@@ -62,12 +66,14 @@ export default {
           this.profileUser = res.getUserId;
         });
     },
+    newFriend() {
+      this.$emit('friend');
+    },
   },
   mounted() {
-    console.log(this.$route.params.id, 'params ID');
+    this.$emit('friend');
   },
   beforeRouteUpdate(to, from, next) {
-    console.log('BEFORE ROUTE UPDATE');
     this.getUserInfo(to.params.id)
       .then(() => next());
   },
