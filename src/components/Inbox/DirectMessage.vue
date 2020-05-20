@@ -5,8 +5,8 @@
         <b-list-group-item variant="dark">
           <b-avatar :src="dm.url_avatar" class="mr-3"></b-avatar>
             <span class="mr-auto">
-              {{ dm.username }} sent you a
-              <MessageHistory>message</MessageHistory>
+              {{ dm.username }} sent you a message
+              <MessageHistory></MessageHistory>
             </span>
         </b-list-group-item>
       </div>
