@@ -89,14 +89,14 @@
     </template>
     <template slot="option" slot-scope="option">
       <div class="d-center">
-        <!-- <img :src='option.owner.avatar_url'/> -->
+        <img :src='option.url_avatar'/>
         {{ option.username }}
         </div>
     </template>
     <template slot="selected-option" slot-scope="option">
       <div class="selected d-center">
-        <img :src='option.avatar_url'/>
-        {{ option.full_name }}
+        <img :src='option.url_avatar'/>
+        {{ option.username }}
       </div>
     </template>
   </v-select>
@@ -175,17 +175,20 @@ export default {
     onSearch(search, loading) {
       loading(true);
       this.search(loading, search, this);
+      console.log(this.options);
     },
-    search: _.debounce((loading, search) => {
+    /* eslint-disable prefer-arrow-callback */
+    search: _.debounce(function (loading, search) {
       const query = `query {
         getUserName(name:"${search}"){
-              id, username, url_avatar
+          id, username, url_avatar
               }
           }`;
       return request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
         .then((res) => {
           console.log(res);
           loading(false);
+          this.options = res.getUserName;
         });
     }, 350),
     onButtonClick() {
