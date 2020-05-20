@@ -25,6 +25,7 @@ export default Vue.extend({
       liked: [],
       online: [],
       friends: {},
+      notifications: 0,
     };
   },
   mounted() {
@@ -104,6 +105,9 @@ export default Vue.extend({
         })
         .catch((err) => console.log(err));
     },
+    clearNotifications() {
+      this.notifications = 0;
+    },
   },
   sockets: {
     connect() {
@@ -111,6 +115,9 @@ export default Vue.extend({
     },
     updateOnlineUsers(users) {
       this.online = users;
+    },
+    notified() {
+      this.notifications += 1;
     },
   },
 });
@@ -127,6 +134,7 @@ export default Vue.extend({
       :fa="true"
       :loggedIn="loggedIn"
       :user="user"
+      :notifications="notifications"
       @sidebarChanged="onSidebarChanged"
     >
       <template v-slot:navbar>
@@ -154,6 +162,7 @@ export default Vue.extend({
             v-on:new-avatar='newAvatar'
             v-on:new-like="getUserLikes(user.id)"
             v-on:friend="getUserFriends(user.id)"
+            v-on:checked="clearNotifications"
           />
         </b-container>
       </template>

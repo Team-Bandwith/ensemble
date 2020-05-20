@@ -1,9 +1,15 @@
-let usersOnline = [];
+let usersOnline = {};
 const usersInRooms = {};
 
-const logUser = (user) => usersOnline.push(user);
+const logUser = (user) => usersOnline[user.id] = user;
 
-const logOutUser = (sockId) => usersOnline = usersOnline.filter((user) => user.socketId !== sockId);
+const logOutUser = (sockId) => {
+  for(let key in usersOnline) {
+    if (usersOnline[key].socketId === sockId) {
+      delete usersOnline[key];
+    }
+  }
+};
 
 const getOnlineUsers = () => usersOnline;
 
