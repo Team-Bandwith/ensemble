@@ -20,6 +20,17 @@
       />
       <!-- submit button is disabled until a file is selected -->
       <button type="submit" :disabled="filesSelected < 1" >Upload</button>
+      <div v-show="showProgress">
+      <loading-progress
+        :progress="progress"
+        :indeterminate="indeterminate"
+        shape="line"
+        size="200"
+        width="400"
+        height="15"
+        fill-duration="2"
+      />
+        </div>
     </form>
    </b-modal>
   </div>
@@ -48,6 +59,9 @@ export default {
       tags: 'browser-upload',
       fileContents: null,
       formData: null,
+      progress: 0,
+      showProgress: false,
+      indeterminate: true,
     };
   },
   methods: {
@@ -87,6 +101,9 @@ export default {
             url: cloudinaryUploadURL,
             method: 'POST',
             data: this.formData,
+            onUpload(progressEvent) {
+              this.progress = Math.round((progressEvent.loaded * 100.0) / progressEvent.total);
+            },
           };
           // show progress bar at beginning of post
           this.showProgress = true;
@@ -117,6 +134,7 @@ export default {
             .finally(() => {
               setTimeout(
                 () => {
+                  console.log('progress is hitting');
                   this.showProgress = false;
                 },
                 1000,
@@ -129,6 +147,19 @@ export default {
       if (this.file && this.file.name) {
         reader.readAsDataURL(this.file);
       }
+    },
+  },
+  computed: {
+    progressModel: {
+      get() {
+        return this.progress * 100;
+      },
+      set(value) {
+        this.progress = value / 100;
+      },
+    },
+    progressDisplay() {
+      return `${Math.round(this.progress * 100)}%`;
     },
   },
 };
@@ -204,4 +235,16 @@ img {
   height: 150px;
   border-radius: 50%;
 }
+.vue-progress-path path {
+  stroke-width: 12;
+}
+
+.vue-progress-path .progress {
+  stroke: red;
+}
+
+.vue-progress-path .background {
+  stroke: #edd;
+}
+.vue-progress-path.indeterminate path{transition:none}
 </style>
