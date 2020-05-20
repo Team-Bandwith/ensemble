@@ -1,6 +1,6 @@
 <template>
   <b-container fluid>
-    <h3>Jam Room Invites</h3>
+    <h3>Invitations to Jam</h3>
     <div>
       <span v-for="invite in invites" :key="invite.id">
         <IndvInvite :invite="invite"></IndvInvite>
