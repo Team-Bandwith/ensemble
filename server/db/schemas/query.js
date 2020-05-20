@@ -202,7 +202,7 @@ exports.query = new GraphQLObjectType({
         const query = 'SELECT id, username, url_avatar from member where username = $1';
         return db.one(query, [args.name])
           .then((res) => res)
-          .catch((err) => console.log(err, "cannot search for names"));
+          .catch((err) => err);
       },
     },
   },
