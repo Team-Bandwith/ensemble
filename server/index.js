@@ -15,7 +15,17 @@ const { GraphQLSchema } = graphql;
 const { query } = require('./db/schemas/query');
 const { mutation } = require('./db/schemas/mutation');
 
-const { logUser, logOutUser, addUserToRoom, getUsersInRoom, getOnlineUsers, removeUserFromRoom, } = require('./users');
+const {
+  logUser,
+  logOutUser,
+  addUserToRoom,
+  getUsersInRoom,
+  getOnlineUsers,
+  removeUserFromRoom,
+  addNotification,
+  clearNotifications,
+  getNotifications,
+} = require('./users');
 
 const schema = new GraphQLSchema({
   query,
@@ -101,7 +111,11 @@ io.on('connection', (socket) => {
     userWithId = { ...user };
     userWithId.socketId = socket.id;
     logUser(userWithId);
-    io.sockets.emit('updateOnlineUsers', getOnlineUsers());
+    io.sockets.emit('updateOnlineUsers', Object.values(getOnlineUsers()));
+    if (getNotifications(user.id)) {
+      io.to(socket.id).emit('backlog', getNotifications(user.id));
+      clearNotifications(user.id);
+    }
   });
 
   socket.on('join', ({ room, user }) => {
@@ -131,9 +145,19 @@ io.on('connection', (socket) => {
     io.to(room).emit('receiveMessage', message);
   });
 
+  socket.on('notify', (id) => {
+    const online = getOnlineUsers();
+    console.log(online, online[id]);
+    if (online[id]) {
+      io.to(online[id].socketId).emit('notified');
+    } else {
+      addNotification(id);
+    }
+  });
+
   socket.on('logout', () => {
     logOutUser(socket.id);
-    io.sockets.emit('updateOnlineUsers', getOnlineUsers());
+    io.sockets.emit('updateOnlineUsers', Object.values(getOnlineUsers()));
   });
 
   socket.on('disconnect', () => {
@@ -143,6 +167,6 @@ io.on('connection', (socket) => {
       io.to(info.room).emit('receiveMessage', { user: 'Ensemble', message: `${info.left.username} has left the band!` });
       io.to(info.room).emit('updateUsers', getUsersInRoom(info.room));
     }
-    io.sockets.emit('updateOnlineUsers', getOnlineUsers());
+    io.sockets.emit('updateOnlineUsers', Object.values(getOnlineUsers()));
   });
 });

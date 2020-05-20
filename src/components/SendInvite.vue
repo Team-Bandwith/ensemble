@@ -43,6 +43,7 @@ export default {
     },
     send() {
       Promise.all(this.toInvite.map((usr) => {
+        this.$socket.emit('notify', usr.id);
         const query = `
   mutation {
     sendInvite(id_user_to: ${usr.id}, id_user_from: ${this.you.id}, link: "${window.location.search}") {
@@ -52,7 +53,9 @@ export default {
 `;
         return request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query);
       }))
-        .then(() => this.$emit('input', false))
+        .then(() => {
+          this.$emit('input', false);
+        })
         .catch((err) => console.log(err));
     },
   },

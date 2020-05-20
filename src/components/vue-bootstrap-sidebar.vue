@@ -47,7 +47,8 @@
                   />
                 </div>
                 <div class="link-name">
-                  {{ link.name }}
+                  {{ link.name }} {{ link.name === 'Inbox' && notifications
+                    ? `(${notifications})` : ''}}
                 </div>
               </b-button>
             </b-list-group-item>
@@ -160,6 +161,7 @@ export default {
     },
     loggedIn: Boolean,
     user: Object,
+    notifications: Number,
   },
   data() {
     return {
@@ -182,7 +184,6 @@ export default {
           }`;
       return request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
         .then((res) => {
-          
           console.log(res);
           loading(false);
         });
