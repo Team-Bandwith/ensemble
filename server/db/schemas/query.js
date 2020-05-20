@@ -132,7 +132,7 @@ exports.query = new GraphQLObjectType({
         AND id_user_from = member.id
         AND type = 'dm'
         ORDER BY created_at DESC`;
-        
+
         return db.any(query, [args.id])
           .then((res) => res)
           .catch((err) => console.log(err));
@@ -190,9 +190,21 @@ exports.query = new GraphQLObjectType({
         id_user_from: { type: GraphQLInt },
       },
       resolve(parentValue, args) {
-        const query = `SELECT * FROM friend WHERE id_user_to = $1 AND id_user_from = $2`;
+        const query = 'SELECT * FROM friend WHERE id_user_to = $1 AND id_user_from = $2';
         const values = [args.id_user_to, args.id_user_from];
         return db.one(query, values);
+      },
+    },
+    getUserName: {
+      type: new GraphQLList(MemberType),
+      args: {
+        name: { type: GraphQLString },
+      },
+      resolve(parentValue, args) {
+        const query = 'SELECT id, username, url_avatar from member Where levenshtein(username, $1) < char_length(username) ORDER BY levenshtein(username, $1) limit 5';
+        return db.any(query, [args.name])
+          .then((res) => res)
+          .catch((err) => console.log(err, 'cannot search for names'));
       },
     },
   },
