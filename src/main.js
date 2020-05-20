@@ -10,9 +10,11 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import socketio from 'socket.io-client';
 import VueSocketIO from 'vue-socket.io';
+import VueProgress from 'vue-progress-path';
 import App from './App.vue';
 import { router } from './router/index';
 import store from './store';
+import 'vue-progress-path/dist/vue-progress-path.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 
@@ -31,6 +33,7 @@ library.add(faAddressBook);
 
 // Install BootstrapVue
 Vue.use(BootstrapVue);
+Vue.use(VueProgress);
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin);
 // Moment.js
