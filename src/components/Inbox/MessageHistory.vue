@@ -3,7 +3,7 @@
     <b-button v-b-modal.message-history>Send Message</b-button>
     <b-modal
       id="message-history"
-      title="Message with Username"
+      title="Message with username"
       @click="handleOk"
       hide-footer>
       <form ref="form" @submit.stop.prevent="handleSubmit">
@@ -29,7 +29,9 @@ export default {
   },
   name: 'message-history',
   props: {
-    id: Number,
+    user: Object,
+    myId: Number,
+    friends: Object,
   },
   components: {
 
@@ -44,7 +46,7 @@ export default {
     handleSubmit() {
       console.log('click');
       const sendMessage = `mutation {
-        sendMessage(id_user_to: 1, id_user_from: 2, text: "${this.text}") {
+        sendMessage(id_user_to: ${this.$route.params.id}, id_user_from: ${this.myId}, text: "${this.text}") {
           id
         }
       }`;
@@ -53,6 +55,7 @@ export default {
           console.log(res);
         })
         .catch((err) => console.log(err));
+      this.text = '';
     },
   },
 };
