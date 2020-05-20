@@ -58,7 +58,7 @@
 <script>
 import { request } from 'graphql-request';
 import PhotoUpload from '@/components/PhotoUpload.vue';
-import MessageHistory from './Inbox/MessageHistory.vue';
+import MessageHistory from './MessageHistory.vue';
 
 export default {
   name: 'ProfileCard',
