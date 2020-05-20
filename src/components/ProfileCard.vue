@@ -92,7 +92,17 @@ export default {
         .then(() => {
           this.$emit('friend');
         })
-        .catch((err) => console.log(err));
+        .then(() => {
+          const reverseCheck = `
+          query {
+            checkRequest(id_user_to: ${this.myId}, id_user_from: ${this.$route.params.id}) {
+              id
+            }
+          }`;
+
+          return request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, reverseCheck);
+        })
+        .catch(() => this.$socket.emit('notify', this.$route.params.id));
     },
     removeFriend() {
       const mutation = `
