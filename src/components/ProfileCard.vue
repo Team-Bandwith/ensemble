@@ -45,15 +45,17 @@
       <PhotoUpload v-on:new-avatar='newAvatar' :user='user'/>
     </b-card-body>
     </div>
+    <div>Friends</div>
     <b-card-footer
     v-for="friend in friends"
     :key="friend.id">
-    <div></div>
+    <b-row>
     <b-avatar class="friendimg" :src="friend.url_avatar"/>
-    <router-link
+    <router-link class="friendname"
     :to="`/profile/${friend.id}`">
     {{ friend.username }}
     </router-link>
+    </b-row>
     </b-card-footer>
   </b-card>
 </div>
