@@ -194,13 +194,13 @@ exports.query = new GraphQLObjectType({
         const values = [args.id_user_to, args.id_user_from];
         return db.one(query, values);
     getUserName: {
-      type: MemberType,
+      type: new GraphQLList(MemberType),
       args: {
         name: { type: GraphQLString },
       },
       resolve(parentValue, args) {
-        const query = 'SELECT id, username, url_avatar from member where username = $1';
-        return db.one(query, [args.name])
+        const query = 'SELECT id, username, url_avatar from member ORDER BY levenshtein(username, $1) LIMIT 3';
+        return db.any(query, [args.name])
           .then((res) => res)
           .catch((err) => err);
       },
