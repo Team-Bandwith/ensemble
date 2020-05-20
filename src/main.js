@@ -7,14 +7,17 @@ import {
   faUserSecret, faHome, faTint, faUsers,
   faPhone, faChild, faUser, faMusic, faComments, faPlay, faPause, faAddressBook,
 } from '@fortawesome/free-solid-svg-icons';
+import vSelect from 'vue-select';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import socketio from 'socket.io-client';
 import VueSocketIO from 'vue-socket.io';
 import VueProgress from 'vue-progress-path';
+import underscore from 'vue-underscore';
 import App from './App.vue';
 import { router } from './router/index';
-import store from './store';
 import 'vue-progress-path/dist/vue-progress-path.css';
+import store from './store';
+import 'vue-select/dist/vue-select.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 
@@ -32,6 +35,7 @@ library.add(faPause);
 library.add(faAddressBook);
 
 // Install BootstrapVue
+Vue.use(underscore);
 Vue.use(BootstrapVue);
 Vue.use(VueProgress);
 // Optionally install the BootstrapVue icon components plugin
@@ -39,6 +43,7 @@ Vue.use(IconsPlugin);
 // Moment.js
 Vue.use(Moment);
 Vue.use(VueRouter);
+Vue.component('v-select', vSelect);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 /* eslint-disable import/prefer-default-export */
