@@ -39,6 +39,9 @@ export default {
       this.$emit('friend');
     },
   },
+  mounted() {
+    this.$emit('checked');
+  },
 };
 </script>
 

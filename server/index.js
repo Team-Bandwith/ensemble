@@ -101,7 +101,7 @@ io.on('connection', (socket) => {
     userWithId = { ...user };
     userWithId.socketId = socket.id;
     logUser(userWithId);
-    io.sockets.emit('updateOnlineUsers', getOnlineUsers());
+    io.sockets.emit('updateOnlineUsers', Object.values(getOnlineUsers()));
   });
 
   socket.on('join', ({ room, user }) => {
@@ -131,9 +131,17 @@ io.on('connection', (socket) => {
     io.to(room).emit('receiveMessage', message);
   });
 
+  socket.on('notify', (id) => {
+    const online = getOnlineUsers();
+    console.log(online, online[id]);
+    if (online[id]) {
+      io.to(online[id].socketId).emit('notified');
+    }
+  });
+
   socket.on('logout', () => {
     logOutUser(socket.id);
-    io.sockets.emit('updateOnlineUsers', getOnlineUsers());
+    io.sockets.emit('updateOnlineUsers', Object.values(getOnlineUsers()));
   });
 
   socket.on('disconnect', () => {
@@ -143,6 +151,6 @@ io.on('connection', (socket) => {
       io.to(info.room).emit('receiveMessage', { user: 'Ensemble', message: `${info.left.username} has left the band!` });
       io.to(info.room).emit('updateUsers', getUsersInRoom(info.room));
     }
-    io.sockets.emit('updateOnlineUsers', getOnlineUsers());
+    io.sockets.emit('updateOnlineUsers', Object.values(getOnlineUsers()));
   });
 });

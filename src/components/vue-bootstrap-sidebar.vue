@@ -47,7 +47,8 @@
                   />
                 </div>
                 <div class="link-name">
-                  {{ link.name }}
+                  {{ link.name }} {{ link.name === 'Inbox' && notifications
+                    ? `(${notifications})` : ''}}
                 </div>
               </b-button>
             </b-list-group-item>
@@ -154,6 +155,7 @@ export default {
     },
     loggedIn: Boolean,
     user: Object,
+    notifications: Number,
   },
   data() {
     return {
