@@ -80,22 +80,26 @@
         </div>
 <div>
   <div>
-      <font-awesome-icon icon='AddressBook'></font-awesome-icon>
-      <form ref="form" >
-        <b-form-group
-          :state="nameState"
-          label="Search"
-          label-for="name-input"
-          invalid-feedback="Name is required"
-        >
-          <b-form-input
-            id="name-input"
-            v-model="name"
-            :state="nameState"
-            required
-          ></b-form-input>
-        </b-form-group>
-      </form>
+  <div v-if="loggedIn">
+      <font-awesome-icon icon='address-book'/>
+<v-select label="name" :filterable="false" :options="options" @search="onSearch">
+    <template slot="no-options">
+      Search for Friends
+    </template>
+    <template slot="option" slot-scope="option">
+      <div class="d-center">
+        <!-- <img :src='option.owner.avatar_url'/> -->
+        {{ option.full_name }}
+        </div>
+    </template>
+    <template slot="selected-option" slot-scope="option">
+      <div class="selected d-center">
+        <img :src='option.owner.avatar_url'/>
+        {{ option.full_name }}
+      </div>
+    </template>
+  </v-select>
+    </div>
   </div>
 </div>
       </b-list-group> <!--/ .items-wrapper -->
@@ -125,6 +129,8 @@
 <script>
 // import axios from 'axios';
 import HamburgerButton from '@jurajkavka/vue-hamburger-button';
+import { _ } from 'vue-underscore';
+import { request } from 'graphql-request';
 import Login from './Login.vue';
 import SignUp from './SignUp.vue';
 
@@ -160,37 +166,27 @@ export default {
       show: this.initialShow,
       name: '',
       nameState: null,
-      submittedNames: [],
+      options: [],
     };
   },
   methods: {
-    checkFormValidity() {
-      const valid = this.$refs.form.checkValidity();
-      this.nameState = valid;
-      return valid;
+    onSearch(search, loading) {
+      loading(true);
+      this.search(loading, search, this);
     },
-    resetModal() {
-      this.name = '';
-      this.nameState = null;
-    },
-    handleOk(bvModalEvt) {
-      // Prevent modal from closing
-      bvModalEvt.preventDefault();
-      // Trigger submit handler
-      this.handleSubmit();
-    },
-    handleSubmit() {
-      // Exit when the form isn't valid
-      if (!this.checkFormValidity()) {
-        return;
-      }
-      // Push the name to submitted names
-      this.submittedNames.push(this.name);
-      // Hide the modal manually
-      this.$nextTick(() => {
-        this.$bvModal.hide('modal-prevent-closing');
-      });
-    },
+    search: _.debounce((loading, search) => {
+      console.log(search);
+      const query = `query {
+        getUserName(name:"${search}"){
+              id, username, url_avatar
+              }
+          }`;
+      return request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
+        .then((res) => {
+          console.log(res);
+          loading(false);
+        });
+    }, 350),
     onButtonClick() {
       this.show = !this.show;
       this.$emit('sidebarChanged', this.show);
