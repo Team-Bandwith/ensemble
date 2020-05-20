@@ -6,7 +6,6 @@
           <b-avatar :src="dm.url_avatar" class="mr-3"></b-avatar>
             <span class="mr-auto">
               {{ dm.username }} sent you a message
-              <MessageHistory></MessageHistory>
             </span>
         </b-list-group-item>
       </div>
@@ -15,7 +14,7 @@
 </template>
 
 <script>
-import MessageHistory from './MessageHistory.vue';
+
 
 // import { request } from 'graphql-request';
 
@@ -27,7 +26,7 @@ export default {
     id: Number,
   },
   components: {
-    MessageHistory,
+
   },
 };
 </script>
