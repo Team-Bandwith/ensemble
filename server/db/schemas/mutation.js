@@ -123,7 +123,7 @@ exports.mutation = new GraphQLObjectType({
         return db.one(query, values)
           .then((res) => res)
           .catch((err) => console.log(err));
-      }
+      },
     },
     sendInvite: {
       type: InviteType,
@@ -138,7 +138,7 @@ exports.mutation = new GraphQLObjectType({
         return db.one(query, values)
           .then((res) => res)
           .catch((err) => console.log(err));
-      }
+      },
     },
     addFriend: {
       type: FriendType,
