@@ -82,19 +82,19 @@
   <div>
   <div v-if="loggedIn">
       <font-awesome-icon icon='address-book'/>
-<v-select label="name" :filterable="false" :options="options" @search="onSearch">
+<v-select label="username" :filterable="false" :options="options" @search="onSearch">
     <template slot="no-options">
       Search for Friends
     </template>
     <template slot="option" slot-scope="option">
       <div class="d-center">
         <!-- <img :src='option.owner.avatar_url'/> -->
-        {{ option.full_name }}
+        {{ option.username }}
         </div>
     </template>
     <template slot="selected-option" slot-scope="option">
       <div class="selected d-center">
-        <img :src='option.owner.avatar_url'/>
+        <img :src='option.avatar_url'/>
         {{ option.full_name }}
       </div>
     </template>
@@ -182,6 +182,7 @@ export default {
           }`;
       return request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
         .then((res) => {
+          
           console.log(res);
           loading(false);
         });
