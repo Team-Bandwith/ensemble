@@ -196,13 +196,13 @@ exports.query = new GraphQLObjectType({
       },
     },
     getUserName: {
-      type: MemberType,
+      type: new GraphQLList(MemberType),
       args: {
         name: { type: GraphQLString },
       },
       resolve(parentValue, args) {
-        const query = 'SELECT id, username, url_avatar from member where username = $1';
-        return db.one(query, [args.name])
+        const query = 'SELECT id, username, url_avatar from member ORDER BY levenshtein(username, $1)';
+        return db.any(query, [args.name])
           .then((res) => res)
           .catch((err) => console.log(err, 'cannot search for names'));
       },
