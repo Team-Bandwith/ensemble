@@ -42,6 +42,16 @@
           <b-button v-if="!recording && !playing && playback" @click="uploadSong">save</b-button>
         </b-col>
         </b-row>
+        <div v-show="showProgress">
+          <loading-progress
+        indeterminate
+        shape="line"
+        size="500"
+        width="400"
+        height="15"
+        fill-duration="2"
+      />
+        </div>
       </div>
     </b-container>
 </template>
@@ -80,6 +90,7 @@ export default {
       playing: false,
       dataURI: null,
       cloudURL: null,
+      showProgress: false,
     };
   },
   mounted() {
@@ -135,11 +146,20 @@ export default {
     uploadSong() {
       axios.post(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/song`, { url: this.dataURI })
         .then((res) => {
+          this.showProgress = true;
           this.cloudURL = res.data.url;
           this.$emit('deact');
           this.$bvModal.show('save-song');
         })
-        .catch((err) => console.error(err));
+        .catch((err) => console.error(err))
+        .finally(() => {
+          setTimeout(
+            () => {
+              this.showProgress = false;
+            },
+            5000,
+          );
+        });
     },
     activate() {
       this.$emit('active');
