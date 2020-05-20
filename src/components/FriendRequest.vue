@@ -7,6 +7,7 @@
           :request="request"
           :id="id"
           v-on:friend="newFriend"
+          :user="user"
         />
       </span>
     </div>
@@ -24,6 +25,7 @@ export default {
   },
   props: {
     id: Number,
+    user: Object,
   },
   data() {
     return {
