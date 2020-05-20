@@ -190,19 +190,21 @@ exports.query = new GraphQLObjectType({
         id_user_from: { type: GraphQLInt },
       },
       resolve(parentValue, args) {
-        const query = `SELECT * FROM friend WHERE id_user_to = $1 AND id_user_from = $2`;
+        const query = 'SELECT * FROM friend WHERE id_user_to = $1 AND id_user_from = $2';
         const values = [args.id_user_to, args.id_user_from];
         return db.one(query, values);
+      },
+    },
     getUserName: {
-      type: new GraphQLList(MemberType),
+      type: MemberType,
       args: {
         name: { type: GraphQLString },
       },
       resolve(parentValue, args) {
-        const query = 'SELECT id, username, url_avatar from member ORDER BY levenshtein(username, $1) LIMIT 3';
-        return db.any(query, [args.name])
+        const query = 'SELECT id, username, url_avatar from member where username = $1';
+        return db.one(query, [args.name])
           .then((res) => res)
-          .catch((err) => err);
+          .catch((err) => console.log(err, 'cannot search for names'));
       },
     },
   },
