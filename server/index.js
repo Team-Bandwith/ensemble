@@ -15,7 +15,17 @@ const { GraphQLSchema } = graphql;
 const { query } = require('./db/schemas/query');
 const { mutation } = require('./db/schemas/mutation');
 
-const { logUser, logOutUser, addUserToRoom, getUsersInRoom, getOnlineUsers, removeUserFromRoom, } = require('./users');
+const {
+  logUser,
+  logOutUser,
+  addUserToRoom,
+  getUsersInRoom,
+  getOnlineUsers,
+  removeUserFromRoom,
+  addNotification,
+  clearNotifications,
+  getNotifications,
+} = require('./users');
 
 const schema = new GraphQLSchema({
   query,
@@ -102,6 +112,10 @@ io.on('connection', (socket) => {
     userWithId.socketId = socket.id;
     logUser(userWithId);
     io.sockets.emit('updateOnlineUsers', Object.values(getOnlineUsers()));
+    if (getNotifications(user.id)) {
+      io.to(socket.id).emit('backlog', getNotifications(user.id));
+      clearNotifications(user.id);
+    }
   });
 
   socket.on('join', ({ room, user }) => {
@@ -136,6 +150,8 @@ io.on('connection', (socket) => {
     console.log(online, online[id]);
     if (online[id]) {
       io.to(online[id].socketId).emit('notified');
+    } else {
+      addNotification(id);
     }
   });
 
