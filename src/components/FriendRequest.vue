@@ -6,6 +6,7 @@
         <IndvRequest
           :request="request"
           :id="id"
+          :user="user"
           v-on:friend="newFriend"
         />
       </span>
@@ -24,6 +25,7 @@ export default {
   },
   props: {
     id: Number,
+    user: Object,
   },
   data() {
     return {
