@@ -132,7 +132,7 @@ exports.query = new GraphQLObjectType({
         AND id_user_from = member.id
         AND type = 'dm'
         ORDER BY created_at DESC`;
-        
+
         return db.any(query, [args.id])
           .then((res) => res)
           .catch((err) => console.log(err));
@@ -193,6 +193,16 @@ exports.query = new GraphQLObjectType({
         const query = `SELECT * FROM friend WHERE id_user_to = $1 AND id_user_from = $2`;
         const values = [args.id_user_to, args.id_user_from];
         return db.one(query, values);
+    getUserName: {
+      type: MemberType,
+      args: {
+        name: { type: GraphQLString },
+      },
+      resolve(parentValue, args) {
+        const query = 'SELECT id, username, url_avatar from member where username = $1';
+        return db.one(query, [args.name])
+          .then((res) => res)
+          .catch((err) => console.log(err, "cannot search for names"));
       },
     },
   },
