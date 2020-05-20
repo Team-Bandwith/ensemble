@@ -22,7 +22,9 @@
       </b-button>
       <div v-else-if="myId !== parseInt(user.id)">
         <b-button @click="removeFriend">Remove Friend</b-button>
-        <b-button>Send Message</b-button>
+        <div class="message-history">
+          <MessageHistory/>
+        </div>
       </div>
     </template>
     <b-card-body>
@@ -56,11 +58,13 @@
 <script>
 import { request } from 'graphql-request';
 import PhotoUpload from '@/components/PhotoUpload.vue';
+import MessageHistory from './Inbox/MessageHistory.vue';
 
 export default {
   name: 'ProfileCard',
   components: {
     PhotoUpload,
+    MessageHistory,
   },
   props: {
     user: Object,
