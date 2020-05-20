@@ -5,7 +5,10 @@
         <b-list-group-item variant="dark">
           <b-avatar :src="request.url_avatar" class="mr-3" />
             <span class="mr-auto">
-              {{ request.username }} sent you a friend request!
+              <router-link :to="`/profile/${request.id}`">
+              {{ request.username }}
+              </router-link>
+              sent you a friend request!
             </span>
             <b-button variant="success" @click="addFriend">Accept</b-button>
             <b-button variant="danger" @click="removeFriend">Deny</b-button>
@@ -23,6 +26,7 @@ export default {
   props: {
     request: Object,
     id: Number,
+    user: Object,
   },
   methods: {
     addFriend() {
@@ -34,7 +38,21 @@ export default {
       }`;
 
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, mutation)
-        .then(() => this.$emit('friend'))
+        .then(() => {
+          this.$emit('friend');
+          this.$socket.emit('notify', this.request.id);
+
+          const confirm = `
+          mutation {
+            sendMessage(id_user_to: ${this.request.id},
+            id_user_from: 1,
+            text: "${this.user.username} has confirmed your friend request!") {
+              id
+            }
+          }`;
+
+          request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, confirm);
+        })
         .catch((err) => console.log(err));
     },
     removeFriend() {

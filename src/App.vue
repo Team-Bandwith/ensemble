@@ -108,6 +108,9 @@ export default Vue.extend({
     clearNotifications() {
       this.notifications = 0;
     },
+    denotify() {
+      this.notifications -= 1;
+    },
   },
   sockets: {
     connect() {
@@ -166,6 +169,7 @@ export default Vue.extend({
             v-on:new-like="getUserLikes(user.id)"
             v-on:friend="getUserFriends(user.id)"
             v-on:checked="clearNotifications"
+            v-on:denotify="denotify"
           />
         </b-container>
       </template>

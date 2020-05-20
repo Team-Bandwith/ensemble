@@ -184,7 +184,6 @@ export default {
           }`;
       return request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
         .then((res) => {
-          
           console.log(res);
           loading(false);
         });

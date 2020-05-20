@@ -65,4 +65,5 @@ CREATE TABLE song (
 
 -- dummy data
 
-
+INSERT INTO member (username, email, url_avatar, password)
+VALUES ('Ensemble', 'ensemble@ensemble.com', 'https://res.cloudinary.com/my-ensemble/image/upload/v1589993902/ynga4emqrtetmrcxjhiw.png', 'none');

@@ -7,6 +7,7 @@
     <ProfileCard v-if='user'
      v-on:new-avatar='newAvatar'
      v-on:friend='newFriend'
+     v-on:denotify="denotify"
      :user='profileUser || user'
      :myId='user.id'
      :friends="friends"
@@ -68,6 +69,9 @@ export default {
     },
     newFriend() {
       this.$emit('friend');
+    },
+    denotify() {
+      this.$emit('denotify');
     },
   },
   mounted() {
