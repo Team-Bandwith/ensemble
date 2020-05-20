@@ -174,7 +174,7 @@ export default {
       loading(true);
       this.search(loading, search, this);
     },
-    search: _.debounce((loading, search, vm) => {
+    search: _.debounce((loading, search) => {
       const query = `query {
         getUserName(name:"${search}"){
               id, username, url_avatar
