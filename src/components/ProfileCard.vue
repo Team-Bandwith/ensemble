@@ -23,7 +23,7 @@
       <div v-else-if="myId !== parseInt(user.id)">
         <b-button @click="removeFriend">Remove Friend</b-button>
         <div class="message-history">
-          <MessageHistory/>
+          <MessageHistory :myId='myId'/>
         </div>
       </div>
     </template>
