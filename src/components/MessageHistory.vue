@@ -3,7 +3,7 @@
     <b-button v-b-modal.message-history>Send Message</b-button>
     <b-modal
       id="message-history"
-      title="Message with username"
+      :title="`Message with ${user.username}`"
       @click="handleOk"
       hide-footer>
       <form ref="form" @submit.stop.prevent="handleSubmit">
