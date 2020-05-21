@@ -46,13 +46,8 @@
       <PhotoUpload v-on:new-avatar='newAvatar' :user='user'/>
     </b-card-body>
     </div>
-<<<<<<< HEAD
     <div>Friends:</div>
     <b-card-footer style="border:none;">
-=======
-    <div>Friends</div>
-    <b-card-footer>
->>>>>>> unique friends list renders
     <b-row v-for="row in friendsRow" :key="row[0].id">
       <b-col>
         <b-avatar :src="row[0].url_avatar" />
