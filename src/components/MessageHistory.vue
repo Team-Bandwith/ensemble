@@ -4,6 +4,7 @@
       id="message-history"
       :title="`Message with ${user.username}`"
       @click="handleOk"
+      @hidden="closeMessage"
       hide-footer>
       <form ref="form" @submit.stop.prevent="handleSubmit">
       <b-form-group>
@@ -31,6 +32,7 @@ export default {
     user: Object,
     myId: Number,
     friends: Object,
+    userTo: String,
   },
   components: {
 
@@ -43,9 +45,8 @@ export default {
       this.handleSubmit();
     },
     handleSubmit() {
-      console.log('click');
       const sendMessage = `mutation {
-        sendMessage(id_user_to: ${this.$route.params.id}, id_user_from: ${this.myId}, text: "${this.text}") {
+        sendMessage(id_user_to: ${this.userTo}, id_user_from: ${this.myId}, text: "${this.text}") {
           id
         }
       }`;
@@ -55,6 +56,9 @@ export default {
         })
         .catch((err) => console.log(err));
       this.text = '';
+    },
+    closeMessage() {
+      this.$bvModal.hide('message-history');
     },
   },
 };
