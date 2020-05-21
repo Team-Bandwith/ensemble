@@ -37,7 +37,7 @@ export default {
   methods: {
     openHistory() {
       console.log('click');
-      this.$bvModal.show('message-history');
+      this.$bvModal.show(`message-history${this.dm.id_user_from}`);
     },
   },
 };
