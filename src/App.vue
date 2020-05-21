@@ -35,7 +35,7 @@ export default Vue.extend({
     onSidebarChanged() {
     },
     logIn() {
-      console.log('login');
+      // console.log('login');
       const token = localStorage.getItem('jwt');
       axios.post(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/verify`, { token })
         .then((decode) => {
