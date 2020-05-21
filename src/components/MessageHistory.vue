@@ -51,7 +51,7 @@ export default {
   methods: {
     messageHistory() {
       const query = `query {
-        messageHistory(user_id: ${this.myId}, friend_id: ${this.$route.params.id}) {
+        messageHistory(user_id: ${this.myId}, friend_id: ${this.userTo}) {
           id,
           id_user_to,
           id_user_from,
