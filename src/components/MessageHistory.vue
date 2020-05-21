@@ -1,6 +1,5 @@
 <template>
   <div>
-    <b-button v-b-modal.message-history>Send Message</b-button>
     <b-modal
       id="message-history"
       :title="`Message with ${user.username}`"
