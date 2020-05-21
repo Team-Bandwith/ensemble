@@ -14,10 +14,13 @@
   <b-row>
     <b-button @click="playLoop">play loop</b-button>
   </b-row>
+  <b-row><div id="target"></div></b-row>
   </div>
+
 </template>
 <script>
 import Tone from 'tone';
+import Nexus from 'nexusui';
 
 export default {
   name: 'Drum',
@@ -29,7 +32,20 @@ export default {
       rows: [1, 2, 3, 4],
     };
   },
+  mounted() {
+    this.createSequencer();
+  },
   methods: {
+    createSequencer() {
+      console.log('created');
+      const sequencer = new Nexus.Sequencer('#target', {
+        size: [400, 200],
+        mode: 'toggle',
+        rows: 5,
+        columns: 10,
+      });
+      console.log(sequencer);
+    },
     makeBassSound() {
       const synth = new Tone.MembraneSynth();
       synth.toMaster();
