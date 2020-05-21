@@ -11,6 +11,7 @@
      :user='profileUser || user'
      :myId='user.id'
      :friends="friends"
+     :friendsData="friendsData"
     />
   </div>
   <div class="user-song">
@@ -36,6 +37,7 @@ export default {
   name: 'Profile',
   data() {
     return {
+      friendsData: [],
       profileUser: null,
     };
   },
@@ -65,6 +67,15 @@ export default {
       return request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
         .then((res) => {
           this.profileUser = res.getUserId;
+          const querys = `query {
+            getUserFriends(id:${id}){
+              id, username, url_avatar, email
+              }
+            }`;
+          return request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, querys);
+        }).then((res) => {
+          this.friendsData = res.getUserFriends;
+          console.log(res.getUserFriends, 'THIS IS MY FRIENDS INFO');
         });
     },
     newFriend() {
