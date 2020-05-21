@@ -1,6 +1,6 @@
 <template>
    <b-container fluid>
-    <SaveSong :cloudURL="cloudURL" :id="id" v-on:active="activate" />
+    <SaveSong :cloudURL="cloudURL" :id="id" :users="users" v-on:active="activate" />
     <div class="jam">
       <b-row>
         <b-button @click="openModal">Select instrument</b-button>
@@ -80,6 +80,7 @@ export default {
   props: {
     id: Number,
     active: Boolean,
+    users: Array,
   },
   data() {
     return {

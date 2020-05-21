@@ -54,6 +54,7 @@ export default {
   props: {
     cloudURL: String,
     id: Number,
+    users: Array,
   },
   methods: {
     checkFormValidity() {
@@ -96,7 +97,16 @@ export default {
   }
 `;
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, addSong)
-        .then((res) => console.log(res))
+        .then((res) => Promise.all(this.users.map((ctb) => {
+          const makeContrib = `
+          mutation {
+            makeContribution(id_user: ${ctb.id}, id_song: ${res.addSong.id}) {
+              id
+            }
+          }`;
+
+          return request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, makeContrib);
+        })))
         .catch((err) => console.log(err));
       // Hide the modal manually
       this.$nextTick(() => {
