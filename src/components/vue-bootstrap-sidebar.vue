@@ -79,30 +79,30 @@
           </template>
         </template>
         </div>
-<div>
-  <div>
-  <div v-if="loggedIn">
-      <font-awesome-icon icon='address-book'/>
-<v-select label="username" :filterable="false" :options="options" @search="onSearch">
-    <template slot="no-options">
-      Search for Friends
-    </template>
-    <template slot="option" slot-scope="option">
-      <div class="d-center">
-        <b-avatar :src='option.url_avatar'/>
-        {{ option.username }}
+        <div>
+          <div>
+          <div v-if="loggedIn">
+              <font-awesome-icon icon='address-book'/>
+        <v-select @input="changeRoute"
+            label="username"
+            :filterable="false"
+            :options="options"
+            @search="onSearch">
+            <template slot="no-options">
+              Search for Friends
+            </template>
+            <template slot="option" slot-scope="option">
+                <router-link :to="`/profile/${option.id}`">
+              <div class="d-center" >
+                <b-avatar :src='option.url_avatar'/>
+                {{ option.username }}
+                </div>
+                </router-link>
+            </template>
+          </v-select>
+            </div>
+          </div>
         </div>
-    </template>
-    <template slot="selected-option" slot-scope="option">
-      <div class="selected d-center">
-        <b-avatar :src='option.url_avatar'/>
-        {{ option.username }}
-      </div>
-    </template>
-  </v-select>
-    </div>
-  </div>
-</div>
       </b-list-group> <!--/ .items-wrapper -->
       <HamburgerButton
         id="sidebarButton"
@@ -175,9 +175,8 @@ export default {
     onSearch(search, loading) {
       loading(true);
       this.search(loading, search, this);
-      console.log(this.options);
     },
-    /* eslint-disable prefer-arrow-callback */
+    // eslint-disable-next-line func-names
     search: _.debounce(function (loading, search) {
       const query = `query {
         getUserName(name:"${search}"){
@@ -186,7 +185,6 @@ export default {
           }`;
       return request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
         .then((res) => {
-          console.log(res);
           loading(false);
           this.options = res.getUserName;
         });
@@ -202,6 +200,11 @@ export default {
     },
     logIn() {
       this.$emit('log-in');
+    },
+    changeRoute(value) {
+      if (value) {
+        this.$router.push(`/profile/${value.id}`);
+      }
     },
   },
 };
