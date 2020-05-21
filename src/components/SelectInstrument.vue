@@ -1,6 +1,7 @@
 <template>
   <div v-show="value">
     <img src="../assets/piano.png" @click="select('piano')"/>
+    <img src="../assets/drum.jpg" @click="select('drum')"/>
   </div>
 </template>
 

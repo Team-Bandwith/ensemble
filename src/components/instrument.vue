@@ -9,6 +9,8 @@
         <SelectInstrument v-model="modalOpen" v-on:select="select" />
         <div class="instrument">
           <Piano v-if="selected === 'piano'" :dest="dest" :active="active" />
+          <Drum v-if="selected === 'drum'" :dest="dest" :active="active" />
+
         </div>
         <audio controls />
       </b-row>
@@ -66,6 +68,7 @@ import Tone from 'tone';
 import note from 'midi-note';
 import axios from 'axios';
 // import { request } from 'graphql-request';
+import Drum from './Drum.vue';
 import Piano from './Piano.vue';
 import SelectInstrument from './SelectInstrument.vue';
 import SaveSong from './SaveSong.vue';
@@ -74,6 +77,7 @@ export default {
   name: 'Instrument',
   components: {
     Piano,
+    Drum,
     SelectInstrument,
     SaveSong,
   },
