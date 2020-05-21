@@ -5,15 +5,20 @@
       <form ref="form" @submit.stop.prevent="handleSubmit">
 
           <b-form-input
-            id="comment-input"
+            :id="song.id"
             v-model="commentText"
             :state="commentState"
+            @keypress.enter="handleComment(user.id, song.id)"
           ></b-form-input>
 
       </form>
       </b-col>
       <b-col>
-        <b-button @click="handleComment(user.id, song.id)">submit</b-button>
+        <b-button
+          @click="handleComment(user.id, song.id)"
+        >
+          submit
+        </b-button>
       </b-col>
     </b-row>
   </b-container>
@@ -39,6 +44,9 @@ export default {
     };
   },
   methods: {
+    handleSubmit(event) {
+      event.preventDefault();
+    },
     handleComment(userId, songId) {
       if (this.commentText) {
         this.addComment(userId, songId, this.commentText);
