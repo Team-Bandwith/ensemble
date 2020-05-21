@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 <template>
   <b-container fluid style="background-color:#98AC9E;">
     <div v-for="song in songs" :key="song.id">

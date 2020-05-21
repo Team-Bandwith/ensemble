@@ -48,12 +48,10 @@
         <b-col>
         <div class="song-comments">
           <div>
-
-            <!-- Using value -->
-            <b-button v-b-toggle="'collapse-2'" class="m-1">Comments</b-button>
-
-            <!-- Element to collapse -->
-            <b-collapse id="collapse-2">
+            <!-- button to toggle element -->
+            <b-button v-b-toggle="'collapse' + song.id">Comments</b-button>
+            <!-- eslint-disable-next-line vue/no-parsing-error -->
+            <b-collapse :id="'collapse' + song.id">
               <CommentsList :song="song" :user="user"></CommentsList>
             </b-collapse>
           </div>
