@@ -86,6 +86,7 @@ export default {
           console.log(res);
         })
         .catch((err) => console.log(err));
+      this.messageHistory();
       this.text = '';
     },
     closeMessage() {
