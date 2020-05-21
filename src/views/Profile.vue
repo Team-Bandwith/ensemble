@@ -12,6 +12,7 @@
      :myId='user.id'
      :friends="friends"
      :friendsData="friendsData"
+     :contribution="contribution"
     />
   </div>
   <div class="user-song">
@@ -39,6 +40,7 @@ export default {
     return {
       friendsData: [],
       profileUser: null,
+      contribution: [],
     };
   },
   components: {
@@ -75,7 +77,15 @@ export default {
           return request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, querys);
         }).then((res) => {
           this.friendsData = res.getUserFriends;
-          console.log(res.getUserFriends, 'THIS IS MY FRIENDS INFO');
+          const contribQuery = `query {
+            getUserContribs(id:${id}){
+              name
+              }
+            }`;
+          return request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, contribQuery);
+        }).then((res) => {
+          this.contribution = res.getUserContribs;
+          console.log(this.contribution, 'MY CONTROBUTIONS');
         });
     },
     newFriend() {

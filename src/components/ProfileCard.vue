@@ -37,7 +37,7 @@
     </b-card-body>
 
     <b-list-group flush>
-      <b-list-group-item>Likous(99) contributous(21)</b-list-group-item>
+      <b-list-group-item>Likous(99) contributions({{contribution.length}})</b-list-group-item>
       <b-list-group-item>contact: <b>{{user.email}}</b></b-list-group-item>
     </b-list-group>
     <div class='loader' v-if="myId === parseInt($route.params.id)">
@@ -100,6 +100,7 @@ export default {
     myId: Number,
     friends: Object,
     friendsData: Array,
+    contribution: Array,
   },
   watch: {
     friendsData() {
