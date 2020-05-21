@@ -6,6 +6,7 @@
           <Instrument
             :id="user.id"
             :active="active"
+            :users="users"
             v-on:active="activate"
             v-on:deact="deactivate"
           />

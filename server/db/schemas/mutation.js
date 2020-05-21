@@ -188,5 +188,21 @@ exports.mutation = new GraphQLObjectType({
           .catch((err) => console.log(err));
       },
     },
+    makeContribution: {
+      type: SongUserType,
+      args: {
+        id_user: { type: GraphQLInt },
+        id_song: { type: GraphQLInt },
+      },
+      resolve(parentValue, args) {
+        const query = `INSERT INTO song_user (id_user, id_song, type)
+        VALUES ($1, $2, 'contribution')
+        RETURNING id`;
+        const values = [args.id_user, args.id_song];
+        return db.one(query, values)
+          .then((res) => res)
+          .catch((err) => console.log(err));
+      },
+    },
   },
 });

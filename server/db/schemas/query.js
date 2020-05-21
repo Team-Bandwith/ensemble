@@ -206,5 +206,20 @@ exports.query = new GraphQLObjectType({
           .catch((err) => console.log(err, 'cannot search for names'));
       },
     },
+    getUserContribs: {
+      type: new GraphQLList(SongType),
+      args: {
+        id: { type: GraphQLInt },
+      },
+      resolve(parentValue, args) {
+        const query = `SELECT song.* from song, song_user
+        WHERE song_user.id_user = $1
+        AND song_user.id_song = song.id
+        AND song_user.type = 'contribution'`;
+        return db.any(query, [args.id])
+          .then((res) => res)
+          .catch((err) => console.log(err));
+      },
+    },
   },
 });
