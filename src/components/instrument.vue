@@ -37,6 +37,9 @@
             @click="pauseSong"
             v-if="playing"
           />
+          <span v-if="playing">
+            {{ playbackString }}
+          </span>
         </b-col>
         <b-col>
           <b-button v-if="!recording && !playing && playback" @click="uploadSong">save</b-button>
@@ -91,12 +94,18 @@ export default {
       dataURI: null,
       cloudURL: null,
       showProgress: false,
+      playbackTime: 0,
+      playbackString: '0:00',
+      playbackTimer: null,
     };
   },
   mounted() {
     this.recorder = new MediaRecorder(this.dest.stream);
     document.querySelector('audio').onended = () => {
       this.playing = false;
+      clearInterval(this.playbackTimer);
+      this.playbackTime = 0;
+      this.playbackString = '0:00';
     };
   },
   watch: {
@@ -117,6 +126,28 @@ export default {
           };
         }
       };
+    },
+    playing(val) {
+      if (val) {
+        this.playbackTimer = setInterval(() => {
+          this.playbackTime += 1;
+        }, 1000);
+      }
+    },
+    playbackTime(val) {
+      if (val < 10) {
+        this.playbackString = `0:0${val}`;
+      } else if (val < 60) {
+        this.playbackString = `0:${val}`;
+      } else {
+        const minutes = Math.floor(val / 60);
+        const seconds = val % 60;
+        if (seconds < 10) {
+          this.playbackString = `${minutes}:0${seconds}`;
+        } else {
+          this.playbackString = `${minutes}:${seconds}`;
+        }
+      }
     },
   },
   methods: {
