@@ -89,13 +89,13 @@
     </template>
     <template slot="option" slot-scope="option">
       <div class="d-center">
-        <img :src='option.url_avatar'/>
+        <b-avatar :src='option.url_avatar'/>
         {{ option.username }}
         </div>
     </template>
     <template slot="selected-option" slot-scope="option">
       <div class="selected d-center">
-        <img :src='option.url_avatar'/>
+        <b-avatar :src='option.url_avatar'/>
         {{ option.username }}
       </div>
     </template>
