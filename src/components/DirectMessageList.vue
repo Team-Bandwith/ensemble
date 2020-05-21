@@ -42,7 +42,6 @@ export default {
       }`;
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
         .then((res) => {
-          console.log(res.getUserDMs);
           this.dms = res.getUserDMs;
         })
         .catch((err) => console.log(err));
