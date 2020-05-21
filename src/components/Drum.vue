@@ -27,7 +27,6 @@ export default {
     return {
       index: 0,
       rows: [1, 2, 3, 4],
-      stopLoop: false,
     };
   },
   methods: {
@@ -42,7 +41,6 @@ export default {
       synth.triggerAttackRelease('G3', '8n');
     },
     playLoop() {
-      this.stopLoop = !this.stopLoop;
       const beat = document.body.querySelectorAll('input[type="checkbox"]');
       const clock = new Tone.Clock(() => {
         // eslint-disable-next-line no-plusplus
