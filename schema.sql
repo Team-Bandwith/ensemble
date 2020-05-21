@@ -6,6 +6,8 @@ DROP TABLE IF EXISTS song_user;
 DROP TABLE IF EXISTS song;
 DROP TABLE IF EXISTS invite;
 
+CREATE EXTENSION fuzzystrmatch;
+
 CREATE TABLE member (
   id serial PRIMARY KEY,
   username VARCHAR (50) UNIQUE NOT NULL,
