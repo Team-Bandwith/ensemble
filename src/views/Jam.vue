@@ -1,6 +1,6 @@
 <template>
   <b-container class="jam-page" style="background-color:#98AC9E;">
-    <b-row v-align="start">
+    <b-row>
       <b-col cols="8" >
         <div class="jam-instrument">
           <Instrument
@@ -20,7 +20,7 @@
         />
       </b-col>
     </b-row>
-    <b-row align-v="end" >
+    <b-row>
       <b-col class="jam-band">
         <BandMembers
           :users="users"
