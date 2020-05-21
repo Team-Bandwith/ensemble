@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-modal
-      id="message-history"
+      :id="`message-history${userTo}`"
       scrollable
       :title="`Message with ${user.username}`"
       @click="handleOk"
@@ -90,7 +90,7 @@ export default {
       this.text = '';
     },
     closeMessage() {
-      this.$bvModal.hide('message-history');
+      this.$bvModal.hide(`message-history${this.userTo}`);
       this.text = '';
     },
   },
