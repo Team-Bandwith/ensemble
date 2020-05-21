@@ -58,7 +58,6 @@ export default {
     }`;
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
         .then((res) => {
-          console.log(this.song.id, res.getSongComments);
           this.comments = res.getSongComments;
         })
         .catch((err) => console.log(err));
@@ -66,11 +65,6 @@ export default {
   },
   updated() {
     this.scrollDown();
-  },
-  watch: {
-    song(val) {
-      console.log('VALLLLL!', val);
-    },
   },
 };
 </script>
