@@ -2,13 +2,22 @@
   <div>
     <b-modal
       id="message-history"
+      scrollable
       :title="`Message with ${user.username}`"
       @click="handleOk"
       @hidden="closeMessage"
+      @show="messageHistory"
       hide-footer>
       <form ref="form" @submit.stop.prevent="handleSubmit">
-      <b-form-group>
-      <b-form-input v-model="text" placeholder="send a message"></b-form-input>
+        <b-form-group>
+          <b-card>
+            <div>
+            <span v-for="message in messages" :key="message.id">
+              <MessageHistoryList :message="message"></MessageHistoryList>
+            </span>
+            </div>
+          </b-card>
+        <b-form-input v-model="text" placeholder="send a message"></b-form-input>
       </b-form-group>
       <b-button class="mt-3" block @click="handleOk">Send</b-button>
       </form>
@@ -18,6 +27,8 @@
 
 <script>
 import { request } from 'graphql-request';
+
+import MessageHistoryList from './MessageHistoryList.vue';
 
 export default {
   data() {
@@ -35,9 +46,29 @@ export default {
     userTo: String,
   },
   components: {
-
+    MessageHistoryList,
   },
   methods: {
+    messageHistory() {
+      const query = `query {
+        messageHistory(user_id: ${this.myId}, friend_id: ${this.$route.params.id}) {
+          id,
+          id_user_to,
+          id_user_from,
+          text,
+          type,
+          created_at,
+          username,
+          url_avatar,
+        }
+      }`;
+      request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
+        .then((res) => {
+          console.log(res.messageHistory);
+          this.messages = res.messageHistory;
+        })
+        .catch((err) => console.log(err));
+    },
     handleOk(bvModalEvt) {
       // Prevent modal from closing
       bvModalEvt.preventDefault();
@@ -59,6 +90,7 @@ export default {
     },
     closeMessage() {
       this.$bvModal.hide('message-history');
+      this.text = '';
     },
   },
 };
