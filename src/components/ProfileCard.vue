@@ -22,9 +22,10 @@
       </b-button>
       <div v-else-if="myId !== parseInt(user.id)">
         <b-button @click="removeFriend">Remove Friend</b-button>
-        <div class="message-history">
-          <MessageHistory :myId='myId'/>
-        </div>
+        <b-button v-b-modal="`message-history${$route.params.id}`"
+        class="message-history">Send Message
+          <MessageHistory :userTo="$route.params.id" :myId='myId' :user='user'/>
+        </b-button>
       </div>
     </template>
     <b-card-body>

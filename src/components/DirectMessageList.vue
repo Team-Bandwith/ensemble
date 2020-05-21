@@ -3,7 +3,7 @@
     <h3>Direct Messages</h3>
     <div>
       <span v-for="dm in dms" :key="dm.id">
-        <DirectMessage :dm="dm"></DirectMessage>
+        <DirectMessage :user="user" :dm="dm"></DirectMessage>
       </span>
     </div>
   </b-container>
@@ -18,6 +18,7 @@ export default {
   name: 'direct-message-list',
   props: {
     id: Number,
+    user: Object,
   },
   components: {
     DirectMessage,

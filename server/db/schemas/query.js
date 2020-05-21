@@ -144,10 +144,12 @@ exports.query = new GraphQLObjectType({
         friend_id: { type: GraphQLInt },
       },
       resolve(parentValue, args) {
-        const query = `SELECT * from message
+        const query = `SELECT message.*, member.username, member.url_avatar
+        FROM message, member
         WHERE type = 'dm'
         AND ((id_user_to = $1 AND id_user_from = $2)
         OR (id_user_to = $2 AND id_user_from = $1))
+        AND id_user_from = member.id
         ORDER BY created_at ASC`;
         const values = [args.user_id, args.friend_id];
         return db.any(query, values)
