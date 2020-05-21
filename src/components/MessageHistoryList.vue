@@ -4,7 +4,7 @@
       <div class="indv-message">
         <div>
             <span class="mr-auto">
-              {{ message.text }}
+              @{{message.username}}: {{ message.text }}
             </span>
         </div>
       </div>
