@@ -33,7 +33,7 @@
     "jsonwebtoken": "^8.5.1",
     "midi-note": "^1.0.0",
     "moment": "^2.25.3",
-    "nexusui": "^2.0.16",
+    "nexusui": "https://github.com/jwebber18/ui/tarball/fix",
     "node-fetch": "^2.6.0",
     "passport": "^0.4.1",
     "pg-promise": "^10.5.5",
