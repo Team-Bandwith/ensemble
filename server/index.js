@@ -128,9 +128,12 @@ io.on('connection', (socket) => {
   });
 
   socket.on('leaveRoom', (room) => {
-    const user = removeUserFromRoom(socket.id, room).left;
-    io.to(room).emit('receiveMessage', { user: 'Ensemble', message: `${user.username} has left the band!` });
-    io.to(room).emit('updateUsers', getUsersInRoom(room));
+    let user = removeUserFromRoom(socket.id, room);
+    user = user ? user.left : null;
+    if (user) {
+      io.to(room).emit('receiveMessage', { user: 'Ensemble', message: `${user.username} has left the band!` });
+      io.to(room).emit('updateUsers', getUsersInRoom(room));
+    }
   });
 
   socket.on('startNote', ({ note, room }) => {

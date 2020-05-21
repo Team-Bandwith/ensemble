@@ -23,7 +23,7 @@ const removeUserFromRoom = (sockId, room) => {
       .filter((rm) => usersInRooms[rm]
       .some((user) => user.socketId === sockId))[0];
   }
-  if (room) {
+  if (room && usersInRooms[room]) {
     const left = usersInRooms[room].filter((user) => user.socketId === sockId)[0];
     usersInRooms[room] = usersInRooms[room].filter((user) => user.socketId !== sockId);
     return { left, room };
