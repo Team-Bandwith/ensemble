@@ -114,7 +114,7 @@ export default {
     likeSong(likes, songId) {
       // console.log('like', likes);
       const query = `mutation {
-      likeSong(id: ${songId}, id_user: ${this.user.id}) {
+      likeSong(id: ${songId}, id_user: ${this.myId}) {
         count_likes
       }
     }`;
@@ -127,7 +127,7 @@ export default {
     },
     unlikeSong(songId) {
       const query = `mutation {
-      unlikeSong(id: ${songId}, id_user: ${this.user.id}) {
+      unlikeSong(id: ${songId}, id_user: ${this.myId}) {
         count_likes
       }
     }`;
