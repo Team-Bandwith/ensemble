@@ -79,10 +79,16 @@
           </template>
         </template>
         </div>
-        <div>
-          <div>
-          <div v-if="loggedIn">
-              <font-awesome-icon icon='address-book'/>
+          <div v-if="loggedIn" class="list-group sidebar-menu-item">
+           <b-container>
+             <b-row block>
+               <b-col>
+              <font-awesome-icon icon='address-book'></font-awesome-icon>
+              </b-col>
+              <b-col>
+              <p>Search</p>
+              </b-col>
+            </b-row>
         <v-select @input="changeRoute"
             label="username"
             :filterable="false"
@@ -100,9 +106,8 @@
                 </router-link>
             </template>
           </v-select>
+     </b-container>
             </div>
-          </div>
-        </div>
       </b-list-group> <!--/ .items-wrapper -->
       <HamburgerButton
         id="sidebarButton"
