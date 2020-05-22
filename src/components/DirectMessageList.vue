@@ -51,7 +51,9 @@ export default {
               userDMs[dm.id_user_from] = [dm];
             }
           });
-          this.dms = Object.values(userDMs).map((dms) => dms[0]);
+          this.dms = Object.values(userDMs)
+            .map((dms) => dms[0])
+            .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
         })
         .catch((err) => console.log(err));
     },

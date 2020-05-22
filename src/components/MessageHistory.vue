@@ -84,6 +84,7 @@ export default {
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, sendMessage)
         .then(() => {
           this.messageHistory();
+          this.$socket.emit('notify', this.userTo);
         })
         .catch((err) => console.log(err));
       this.text = '';
