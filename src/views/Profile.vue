@@ -13,6 +13,7 @@
      :friends="friends"
      :friendsData="friendsData"
      :contribution="contribution"
+     :liked="liked"
     />
   </div>
   <div class="user-song">
