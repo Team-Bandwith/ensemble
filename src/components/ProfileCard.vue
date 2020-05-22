@@ -39,7 +39,7 @@
     <b-list-group flush>
       <b-list-group-item>
         Likes({{liked.length}})
-        contributions({{contribution.length}})
+        contributions({{contribution}})
         </b-list-group-item>
       <b-list-group-item>contact: <b>{{user.email}}</b></b-list-group-item>
     </b-list-group>
@@ -103,7 +103,7 @@ export default {
     myId: Number,
     friends: Object,
     friendsData: Array,
-    contribution: Array,
+    contribution: Number,
     liked: Array,
   },
   watch: {
