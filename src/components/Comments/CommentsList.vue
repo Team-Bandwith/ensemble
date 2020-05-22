@@ -9,7 +9,9 @@
   <CommentInput
     v-on:new-comment="getSongComments"
     :song="song"
-    :user="user">
+    :user="user"
+    :myId="myId"
+  >
   </CommentInput>
 
 </b-container>
@@ -26,6 +28,7 @@ export default {
     text: String,
     user: Object,
     song: Object,
+    myId: Number,
   },
   components: {
     CommentInput,

@@ -52,7 +52,7 @@
             <b-button v-b-toggle="'collapse' + song.id">Comments</b-button>
             <!-- eslint-disable-next-line vue/no-parsing-error -->
             <b-collapse :id="'collapse' + song.id">
-              <CommentsList :song="song" :user="user"></CommentsList>
+              <CommentsList :song="song" :user="user" :myId="myId"></CommentsList>
             </b-collapse>
           </div>
         </div>
@@ -76,6 +76,7 @@ export default {
     song: Object,
     liked: Array,
     user: Object,
+    myId: Number,
   },
   components: {
     CommentsList,

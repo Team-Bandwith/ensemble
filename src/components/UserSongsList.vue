@@ -7,6 +7,7 @@
         :song="song"
         :liked="liked"
         :user="user"
+        :myId="myId"
         v-on:new-like="newLike"
       />
       <hr>
@@ -24,6 +25,7 @@ export default {
     loggedIn: Boolean,
     liked: Array,
     user: Object,
+    myId: Number,
   },
   components: {
     Song,

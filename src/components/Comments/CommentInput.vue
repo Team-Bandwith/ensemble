@@ -8,14 +8,14 @@
             :id="song.id"
             v-model="commentText"
             :state="commentState"
-            @keypress.enter="handleComment(user.id, song.id)"
+            @keypress.enter="handleComment(myId, song.id)"
           ></b-form-input>
 
       </form>
       </b-col>
       <b-col>
         <b-button
-          @click="handleComment(user.id, song.id)"
+          @click="handleComment(myId, song.id)"
         >
           submit
         </b-button>
@@ -34,6 +34,7 @@ export default {
     comment: Object,
     user: Object,
     song: Object,
+    myId: Number,
   },
   data() {
     return {
@@ -56,10 +57,10 @@ export default {
         console.log('please enter a comment');
       }
     },
-    addComment(user, songId, text) {
+    addComment(userId, songId, text) {
       // console.log('like', likes);
       const query = `mutation {
-      addComment(id_user: ${user}, id_song: ${songId}, text: "${text}") {
+      addComment(id_user: ${userId}, id_song: ${songId}, text: "${text}") {
         id,
         text,
       }
