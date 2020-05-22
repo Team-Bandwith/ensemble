@@ -6,7 +6,7 @@
       :title="`Message with ${user.username}`"
       @click="handleOk"
       @hidden="closeMessage"
-      @show="messageHistory"
+      @show="open"
       hide-footer>
       <form ref="form" @submit.stop.prevent="handleSubmit">
         <b-form-group>
@@ -49,6 +49,11 @@ export default {
     MessageHistoryList,
   },
   methods: {
+    open() {
+      this.messageHistory();
+      const room = this.myId < this.userTo ? `${this.myId}${this.userTo}` : `${this.userTo}${this.myId}`;
+      this.$socket.emit('openDM', room);
+    },
     messageHistory() {
       const query = `query {
         messageHistory(user_id: ${this.myId}, friend_id: ${this.userTo}) {
@@ -85,13 +90,22 @@ export default {
         .then(() => {
           this.messageHistory();
           this.$socket.emit('notify', this.userTo);
+          const room = this.myId < this.userTo ? `${this.myId}${this.userTo}` : `${this.userTo}${this.myId}`;
+          this.$socket.emit('sendDM', room);
         })
         .catch((err) => console.log(err));
       this.text = '';
     },
     closeMessage() {
+      const room = this.myId < this.userTo ? `${this.myId}${this.userTo}` : `${this.userTo}${this.myId}`;
+      this.$socket.emit('closeDM', room);
       this.$bvModal.hide(`message-history${this.userTo}`);
       this.text = '';
+    },
+  },
+  sockets: {
+    getDM() {
+      this.messageHistory();
     },
   },
 };
