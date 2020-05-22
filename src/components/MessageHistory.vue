@@ -13,7 +13,10 @@
           <b-card>
             <div>
             <span v-for="message in messages" :key="message.id">
-              <MessageHistoryList :message="message"></MessageHistoryList>
+              <MessageHistoryList
+              :myId="myId"
+              :userTo="userTo"
+              :message="message"></MessageHistoryList>
             </span>
             </div>
           </b-card>
