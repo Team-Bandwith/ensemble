@@ -22,6 +22,7 @@
       :loggedIn="loggedIn"
       :liked="liked"
       :user="profileUser || user"
+      :myId="user.id"
       v-on:new-like="newLike"
       />
   </div>

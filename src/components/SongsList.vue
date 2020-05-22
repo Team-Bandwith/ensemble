@@ -5,6 +5,7 @@
         :song="song"
         :liked="liked"
         :user="user"
+        :myId="user.id"
         v-on:new-like="newLike"
       />
       <hr>
