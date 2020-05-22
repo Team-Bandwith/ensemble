@@ -24,20 +24,23 @@
           <b-button class="stop align-top"
             variant="dark" v-show="recording" @click="stopRecording" />
         </b-col>
+        <b-col cols="1" v-show="recording">
+          {{ playbackString }}
+        </b-col>
         <b-col>
           <font-awesome-icon
             icon="play"
             class="play align-top"
             size="2x"
             @click="playSong"
-            v-if="!recording && !playing && playback"
+            v-if="!recording && playback && paused"
           />
           <font-awesome-icon
             icon="pause"
             class="pause align-top"
             size="2x"
             @click="pauseSong"
-            v-if="playing"
+            v-if="!paused"
           />
           <span v-if="playing">
             {{ playbackString }}
@@ -102,6 +105,7 @@ export default {
       playbackTime: 0,
       playbackString: '0:00',
       playbackTimer: null,
+      paused: true,
     };
   },
   mounted() {
@@ -109,6 +113,7 @@ export default {
     document.querySelector('audio').onended = () => {
       this.playing = false;
       clearInterval(this.playbackTimer);
+      this.paused = true;
       this.playbackTime = 0;
       this.playbackString = '0:00';
     };
@@ -134,6 +139,23 @@ export default {
     },
     playing(val) {
       if (val) {
+        this.playbackTimer = setInterval(() => {
+          this.playbackTime += 1;
+        }, 1000);
+      }
+    },
+    recording(val) {
+      if (val) {
+        this.playbackTimer = setInterval(() => {
+          this.playbackTime += 1;
+        }, 1000);
+      }
+    },
+    paused(val) {
+      if (this.playbackTimer) {
+        clearInterval(this.playbackTimer);
+      }
+      if (!val) {
         this.playbackTimer = setInterval(() => {
           this.playbackTime += 1;
         }, 1000);
@@ -169,14 +191,19 @@ export default {
     },
     stopRecording() {
       this.recording = false;
+      clearInterval(this.playbackTimer);
+      this.playbackString = '0:00';
+      this.playbackTime = 0;
       this.recorder.stop();
     },
     playSong() {
       this.playing = true;
+      this.paused = false;
       document.querySelector('audio').play();
     },
     pauseSong() {
-      this.playing = false;
+      this.paused = true;
+      clearInterval(this.playbackTimer);
       document.querySelector('audio').pause();
     },
     uploadSong() {
