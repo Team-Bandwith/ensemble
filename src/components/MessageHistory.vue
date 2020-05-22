@@ -82,11 +82,10 @@ export default {
         }
       }`;
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, sendMessage)
-        .then((res) => {
-          console.log(res);
+        .then(() => {
+          this.messageHistory();
         })
         .catch((err) => console.log(err));
-      this.messageHistory();
       this.text = '';
     },
     closeMessage() {

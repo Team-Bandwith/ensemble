@@ -11,6 +11,8 @@
      :user='profileUser || user'
      :myId='user.id'
      :friends="friends"
+     :friendsData="friendsData"
+     :contribution="contribution"
     />
   </div>
   <div class="user-song">
@@ -36,7 +38,9 @@ export default {
   name: 'Profile',
   data() {
     return {
+      friendsData: [],
       profileUser: null,
+      contribution: [],
     };
   },
   components: {
@@ -65,6 +69,23 @@ export default {
       return request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
         .then((res) => {
           this.profileUser = res.getUserId;
+          const querys = `query {
+            getUserFriends(id:${id}){
+              id, username, url_avatar, email
+              }
+            }`;
+          return request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, querys);
+        }).then((res) => {
+          this.friendsData = res.getUserFriends;
+          const contribQuery = `query {
+            getUserContribs(id:${id}){
+              name
+              }
+            }`;
+          return request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, contribQuery);
+        }).then((res) => {
+          this.contribution = res.getUserContribs;
+          console.log(this.contribution, 'MY CONTROBUTIONS');
         });
     },
     newFriend() {

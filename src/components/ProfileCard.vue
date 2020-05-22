@@ -4,6 +4,7 @@
   <div class="profile">
     <div class="profile-card">
   <b-card
+    class="profile-card"
     no-body
     style="max-width: 20rem; border:none; top:50px; right:50px; position:fixed;"
   >
@@ -36,19 +37,41 @@
     </b-card-body>
 
     <b-list-group flush>
-      <b-list-group-item>Likous(99) contributous(21)</b-list-group-item>
+      <b-list-group-item>Likous(99) contributions({{contribution.length}})</b-list-group-item>
       <b-list-group-item>contact: <b>{{user.email}}</b></b-list-group-item>
     </b-list-group>
     <div class='loader' v-if="myId === parseInt($route.params.id)">
-    <b-card-body>
+    <b-card-body style="border:none;">
       Upload your Photo Here:
       <PhotoUpload v-on:new-avatar='newAvatar' :user='user'/>
     </b-card-body>
     </div>
-
-    <b-card-footer>Friends</b-card-footer>
-
-    <b-card-img src="https://placekitten.com/480/210" alt="Image"></b-card-img>
+    <div>Friends:</div>
+    <b-card-footer style="border:none;">
+    <b-row v-for="row in friendsRow" :key="row[0].id">
+      <b-col>
+        <b-avatar :src="row[0].url_avatar" />
+        <router-link class="friendname"
+        :to="`/profile/${row[0].id}`">
+        {{ row[0].username }}
+        </router-link>
+      </b-col>
+      <b-col v-if="row[1]">
+        <b-avatar :src="row[1].url_avatar" />
+        <router-link class="friendname"
+        :to="`/profile/${row[1].id}`">
+        {{ row[1].username }}
+        </router-link>
+      </b-col>
+      <b-col v-if="row[2]">
+        <b-avatar :src="row[2].url_avatar" />
+        <router-link class="friendname"
+        :to="`/profile/${row[2].id}`">
+        {{ row[2].username }}
+    </router-link>
+      </b-col>
+    </b-row>
+    </b-card-footer>
   </b-card>
 </div>
   </div>
@@ -67,10 +90,28 @@ export default {
     PhotoUpload,
     MessageHistory,
   },
+  data() {
+    return {
+      friendsRow: [],
+    };
+  },
   props: {
     user: Object,
     myId: Number,
     friends: Object,
+    friendsData: Array,
+    contribution: Array,
+  },
+  watch: {
+    friendsData() {
+      let index = 0;
+      const rows = [];
+      while (this.friendsData.slice(index, index + 3).length) {
+        rows.push(this.friendsData.slice(index, index + 3));
+        index += 3;
+      }
+      this.friendsRow = rows;
+    },
   },
   methods: {
     newAvatar(avatar) {
@@ -142,5 +183,7 @@ export default {
 </script>
 
 <style scoped>
-
+.profile-card {
+  text-decoration-color:#99aca0;
+}
 </style>
