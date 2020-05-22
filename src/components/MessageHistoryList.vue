@@ -7,6 +7,7 @@
             :variant="[ Number(this.myId) === Number(this.message.id_user_from)
             ? variant='info' : variant='dark' ]">
           <b-avatar
+          :href="'/profile/' + message.id_user_from"
           :src="message.url_avatar"
           :size="24"
           class="mr-3"
@@ -34,12 +35,6 @@ export default {
   },
   components: {
 
-  },
-  data() {
-    console.log('myId:', this.myId);
-    console.log('user_from:', this.message.id_user_from);
-    return {
-    };
   },
 };
 </script>
