@@ -80,13 +80,17 @@
         </template>
         </div>
           <div v-if="loggedIn" class="list-group sidebar-menu-item">
-           <b-container>
-             <b-row block>
-               <b-col>
-              <font-awesome-icon icon='address-book'></font-awesome-icon>
+            <b-container>
+              <b-row class="search-icon">
+                <b-col sm="1" >
+                  <div>
+              <font-awesome-icon class="fa-icon" icon='address-book'></font-awesome-icon>
+              </div>
               </b-col>
-              <b-col>
+              <b-col sm='10'>
+                <div class="link-name search">
               <p>Search</p>
+              </div>
               </b-col>
             </b-row>
         <v-select @input="changeRoute"
@@ -106,7 +110,7 @@
                 </router-link>
             </template>
           </v-select>
-     </b-container>
+    </b-container>
             </div>
       </b-list-group> <!--/ .items-wrapper -->
       <HamburgerButton
@@ -253,5 +257,12 @@ img {
    position:fixed;
    right:90px;
    top:7px;
+}
+.search {
+  margin-left: -6px;
+}
+.search-icon {
+  margin-top: 5px;
+  margin-bottom: -10px;
 }
 </style>
