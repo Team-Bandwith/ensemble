@@ -1,9 +1,9 @@
 <template>
-<div style="max-width: 20rem; position: relevant;">
+<div style="width: 20rem; right: 50px; position: fixed; bottom: 50px;">
+    <b-list-group>
     <b-list-group-header>
         Contributions:
     </b-list-group-header>
-    <b-list-group>
         <b-list-group-item
         v-for="contrib in contribution"
         :key="contrib.id">
@@ -18,6 +18,9 @@
             />
         </b-modal>
         </b-list-group-item>
+        <b-list-group-footer>
+            <hr/>
+        </b-list-group-footer>
     </b-list-group>
 </div>
 </template>
