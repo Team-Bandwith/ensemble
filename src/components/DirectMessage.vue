@@ -7,9 +7,9 @@
           <b-avatar :src="dm.url_avatar" class="mr-3"></b-avatar>
             <span class="mr-auto">
               {{ dm.username }}
-              sent you a
-              <span @click="openHistory">
-              message
+              says:
+              <span @click="openHistory" class="message">
+              {{ dm.text }}
               </span>
             </span>
         </b-list-group-item>
@@ -42,3 +42,13 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.message {
+  color: blue;
+}
+
+.message:hover {
+  cursor: pointer;
+}
+</style>
