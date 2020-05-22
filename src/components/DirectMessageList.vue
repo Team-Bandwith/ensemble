@@ -25,7 +25,7 @@ export default {
   },
   data() {
     return {
-      dms: [],
+      dms: {},
     };
   },
   methods: {
@@ -43,7 +43,17 @@ export default {
       }`;
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
         .then((res) => {
-          this.dms = res.getUserDMs;
+          const userDMs = {};
+          res.getUserDMs.forEach((dm) => {
+            if (userDMs[dm.id_user_from]) {
+              userDMs[dm.id_user_from].push(dm);
+            } else {
+              userDMs[dm.id_user_from] = [dm];
+            }
+          });
+          this.dms = Object.values(userDMs)
+            .map((dms) => dms[0])
+            .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
         })
         .catch((err) => console.log(err));
     },

@@ -120,7 +120,9 @@ export default Vue.extend({
       this.online = users;
     },
     notified() {
-      this.notifications += 1;
+      if (window.location.pathname !== '/inbox') {
+        this.notifications += 1;
+      }
     },
     backlog(num) {
       this.notifications = num;

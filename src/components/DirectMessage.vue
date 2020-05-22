@@ -7,10 +7,11 @@
           <b-avatar :src="dm.url_avatar" class="mr-3"></b-avatar>
             <span class="mr-auto">
               {{ dm.username }}
-              sent you a
-              <span @click="openHistory">
-              message
+              says:
+              <span @click="openHistory" class="message">
+              {{ dm.text }}
               </span>
+              <span> {{ moment(dm.created_at).fromNow() }} </span>
             </span>
         </b-list-group-item>
       </div>
@@ -19,12 +20,16 @@
 </template>
 
 <script>
+import moment from 'moment';
 import MessageHistory from './MessageHistory.vue';
-
-// import { request } from 'graphql-request';
 
 export default {
   name: 'DirectMessage',
+  data() {
+    return {
+      moment,
+    };
+  },
   props: {
     loggedIn: Boolean,
     dm: Object,
@@ -42,3 +47,13 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.message {
+  color: blue;
+}
+
+.message:hover {
+  cursor: pointer;
+}
+</style>

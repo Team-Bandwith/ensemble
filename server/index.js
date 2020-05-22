@@ -127,7 +127,20 @@ io.on('connection', (socket) => {
     io.to(room).emit('updateUsers', getUsersInRoom(room));
   });
 
+  socket.on('openDM', (room) => {
+    socket.join(room);
+  });
+
+  socket.on('sendDM', (room) => {
+    socket.broadcast.to(room).emit('getDM');
+  });
+
+  socket.on('closeDM', (room) => {
+    socket.leave(room);
+  });
+
   socket.on('leaveRoom', (room) => {
+    socket.leave(room);
     let user = removeUserFromRoom(socket.id, room);
     user = user ? user.left : null;
     if (user) {
