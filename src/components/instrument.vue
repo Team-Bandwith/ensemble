@@ -24,6 +24,9 @@
           <b-button class="stop align-top"
             variant="dark" v-show="recording" @click="stopRecording" />
         </b-col>
+        <b-col cols="1" v-show="recording">
+          {{ playbackString }}
+        </b-col>
         <b-col>
           <font-awesome-icon
             icon="play"
@@ -133,6 +136,13 @@ export default {
       };
     },
     playing(val) {
+      if (val) {
+        this.playbackTimer = setInterval(() => {
+          this.playbackTime += 1;
+        }, 1000);
+      }
+    },
+    recording(val) {
       if (val) {
         this.playbackTimer = setInterval(() => {
           this.playbackTime += 1;
