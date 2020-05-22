@@ -72,7 +72,6 @@ export default {
       }`;
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
         .then((res) => {
-          console.log(res.messageHistory);
           this.messages = res.messageHistory;
         })
         .catch((err) => console.log(err));
