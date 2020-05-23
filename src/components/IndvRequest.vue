@@ -12,8 +12,10 @@
             <span class="user-text">
               sent you a friend request!
             </span>
-            <b-button variant="success" @click="addFriend">Accept</b-button>
-            <b-button variant="danger" @click="removeFriend">Deny</b-button>
+            <b-list-group-item class="indv-request">
+            <b-button class="accept" @click="addFriend">Accept</b-button>
+            <b-button class="deny" @click="removeFriend">Deny</b-button>
+            </b-list-group-item>
         </b-list-group-item>
       </div>
     </b-list-group>
@@ -87,5 +89,12 @@ export default {
 }
 .time {
   font-size: 15px;
+}
+.accept {
+  background-color: #6d8657;
+}
+.deny {
+  background-color: #fd5457;
+  border-color: #fd5457;
 }
 </style>
