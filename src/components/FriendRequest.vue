@@ -1,7 +1,8 @@
 <template>
+    <b-row>
   <b-container fluid>
+    <b-col>
     <h3>Friend Requests</h3>
-    <div>
       <span v-for="request in requests" :key="request.id">
         <IndvRequest
           :request="request"
@@ -10,8 +11,9 @@
           :user="user"
         />
       </span>
-    </div>
+    </b-col>
   </b-container>
+    </b-row>
 </template>
 
 <script>
