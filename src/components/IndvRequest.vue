@@ -2,12 +2,14 @@
   <b-container >
     <b-list-group flush>
       <div class="indv-request">
-        <b-list-group-item variant="dark">
+        <b-list-group-item class="indv-request">
           <b-avatar :src="request.url_avatar" class="mr-3" />
-            <span class="mr-auto">
+            <span class="mr-auto user-name">
               <router-link :to="`/profile/${request.id}`">
               {{ request.username }}
               </router-link>
+            </span>
+            <span class="user-text">
               sent you a friend request!
             </span>
             <b-button variant="success" @click="addFriend">Accept</b-button>
@@ -72,5 +74,18 @@ export default {
 </script>
 
 <style>
-
+.indv-request {
+  background-color: #1f1e1d;
+}
+.user-name {
+  color: #99aca0;
+  font-size: 25px;
+}
+.user-text {
+  color: white;
+  font-size: 25px;
+}
+.time {
+  font-size: 15px;
+}
 </style>
