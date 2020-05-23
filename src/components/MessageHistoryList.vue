@@ -1,5 +1,5 @@
 <template>
-  <b-container >
+  <b-container class="message-container">
     <section flush>
       <div class="indv-message"
           :class="[ Number(this.myId) === Number(this.message.id_user_from)
@@ -41,7 +41,7 @@ export default {
 
 <style scoped>
 .indv-message {
-  border: 2px solid #dedede;
+  border: 2px solid #1f1e1d;
   border-radius: 5px;
   padding: 10px;
   margin: 10px 0;
@@ -49,7 +49,7 @@ export default {
 
 /* Darker chat container */
 .green {
-  border-color: #ddd;
+  border-color: #1f1e1d;
   background-color: #99aca0;
 }
 
