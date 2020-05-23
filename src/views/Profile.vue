@@ -26,6 +26,15 @@
       v-on:new-like="newLike"
       />
   </div>
+  <div class="contrib-list">
+    <ContribList v-if='user'
+    :user="profileUser || user"
+    :myId="user.id"
+    :liked="liked"
+    v-on:new-like='newLike'
+    v-on:num-contribs='setContribs'
+    />
+  </div>
     </b-col>
   </b-row>
 </div>
@@ -34,6 +43,7 @@
 <script>
 import { request } from 'graphql-request';
 import ProfileCard from '@/components/ProfileCard.vue';
+import ContribList from '@/components/ContribList.vue';
 import UserSongsList from '../components/UserSongsList.vue';
 
 export default {
@@ -42,12 +52,13 @@ export default {
     return {
       friendsData: [],
       profileUser: null,
-      contribution: [],
+      contribution: 0,
     };
   },
   components: {
     ProfileCard,
     UserSongsList,
+    ContribList,
   },
   props: {
     user: Object,
@@ -56,6 +67,9 @@ export default {
     friends: Object,
   },
   methods: {
+    setContribs(num) {
+      this.contribution = num;
+    },
     newAvatar(avatar) {
       this.$emit('new-avatar', avatar);
     },
@@ -79,15 +93,6 @@ export default {
           return request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, querys);
         }).then((res) => {
           this.friendsData = res.getUserFriends;
-          const contribQuery = `query {
-            getUserContribs(id:${id}){
-              name
-              }
-            }`;
-          return request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, contribQuery);
-        }).then((res) => {
-          this.contribution = res.getUserContribs;
-          console.log(this.contribution, 'MY CONTROBUTIONS');
         });
     },
     newFriend() {
