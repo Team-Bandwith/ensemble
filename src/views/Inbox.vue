@@ -8,7 +8,7 @@
   <div class="jam-invite">
     <JamInvite :id="user.id"/>
   </div>
-    <div class="friend-request">
+  <div class="friend-request">
     <FriendRequest :id="user.id" v-on:friend="newFriend" :user="user" />
   </div>
   <div class="direct-message-list">
