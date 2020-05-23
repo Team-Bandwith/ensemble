@@ -26,7 +26,7 @@
           placeholder="send a message">
         </b-form-input>
       </b-form-group>
-      <b-button class="mt-3" block @click="handleOk">Send</b-button>
+      <b-button class="mt-3 send-button" block @click="handleOk">Send</b-button>
       </form>
     </b-modal>
   </div>
@@ -127,5 +127,8 @@ export default {
 .message-input {
   border-color: #1f1e1d;
   border-radius: 5px;
+}
+.send-button {
+  background-color: #6d8657;
 }
 </style>
