@@ -6,8 +6,8 @@
         <b-list-group-item id="indv-request">
           <b-col>
           <b-avatar :src="request.url_avatar" class="mr-3 indv-request" />
-            <span class="mr-auto user-name">
-              <router-link :to="`/profile/${request.id}`">
+            <span class="mr-auto">
+              <router-link :to="`/profile/${request.id}`" id="user-name">
               {{ request.username }}
               </router-link>
             </span>
@@ -83,7 +83,7 @@ export default {
 #indv-request {
   background-color: #1f1e1d;
 }
-.user-name {
+#user-name {
   color: #99aca0;
   font-size: 25px;
 }
@@ -98,7 +98,6 @@ export default {
   color: white;
   background-color: #6d8657;
   border-color: #6d8657;
-  margin-top: 10px;
   margin-right: 10px;
   margin-left: 65px;
 }
@@ -106,6 +105,5 @@ export default {
   color: white;
   background-color: #fd5457;
   border-color: #fd5457;
-  margin-top: 10px;
 }
 </style>
