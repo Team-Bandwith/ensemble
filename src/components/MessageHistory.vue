@@ -20,7 +20,11 @@
             </span>
             </div>
           </b-card>
-        <b-form-input v-model="text" placeholder="send a message"></b-form-input>
+        <b-form-input
+          class="message-input"
+          v-model="text"
+          placeholder="send a message">
+        </b-form-input>
       </b-form-group>
       <b-button class="mt-3" block @click="handleOk">Send</b-button>
       </form>
@@ -119,5 +123,9 @@ export default {
 }
 .message-card {
   background-color: #1f1e1d;
+}
+.message-input {
+  border-color: #1f1e1d;
+  border-radius: 5px;
 }
 </style>
