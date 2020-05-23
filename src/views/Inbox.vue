@@ -3,7 +3,7 @@
     <b-col>
 
   <div class="inbox">
-    <h1>Notifications</h1>
+    <h2>Notifications</h2>
   </div>
   <div class="jam-invite">
     <JamInvite :id="user.id"/>
@@ -54,14 +54,14 @@ export default {
     color: white;
   }
   .jam-invite {
-    color: white;
+    color: #99aca0;
   }
 
   .friend-request {
-    color: white;
+    color: #99aca0;
   }
 
   .direct-message-list {
-    color: white;
+    color: #99aca0;
   }
 </style>
