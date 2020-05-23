@@ -149,8 +149,8 @@ io.on('connection', (socket) => {
     }
   });
 
-  socket.on('startNote', ({ note, room }) => {
-    socket.broadcast.to(room).emit('receiveStart', note);
+  socket.on('startNote', ({ note, vibFreq, vibDepth, oscType, room }) => {
+    socket.broadcast.to(room).emit('receiveStart', { note, vibFreq, vibDepth, oscType });
   });
 
   socket.on('stopNote', ({ note, room }) => {

@@ -106,9 +106,12 @@ export default {
       playbackString: '0:00',
       playbackTimer: null,
       paused: true,
+      master: Tone.Master,
     };
   },
   mounted() {
+    this.master.connect(this.dest);
+
     this.recorder = new MediaRecorder(this.dest.stream);
     document.querySelector('audio').onended = () => {
       this.playing = false;
@@ -229,10 +232,17 @@ export default {
     },
   },
   sockets: {
-    receiveStart(midi) {
-      console.log('start', midi);
-      const synth = new Tone.Synth().toMaster();
-      synth.connect(this.dest);
+    receiveStart({
+      note: midi,
+      vibFreq,
+      vibDepth,
+      oscType,
+    }) {
+      const vibrato = new Tone.Vibrato({ frequency: vibFreq, depth: vibDepth });
+      const synth = new Tone.Synth({
+        oscillator: { type: oscType },
+      });
+      synth.chain(vibrato, this.master);
       this.activeExternalSynths = Object.assign({}, this.activeExternalSynths, { [midi]: synth });
       synth.triggerAttack(note(midi));
     },

@@ -97,7 +97,13 @@ export default {
 
       newPiano.on('change', (k) => {
         if (k.state) {
-          this.$socket.emit('startNote', { note: k.note, room: window.location.search });
+          this.$socket.emit('startNote', {
+            note: k.note,
+            vibFreq: this.vibFreq,
+            vibDepth: this.vibDepth,
+            oscType: this.oscType,
+            room: window.location.search,
+          });
           const synth = new Tone.Synth({
             oscillator: { type: this.oscType },
           });
