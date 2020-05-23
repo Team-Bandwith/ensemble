@@ -9,7 +9,7 @@
             </span>
             <span class="user-text">
               invited you to join their
-              <a :href="'jam' + invite.link">jam room</a>
+              <a :href="'jam' + invite.link" id="invite-link">jam room</a>
             </span>
         </b-list-group-item>
       </div>
@@ -37,7 +37,7 @@ export default {
 .indv-invite {
   background-color: #1f1e1d;
 }
-a:link {
+#invite-link {
   color: #99aca0;
 }
 .user-name {
