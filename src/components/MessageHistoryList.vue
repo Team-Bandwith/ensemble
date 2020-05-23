@@ -42,6 +42,7 @@ export default {
 <style scoped>
 .indv-message {
   border: 2px solid #99aca0;
+  background-color: white;
   border-radius: 5px;
   padding: 10px;
   margin: 10px 0;

@@ -10,7 +10,7 @@
       hide-footer>
       <form ref="form" @submit.stop.prevent="handleSubmit">
         <b-form-group>
-          <b-card>
+          <b-card class="message-card">
             <div>
             <span v-for="message in messages" :key="message.id">
               <MessageHistoryList
@@ -116,5 +116,8 @@ export default {
 <style scoped>
 .modal {
   border: 1px solid forestgreen;
+}
+.message-card {
+  background-color: #1f1e1d;
 }
 </style>
