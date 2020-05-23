@@ -41,7 +41,7 @@ export default {
 
 <style scoped>
 .indv-message {
-  border: 2px solid #1f1e1d;
+  border: 2px solid #99aca0;
   border-radius: 5px;
   padding: 10px;
   margin: 10px 0;
@@ -49,7 +49,7 @@ export default {
 
 /* Darker chat container */
 .green {
-  border-color: #1f1e1d;
+  border-color: #99aca0;
   background-color: #99aca0;
 }
 
