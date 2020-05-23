@@ -13,7 +13,7 @@
               <span @click="openHistory" class="message">
               {{ dm.text }}
               </span>
-              <span class="time"> {{ moment(dm.created_at).fromNow() }} </span>
+              <div class="time"> {{ moment(dm.created_at).fromNow() }} </div>
             </span>
         </b-list-group-item>
       </div>
@@ -70,6 +70,8 @@ export default {
   font-size: 25px;
 }
 .time {
-  font-size: 15px;
+  font-size: 10px;
+  margin-top: -10px;
+  margin-left: 65px;
 }
 </style>
