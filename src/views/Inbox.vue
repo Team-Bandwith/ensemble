@@ -50,6 +50,9 @@ export default {
 </script>
 
 <style>
+  h2 {
+    margin-left: 50px;
+  }
   .inbox {
     color: white;
   }

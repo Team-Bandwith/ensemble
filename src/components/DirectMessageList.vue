@@ -65,5 +65,8 @@ export default {
 </script>
 
 <style>
-
+h3 {
+  margin-top: 10px;
+  margin-left: 35px;
+}
 </style>
