@@ -1,25 +1,39 @@
 <template>
-  <div class="cl-upload">
+  <div classes="cl-upload">
     <b-button v-b-modal.modal-prevent-closing>Upload</b-button>
     <b-modal
       class='upload-modal'
       id="modal-prevent-closing"
-      size="lg"
+      size="med"
       ref="modal"
-      title="Upload your Avatar photo here"
+      title="Upload your Avatar"
+      hide-footer="true"
+      hide-header="true"
       >
-    <form v-on:submit.prevent="upload">
+      <b-container class="upload-modal">
+    <form inline v-on:submit.prevent="upload">
       <!-- allow the user to select an image file and when they have selected it call a function
       to handle this event-->
-      <label for="file-input">Upload:</label>
+        <b-row>
+          <b-col col="4" class="pb-2">
       <input
         id="file-input"
         type="file"
+        size="sm"
         accept="image/png, image/jpeg"
         @change="handleFileChange($event)"
       />
+      </b-col>
       <!-- submit button is disabled until a file is selected -->
-      <button type="submit" :disabled="filesSelected < 1" >Upload</button>
+      <b-col col="4" class="pb-2">
+      <b-button
+        class="submit-button"
+        size='sm'
+        type="submit"
+        :disabled="filesSelected < 1" >OK
+        </b-button>
+      </b-col>
+        </b-row>
       <div v-show="showProgress">
       <loading-progress
         :progress="progress"
@@ -32,6 +46,7 @@
       />
         </div>
     </form>
+        </b-container>
    </b-modal>
   </div>
 </template>
@@ -169,32 +184,27 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 cl-upload {
-  width: 180%;
+  width: 50vw;
 }
+/* .upload-modal {
+  background-color: #98AC9E;
+} */
 form input {
   background: #fff;
-  border: 1px solid #9c9c9c;
 }
 form button {
-  background-color: blue;
-  color: white;
+  background-color: #98AC9E;
   font-size: 1em;
   font-weight: bold;
-  padding: 0.7em;
-  width: 10%;
   border: 0;
+  color: black;
 }
 form button:hover {
   background: gold;
   color: black;
 }
-label {
-  padding: 0.5em 0.5em 0.5em 0;
-}
-input {
-  padding: 0.7em;
-  margin-bottom: 0.5rem;
-}
+
+
 input:focus {
   outline: 3px solid gold;
 }
@@ -227,9 +237,7 @@ form button[disabled] {
   background-color: #cccccc;
   color: #666666;
 }
-section {
-  margin: 10px 0;
-}
+
 img {
   max-width: 150px;
   height: 150px;
@@ -246,5 +254,9 @@ img {
 .vue-progress-path .background {
   stroke: #edd;
 }
+.modal-body {
+  background-color: #98AC9E;
+}
+
 .vue-progress-path.indeterminate path{transition:none}
 </style>
