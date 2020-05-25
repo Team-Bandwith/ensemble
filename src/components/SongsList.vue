@@ -22,6 +22,7 @@ export default {
     loggedIn: Boolean,
     liked: Array,
     user: Object,
+    friends: Object,
   },
   components: {
     Song,
@@ -34,6 +35,13 @@ export default {
   computed: {
     myId() {
       return this.user ? this.user.id : null;
+    },
+    userIDs() {
+      let idString = this.myId.toString();
+      Object.keys(this.friends).forEach((id) => {
+        idString += `,${id}`;
+      });
+      return `{${idString}}`;
     },
   },
   methods: {
@@ -56,17 +64,45 @@ export default {
         })
         .catch((err) => console.log(err));
     },
+    getPrivateFeed() {
+      const query = `query {
+        getPrivateFeed(userIDs: "${this.userIDs}") {
+          id, 
+          id_author, 
+          name, 
+          url, 
+          count_likes,
+          created_at,
+          username,
+          url_avatar
+        }
+      }`;
+
+      request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
+        .then((res) => {
+          this.songs = res.getPrivateFeed;
+        })
+        .catch((err) => console.log(err));
+    },
     newLike() {
       this.$emit('new-like');
     },
   },
   created() {
-    console.log('songs list created');
-    this.getAllSongs();
+    if (this.friends) {
+      this.getPrivateFeed();
+    } else {
+      this.getAllSongs();
+    }
   },
   watch: {
-    loggedIn() {
-      this.getAllSongs();
+    loggedIn(val) {
+      if (!val) {
+        this.getAllSongs();
+      }
+    },
+    friends() {
+      this.getPrivateFeed();
     },
   },
 };

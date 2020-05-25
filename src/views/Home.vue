@@ -6,6 +6,7 @@
       :loggedIn="loggedIn"
       :liked="liked"
       :user="user"
+      :friends="friends"
       v-on:new-like="newLike"
     />
   </div>
@@ -26,6 +27,7 @@ export default {
     loggedIn: Boolean,
     liked: Array,
     user: Object,
+    friends: Object,
   },
   methods: {
     newLike() {
