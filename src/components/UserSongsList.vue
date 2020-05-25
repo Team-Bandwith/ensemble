@@ -81,8 +81,5 @@ export default {
 <style scoped>
 .listcontainer {
   background-color:#98AC9E;
-  width: 50%;
-  margin-right: 50%;
-  margin: 1px;
 }
 </style>
