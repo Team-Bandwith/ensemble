@@ -57,6 +57,10 @@ export default {
           this.sequencer.next();
           this.col.forEach((state, i) => {
             if (state) {
+              this.$socket.emit('startDrum', {
+                drum: i,
+                room: this.$route.query.room,
+              });
               this.synths[i].triggerAttackRelease(this.instruments[i], '8n', time);
             }
           });
