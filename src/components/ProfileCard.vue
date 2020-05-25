@@ -11,7 +11,7 @@
     position:fixed;
     background-color: #1f1e1d;"
   >
-    <template v-slot:header>
+    <template v-slot:header style="opacity: 0; border:none;">
       <img v-if="user.url_avatar" :src="user.url_avatar" />
       <h4 class="mb-0"
         :style="friends[user.id] ? { color: 'green' } : {}"
@@ -69,7 +69,7 @@
     </div>
     <div style='font-size: 1.5em;'><b>Friends({{friendsData.length}})</b></div>
     <b-card-footer style="border:none; background-color: #1f1e1d;">
-    <b-row v-for="row in friendsRow" :key="row[0].id">
+    <b-row v-for="row in friendsRow" :key="row[0].id" class='mb-3'>
       <b-col>
         <b-avatar
         :to="`/profile/${row[0].id}`"
