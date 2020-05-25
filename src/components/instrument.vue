@@ -107,6 +107,11 @@ export default {
       playbackTimer: null,
       paused: true,
       master: Tone.Master,
+      instruments: ['C3', 'C4'],
+      synths: [
+        new Tone.MembraneSynth().toMaster(),
+        new Tone.MembraneSynth().toMaster(),
+      ],
     };
   },
   mounted() {
@@ -232,6 +237,13 @@ export default {
     },
   },
   sockets: {
+    receiveStartDrum({
+      drum: d,
+    }) {
+      console.log('gotit');
+      // this.activeExternalSynths = Object.assign({}, this.activeExternalSynths, { [d]: synth });
+      this.synths[d].triggerAttackRelease(this.instruments[d], '8n');
+    },
     receiveStart({
       note: midi,
       vibFreq,
