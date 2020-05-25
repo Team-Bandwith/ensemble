@@ -1,5 +1,5 @@
 <template>
-<div style="width: 20rem; right: 50px; position: fixed; bottom: 50px;">
+<div>
     <b-list-group>
     <b-list-group-header>
         Contributions:
