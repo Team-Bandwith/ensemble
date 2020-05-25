@@ -60,13 +60,24 @@ export default {
   },
   watch: {
     user(val) {
-      this.$socket.emit('join', { room: window.location.search, user: val });
+      this.$socket.emit('join', { room: this.$route.query.room, user: val });
       Tone.start();
     },
   },
   mounted() {
-    if (!window.location.search) {
-      window.location.search = randomstring.generate();
+    if (this.user) {
+      this.$socket.emit('join', { room: this.$route.query.room, user: this.user });
+      Tone.start();
+    }
+  },
+  beforeRouteEnter(to, from, next) {
+    if (to.fullPath === '/jam') {
+      next({
+        path: '/jam',
+        query: { room: randomstring.generate() },
+      });
+    } else {
+      next();
     }
   },
   methods: {
