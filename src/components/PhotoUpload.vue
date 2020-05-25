@@ -12,6 +12,9 @@
     <form v-on:submit.prevent="upload">
       <!-- allow the user to select an image file and when they have selected it call a function
       to handle this event-->
+      <b-container>
+        <b-row>
+          <b-col>
       <input
         id="file-input"
         type="file"
@@ -19,12 +22,17 @@
         accept="image/png, image/jpeg"
         @change="handleFileChange($event)"
       />
+      </b-col>
       <!-- submit button is disabled until a file is selected -->
+      <b-col>
       <b-button
         size="sm"
         type="submit"
         :disabled="filesSelected < 1" >OK
         </b-button>
+      </b-col>
+        </b-row>
+        </b-container>
       <div v-show="showProgress">
       <loading-progress
         :progress="progress"
