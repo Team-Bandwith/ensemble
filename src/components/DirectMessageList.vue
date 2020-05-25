@@ -1,6 +1,6 @@
 <template>
   <b-container fluid>
-    <h3>Direct Messages</h3>
+    <div class="section-header">Direct Messages</div>
     <div>
       <span v-for="dm in dms" :key="dm.id">
         <DirectMessage :user="user" :dm="dm"></DirectMessage>
@@ -65,5 +65,9 @@ export default {
 </script>
 
 <style>
-
+.section-header {
+  font-size: 25px;
+  margin-top: 10px;
+  margin-left: 35px;
+}
 </style>

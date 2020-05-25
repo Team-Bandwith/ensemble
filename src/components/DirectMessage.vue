@@ -3,15 +3,17 @@
   <MessageHistory :userTo='dm.id_user_from' :myId='user.id' :user='dm'/>
     <b-list-group flush>
       <div class="direct-message">
-        <b-list-group-item variant="dark">
+        <b-list-group-item class="direct-message">
           <b-avatar :src="dm.url_avatar" class="mr-3"></b-avatar>
-            <span class="mr-auto">
+            <span class="mr-auto user-name">
               {{ dm.username }}
+              </span>
+              <span class="user-text">
               says:
               <span @click="openHistory" class="message">
               {{ dm.text }}
               </span>
-              <span> {{ moment(dm.created_at).fromNow() }} </span>
+              <div class="time"> {{ moment(dm.created_at).fromNow() }} </div>
             </span>
         </b-list-group-item>
       </div>
@@ -50,10 +52,26 @@ export default {
 
 <style scoped>
 .message {
-  color: blue;
+  color: #6d8657;
 }
 
 .message:hover {
   cursor: pointer;
+}
+.direct-message {
+  background-color: #1f1e1d;
+}
+.user-name {
+  color: #99aca0;
+  font-size: 25px;
+}
+.user-text {
+  color: white;
+  font-size: 25px;
+}
+.time {
+  font-size: 10px;
+  margin-top: -10px;
+  margin-left: 65px;
 }
 </style>

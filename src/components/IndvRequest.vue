@@ -1,20 +1,28 @@
 <template>
   <b-container >
+    <b-row>
     <b-list-group flush>
-      <div class="indv-request">
-        <b-list-group-item variant="dark">
-          <b-avatar :src="request.url_avatar" class="mr-3" />
+      <div>
+        <b-list-group-item id="indv-request">
+          <b-col>
+          <b-avatar :src="request.url_avatar" class="mr-3 indv-request" />
             <span class="mr-auto">
-              <router-link :to="`/profile/${request.id}`">
+              <router-link :to="`/profile/${request.id}`" id="user-name">
               {{ request.username }}
               </router-link>
+            </span>
+            <span class="user-text">
               sent you a friend request!
             </span>
-            <b-button variant="success" @click="addFriend">Accept</b-button>
-            <b-button variant="danger" @click="removeFriend">Deny</b-button>
+            <div id="indv-request">
+            <button id="accept" @click="addFriend">Accept</button>
+            <button id="deny" @click="removeFriend">Deny</button>
+            </div>
+    </b-col>
         </b-list-group-item>
       </div>
     </b-list-group>
+    </b-row>
   </b-container>
 </template>
 
@@ -72,5 +80,30 @@ export default {
 </script>
 
 <style>
-
+#indv-request {
+  background-color: #1f1e1d;
+}
+#user-name {
+  color: #99aca0;
+  font-size: 25px;
+}
+.user-text {
+  color: white;
+  font-size: 25px;
+}
+.time {
+  font-size: 15px;
+}
+#accept {
+  color: white;
+  background-color: #6d8657;
+  border-color: #6d8657;
+  margin-right: 10px;
+  margin-left: 65px;
+}
+#deny {
+  color: white;
+  background-color: #fd5457;
+  border-color: #fd5457;
+}
 </style>
