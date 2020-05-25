@@ -33,18 +33,33 @@
       </div>
     </template>
     <b-card-body>
-      <b-card-text>
+      <b-card-text style="color: white;">
         Some quick example text to build on the card title and make up the bulk of the card's
         content.
       </b-card-text>
     </b-card-body>
 
     <b-list-group flush>
-      <b-list-group-item>
-        Likes({{liked.length}})
-        contributions({{contribution}})
+      <b-list-group-item style="border: none; background-color: #1f1e1d;">
+        <b-row>
+          <b-col cols='7'>
+            <div style='font-size: 1.4em;'><b>({{liked.length}})</b></div>
+          </b-col>
+          <b-col>
+            <div style='font-size: 1.4em;'><b>({{contribution}})</b></div>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col>
+            <div style='font-size: 1em; color: white;'>likes</div>
+          </b-col>
+          <b-col>
+            <div style='font-size: 1em; color: white;'>contributions</div>
+          </b-col>
+        </b-row>
         </b-list-group-item>
-      <b-list-group-item>contact: <b>{{user.email}}</b></b-list-group-item>
+      <b-list-group-item style="border: none; background-color: #1f1e1d;">
+        contact: <b>{{user.email}}</b></b-list-group-item>
     </b-list-group>
     <div class='loader' v-if="myId === parseInt($route.params.id)">
     <b-card-body style="border:none;">
@@ -52,7 +67,7 @@
       <PhotoUpload v-on:new-avatar='newAvatar' :user='user'/>
     </b-card-body>
     </div>
-    <div><b>Friends({{friendsData.length}})</b></div>
+    <div style='font-size: 1.5em;'><b>Friends({{friendsData.length}})</b></div>
     <b-card-footer style="border:none; background-color: #1f1e1d;">
     <b-row v-for="row in friendsRow" :key="row[0].id">
       <b-col>
