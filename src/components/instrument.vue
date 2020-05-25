@@ -240,8 +240,6 @@ export default {
     receiveStartDrum({
       drum: d,
     }) {
-      console.log('gotit');
-      // this.activeExternalSynths = Object.assign({}, this.activeExternalSynths, { [d]: synth });
       this.synths[d].triggerAttackRelease(this.instruments[d], '8n');
     },
     receiveStart({
