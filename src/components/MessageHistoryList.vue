@@ -1,11 +1,11 @@
 <template>
-  <b-container >
-    <b-list-group flush>
-      <div class="indv-message">
-        <b-list-group-item
-            class="mr-auto"
-            :variant="[ Number(this.myId) === Number(this.message.id_user_from)
-            ? variant='info' : variant='dark' ]">
+  <b-container class="message-container">
+    <section flush>
+      <div class="indv-message"
+          :class="[ Number(this.myId) === Number(this.message.id_user_from)
+          ? 'green' : 'white' ]"
+          >
+        <div class="mr-auto">
           <b-avatar
           :href="'/profile/' + message.id_user_from"
           :src="message.url_avatar"
@@ -15,9 +15,9 @@
           ? 'float-right' : 'float-left' ]"
           ></b-avatar>
               {{ message.text }}
-            </b-list-group-item>
+            </div>
       </div>
-    </b-list-group>
+    </section>
   </b-container>
 </template>
 
@@ -40,5 +40,24 @@ export default {
 </script>
 
 <style scoped>
+.indv-message {
+  border: 2px solid #6d8657;
+  background-color: white;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+}
 
+/* Darker chat container */
+.green {
+  border-color: #6d8657;
+  background-color: #6d8657;
+}
+
+/* Clear floats */
+.indv-message::after {
+  content: "";
+  clear: both;
+  display: table;
+}
 </style>

@@ -10,7 +10,7 @@
       hide-footer>
       <form ref="form" @submit.stop.prevent="handleSubmit">
         <b-form-group>
-          <b-card>
+          <b-card class="message-card">
             <div>
             <span v-for="message in messages" :key="message.id">
               <MessageHistoryList
@@ -20,9 +20,13 @@
             </span>
             </div>
           </b-card>
-        <b-form-input v-model="text" placeholder="send a message"></b-form-input>
+        <b-form-input
+          class="message-input"
+          v-model="text"
+          placeholder="send a message">
+        </b-form-input>
       </b-form-group>
-      <b-button class="mt-3" block @click="handleOk">Send</b-button>
+      <b-button class="mt-3 send-button" block @click="handleOk">Send</b-button>
       </form>
     </b-modal>
   </div>
@@ -116,5 +120,15 @@ export default {
 <style scoped>
 .modal {
   border: 1px solid forestgreen;
+}
+.message-card {
+  background-color: #1f1e1d;
+}
+.message-input {
+  border-color: #1f1e1d;
+  border-radius: 5px;
+}
+.send-button {
+  background-color: #6d8657;
 }
 </style>
