@@ -1,12 +1,15 @@
 <template>
-  <b-row>
-    <b-col>
   <div class="profile">
     <div class="profile-card">
   <b-card
     class="profile-card"
     no-body
-    style="max-width: 20rem; border:none; top:50px; right:50px; position:fixed;"
+    style="max-width:20rem;
+    border:none;
+    top:50px;
+    right:50px;
+    position:fixed;
+    background-color: #1f1e1d;"
   >
     <template v-slot:header>
       <img v-if="user.url_avatar" :src="user.url_avatar" />
@@ -49,37 +52,35 @@
       <PhotoUpload v-on:new-avatar='newAvatar' :user='user'/>
     </b-card-body>
     </div>
-    <div>Friends:</div>
-    <b-card-footer style="border:none;">
+    <div><b>Friends({{friendsData.length}})</b></div>
+    <b-card-footer style="border:none; background-color: #1f1e1d;">
     <b-row v-for="row in friendsRow" :key="row[0].id">
       <b-col>
-        <b-avatar :src="row[0].url_avatar" />
-        <router-link class="friendname"
-        :to="`/profile/${row[0].id}`">
-        {{ row[0].username }}
-        </router-link>
+        <b-avatar
+        :to="`/profile/${row[0].id}`"
+        :src="row[0].url_avatar"
+        size="4em"
+         />
       </b-col>
       <b-col v-if="row[1]">
-        <b-avatar :src="row[1].url_avatar" />
-        <router-link class="friendname"
-        :to="`/profile/${row[1].id}`">
-        {{ row[1].username }}
-        </router-link>
+        <b-avatar
+        :to="`/profile/${row[1].id}`"
+        :src="row[1].url_avatar"
+        size="4em"
+        />
       </b-col>
       <b-col v-if="row[2]">
-        <b-avatar :src="row[2].url_avatar" />
-        <router-link class="friendname"
-        :to="`/profile/${row[2].id}`">
-        {{ row[2].username }}
-    </router-link>
+        <b-avatar
+        :to="`/profile/${row[2].id}`"
+        :src="row[2].url_avatar"
+        size="4em"
+        />
       </b-col>
     </b-row>
     </b-card-footer>
   </b-card>
 </div>
   </div>
-    </b-col>
-  </b-row>
 </template>
 
 <script>
@@ -188,6 +189,6 @@ export default {
 
 <style scoped>
 .profile-card {
-  text-decoration-color:#99aca0;
+  color:#99aca0;
 }
 </style>
