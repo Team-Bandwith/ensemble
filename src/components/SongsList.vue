@@ -5,7 +5,7 @@
         :song="song"
         :liked="liked"
         :user="user"
-        :myId="user.id"
+        :myId="myId"
         v-on:new-like="newLike"
       />
       <hr>
@@ -31,12 +31,13 @@ export default {
       songs: [],
     };
   },
+  computed: {
+    myId() {
+      return this.user ? this.user.id : null;
+    },
+  },
   methods: {
     getAllSongs() {
-      if (!this.loggedIn) {
-        this.songs = [];
-        return;
-      }
       const query = `query {
       getAllSongs {
         id, 
@@ -60,6 +61,7 @@ export default {
     },
   },
   created() {
+    console.log('songs list created');
     this.getAllSongs();
   },
   watch: {

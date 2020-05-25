@@ -39,6 +39,7 @@
                 v-if="user && !liked.map((like) => like.id).includes(song.id)"
                 @click="likeSong(song.count_likes, song.id)">Like</b-button>
               <b-button v-else-if="user" @click="unlikeSong(song.id)">Unlike</b-button>
+              <span v-else>Likes: </span>
                 {{ this.likes }}
             </div>
           </b-col>

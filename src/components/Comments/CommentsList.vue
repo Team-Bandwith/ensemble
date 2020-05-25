@@ -7,6 +7,7 @@
   </div>
 
   <CommentInput
+    v-if="myId"
     v-on:new-comment="getSongComments"
     :song="song"
     :user="user"
