@@ -157,6 +157,11 @@ io.on('connection', (socket) => {
     socket.broadcast.to(room).emit('receiveStop', note);
   });
 
+  socket.on('startDrum', ({ drum, room }) => {
+    console.log('d-start');
+    socket.broadcast.to(room).emit('receiveStartDrum', { drum });
+  });
+
   socket.on('sendMessage', ({ message, room }) => {
     io.to(room).emit('receiveMessage', message);
   });
