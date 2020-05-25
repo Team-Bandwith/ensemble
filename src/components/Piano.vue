@@ -102,7 +102,7 @@ export default {
             vibFreq: this.vibFreq,
             vibDepth: this.vibDepth,
             oscType: this.oscType,
-            room: window.location.search,
+            room: this.$route.query.room,
           });
           const synth = new Tone.Synth({
             oscillator: { type: this.oscType },
@@ -111,7 +111,7 @@ export default {
           activeSynths[k.note] = synth;
           synth.triggerAttack(note(k.note));
         } else {
-          this.$socket.emit('stopNote', { note: k.note, room: window.location.search });
+          this.$socket.emit('stopNote', { note: k.note, room: this.$route.query.room });
           activeSynths[k.note].triggerRelease();
           delete activeSynths[k.note];
         }
