@@ -62,7 +62,7 @@ export default {
         user: this.user.username,
       };
       // console.log(message);
-      this.$socket.emit('sendMessage', { message, room: window.location.search });
+      this.$socket.emit('sendMessage', { message, room: this.$route.query.room });
       this.message = '';
     },
     chat() {
