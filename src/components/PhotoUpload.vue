@@ -234,7 +234,7 @@ button:focus {
 form button:disabled,
 form button[disabled] {
   border: 1px solid #999999;
-  background-color: #cccccc;background-color: #98AC9E;
+  background-color: #cccccc;
   color: #666666;
 }
 
