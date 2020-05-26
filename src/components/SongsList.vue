@@ -1,15 +1,6 @@
 <template>
   <b-container fluid>
     <div v-for="song in songs" :key="song.id">
-<<<<<<< HEAD
-       <Song
-        :song="song"
-        :liked="liked"
-        :user="user"
-        :myId="myId"
-        v-on:new-like="newLike"
-      />
-=======
        <div class="song">
         <Song
           :song="song"
@@ -19,7 +10,6 @@
           v-on:new-like="newLike"
         />
       </div>
->>>>>>> (chore) seperate songs with margin in songsList
       <hr>
     </div>
   </b-container>
