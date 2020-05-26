@@ -56,7 +56,12 @@
                 size="2x"
                 v-else-if="user" @click="unlikeSong(song.id)"
               />
-              <span v-else>Likes:</span>
+              <font-awesome-icon
+                icon="thumbs-up"
+                class="align-top"
+                size="2x"
+                v-else
+              />
                 {{ this.likes }}
             </div>
           </b-col>
