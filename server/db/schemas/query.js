@@ -71,8 +71,11 @@ exports.query = new GraphQLObjectType({
       type: new GraphQLList(InviteType),
       args: { id: { type: GraphQLInt } },
       resolve(parentValue, args) {
-        const query = `SELECT invite.*, member.username, member.url_avatar
-        FROM invite, member WHERE id_user_to = $1 AND id_user_from = member.id ORDER BY created_at DESC`;
+        const query = `SELECT invite.*, member.username, member.url_avatar FROM invite, member
+        WHERE id_user_to = $1
+        AND id_user_from = member.id
+        AND created_at > now() - interval '6 hour'
+        ORDER BY created_at DESC`;
         return db.any(query, [args.id])
           .then((data) => data)
           .catch((err) => { console.log('err', err); });
