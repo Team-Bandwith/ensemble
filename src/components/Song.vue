@@ -78,12 +78,12 @@
                         size="2x"
                         v-b-toggle="'collapse' + song.id"
                 />
-                <!-- eslint-disable-next-line vue/no-parsing-error -->
               </div>
             </div>
           </b-col>
         </b-row>
         <b-row>
+          <!-- Toggled element -->
           <b-collapse :id="'collapse' + song.id">
             <CommentsList :song="song" :user="user" :myId="myId"></CommentsList>
           </b-collapse>
@@ -178,6 +178,7 @@ export default {
   padding: 1em;
 }
 .song-title{
+  font-size: 1.7em;
   font-weight: bold;
 }
 .created-by a{
