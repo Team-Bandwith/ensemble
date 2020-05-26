@@ -1,13 +1,15 @@
 <template>
 <div>
     <b-list-group>
-    <b-list-group-header>
-        Contributions:
+    <b-list-group-header class='contribs' style="background-color: #1f1e1d;">
+        Contributing Artist
     </b-list-group-header>
         <b-list-group-item
         v-for="contrib in contribution"
         :key="contrib.id">
-        <span v-b-modal="`contrib${contrib.id}`">{{contrib.name}}</span>
+        <span v-b-modal="`contrib${contrib.id}`"
+        style="font-size: 1.3rem;"
+        >{{contrib.name}}</span>
         <b-modal :id="`contrib${contrib.id}`">
             <Song
             :myId='myId'
@@ -18,9 +20,6 @@
             />
         </b-modal>
         </b-list-group-item>
-        <b-list-group-footer>
-            <hr/>
-        </b-list-group-footer>
     </b-list-group>
 </div>
 </template>
@@ -77,6 +76,11 @@ export default {
 </script>
 <style scoped>
 div {
-    background-color:aliceblue;
+    margin-bottom: 1em;
+    background-color:#98AC9E;
+}
+.contribs{
+  font-size: 2rem;
+  color: #99aca0;
 }
 </style>

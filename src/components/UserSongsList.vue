@@ -1,8 +1,8 @@
 /* eslint-disable max-len */
 <template>
-<div class='listcontainer'>
   <b-container fluid>
     <div v-for="song in songs" :key="song.id">
+      <div class='listcontainer'>
        <Song
         :song="song"
         :liked="liked"
@@ -10,10 +10,10 @@
         :myId="myId"
         v-on:new-like="newLike"
       />
+      </div>
       <hr>
     </div>
   </b-container>
-</div>
 </template>
 <script>
 import { request } from 'graphql-request';
@@ -80,6 +80,7 @@ export default {
 
 <style scoped>
 .listcontainer {
+  margin-bottom: 1em;
   background-color:#98AC9E;
 }
 </style>
