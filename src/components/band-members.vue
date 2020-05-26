@@ -1,15 +1,20 @@
 <template>
   <b-container>
     <b-row align-h="end">
-      <b-button variant="primary" @click="toggleInv">Invite</b-button>
+      <b-button
+        squared
+        variant="primary"
+        class='button'
+        @click="toggleInv">Invite
+        </b-button>
     </b-row>
     <b-row>
       <SendInvite v-model="invOpen" :online="online" :you="you" />
     </b-row>
-    <b-row>
+    <b-row align-h="around">
       <b-col cols="2" v-for="user in users" v-bind:key="user.id">
-        <img class="band-member-avatar" v-if="user.url_avatar" :src="user.url_avatar" />
-        <span class="band-member-username">{{ user.username }}</span>
+        <b-avatar class="band-member-avatar" v-if="user.url_avatar" :src="user.url_avatar" />
+        <p class="band-member-username">{{ user.username }} </p>
       </b-col>
     </b-row>
   </b-container>
@@ -42,9 +47,4 @@ export default {
 </script>
 
 <style>
-
-.band-member-username {
-  text-align: center;
-}
-
 </style>
