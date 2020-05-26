@@ -1,6 +1,11 @@
 <template>
   <div classes="cl-upload">
-    <b-button v-b-modal.modal-prevent-closing>Upload</b-button>
+    <font-awesome-icon
+      icon="plus"
+      class="upload-plus"
+      size="sm"
+      v-b-modal.modal-prevent-closing
+      />
     <b-modal
       class='upload-modal'
       id="modal-prevent-closing"
@@ -223,7 +228,7 @@ input:focus {
   }
 }
 button {
-  background-color: blue;
+  background-color: black;
   color: white;
   font-weight: bold;
   border-radius: 10px;

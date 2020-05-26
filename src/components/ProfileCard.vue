@@ -12,7 +12,14 @@
     background-color: #1f1e1d;"
   >
     <template v-slot:header style="opacity: 0; border:none;">
-      <img v-if="user.url_avatar" :src="user.url_avatar" />
+      <b-avatar
+      :src="user.url_avatar"
+      badge badge-offset="-0.5em"
+      badge-variant="dark"
+      class="justify-center"
+      size='115px'>
+      <template v-slot:badge><PhotoUpload v-on:new-avatar='newAvatar' :user='user'/></template>
+      </b-avatar>
       <h4 class="mb-0"
         :style="friends[user.id] ? { color: 'green' } : {}"
       >
@@ -59,32 +66,40 @@
         </b-row>
         </b-list-group-item>
       <b-list-group-item style="border: none; background-color: #1f1e1d;">
-        contact: <b>{{user.email}}</b></b-list-group-item>
+        <b-row align-h="end">
+          <b-col cols="4">
+            <div style='text-align: right; color:white;'>
+        contact:
+            </div>
+          </b-col>
+          <b-col cols="8">
+            <div style="text-align: left;">
+        <b>{{user.email}}</b>
+            </div>
+          </b-col>
+        </b-row>
+        </b-list-group-item>
     </b-list-group>
     <div class='loader' v-if="myId === parseInt($route.params.id)">
-    <b-card-body style="border:none;">
-      Upload your Photo Here:
-      <PhotoUpload v-on:new-avatar='newAvatar' :user='user'/>
-    </b-card-body>
     </div>
     <div style='font-size: 1.5em;'><b>Friends({{friendsData.length}})</b></div>
     <b-card-footer style="border:none; background-color: #1f1e1d;">
     <b-row v-for="row in friendsRow" :key="row[0].id" class='mb-3'>
-      <b-col>
+      <b-col cols="4">
         <b-avatar
         :to="`/profile/${row[0].id}`"
         :src="row[0].url_avatar"
         size="4em"
          />
       </b-col>
-      <b-col v-if="row[1]">
+      <b-col v-if="row[1]" cols="4">
         <b-avatar
         :to="`/profile/${row[1].id}`"
         :src="row[1].url_avatar"
         size="4em"
         />
       </b-col>
-      <b-col v-if="row[2]">
+      <b-col v-if="row[2]" cols="4">
         <b-avatar
         :to="`/profile/${row[2].id}`"
         :src="row[2].url_avatar"
@@ -205,5 +220,8 @@ export default {
 <style scoped>
 .profile-card {
   color:#99aca0;
+}
+.b-avatar {
+  background-color: #1f1e1d;
 }
 </style>
