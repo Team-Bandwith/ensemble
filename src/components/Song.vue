@@ -45,11 +45,23 @@
          </b-col>
          <b-col>
             <div class="song-likes">
-              <b-button
+              <font-awesome-icon
+                icon="thumbs-up"
+                class="like align-top"
+                size="2x"
                 v-if="user && !liked.map((like) => like.id).includes(song.id)"
+<<<<<<< HEAD
                 @click="likeSong(song.count_likes, song.id)">Like</b-button>
               <b-button v-else-if="user" @click="unlikeSong(song.id)">Unlike</b-button>
               <span v-else>Likes: </span>
+=======
+                @click="likeSong(song.count_likes, song.id)" />
+              <font-awesome-icon
+                icon="thumbs-down"
+                class="like align-top"
+                size="2x"
+                v-else-if="user" @click="unlikeSong(song.id)" />
+>>>>>>> (chore) add icon in place of button for like and comments
                 {{ this.likes }}
             </div>
           </b-col>
@@ -60,7 +72,12 @@
         <div class="song-comments">
           <div>
             <!-- button to toggle element -->
-            <b-button v-b-toggle="'collapse' + song.id">Comments</b-button>
+            <font-awesome-icon
+                    icon="comments"
+                    class="comments align-top"
+                    size="2x"
+                    v-b-toggle="'collapse' + song.id"
+             />
             <!-- eslint-disable-next-line vue/no-parsing-error -->
             <b-collapse :id="'collapse' + song.id">
               <CommentsList :song="song" :user="user" :myId="myId"></CommentsList>
