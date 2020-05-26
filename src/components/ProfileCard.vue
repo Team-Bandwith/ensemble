@@ -12,7 +12,13 @@
     background-color: #1f1e1d;"
   >
     <template v-slot:header style="opacity: 0; border:none;">
-      <img v-if="user.url_avatar" :src="user.url_avatar" />
+      <b-avatar v-if="user.url_avatar"
+      :src="user.url_avatar"
+      badge badge-offset="-0.5em"
+      badge-variant="dark"
+      size='115px'>
+      <template v-slot:badge><PhotoUpload v-on:new-avatar='newAvatar' :user='user'/></template>
+      </b-avatar>
       <h4 class="mb-0"
         :style="friends[user.id] ? { color: 'green' } : {}"
       >
@@ -205,5 +211,8 @@ export default {
 <style scoped>
 .profile-card {
   color:#99aca0;
+}
+.b-avatar {
+  background-color: #1f1e1d;
 }
 </style>
