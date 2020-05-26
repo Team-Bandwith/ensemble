@@ -1,22 +1,13 @@
 <template>
-  <div>
-    bass:
-  <b-button @click="makeBassSound"></b-button>
-    <br>
-    snare:
-  <b-button @click="makeSnareSound"></b-button>
-    <br>
-  <b-row>
-    <div v-for="row in rows" :key="row">
-      <input type="checkbox">
+  <b-container>
+    <b-row><div id="target"></div></b-row>
+    <div>
+      <b-row><b-button @click="playLoop">play loop</b-button></b-row>
     </div>
-  </b-row>
-  <b-row>
-    <b-button @click="playLoop">play loop</b-button>
-  </b-row>
-  <b-row><div id="target"></div></b-row>
-  </div>
-
+    <div>
+      <b-row><b-button @click="stopLoop">stop loop</b-button></b-row>
+    </div>
+  </b-container>
 </template>
 <script>
 import Tone from 'tone';
@@ -25,48 +16,60 @@ import Nexus from 'nexusui';
 export default {
   name: 'Drum',
   props: {
+    dest: MediaStreamAudioDestinationNode,
   },
   data() {
     return {
-      index: 0,
-      rows: [1, 2, 3, 4],
+      intervalState: false,
+      sequencer: null,
+      instruments: ['C3', 'C4'],
+      synths: [
+        new Tone.MembraneSynth().toMaster(),
+        new Tone.MembraneSynth().toMaster(),
+      ],
+      col: null,
+      transport: null,
     };
   },
   mounted() {
     this.createSequencer();
+    Tone.Master.connect(this.dest);
   },
   methods: {
+    toggleIntervalState() {
+      this.intervalState = !this.intervalState;
+    },
     createSequencer() {
-      console.log('created');
       const sequencer = new Nexus.Sequencer('#target', {
         size: [400, 200],
         mode: 'toggle',
-        rows: 5,
+        rows: 2,
         columns: 10,
       });
-      console.log(sequencer);
-    },
-    makeBassSound() {
-      const synth = new Tone.MembraneSynth();
-      synth.toMaster();
-      synth.triggerAttackRelease('C2', '8n');
-    },
-    makeSnareSound() {
-      const synth = new Tone.MembraneSynth();
-      synth.toMaster();
-      synth.triggerAttackRelease('G3', '8n');
+      sequencer.on('step', (v) => {
+        this.col = v;
+      });
+      this.sequencer = sequencer;
     },
     playLoop() {
-      const beat = document.body.querySelectorAll('input[type="checkbox"]');
-      const clock = new Tone.Clock(() => {
-        // eslint-disable-next-line no-plusplus
-        for (let i = 0; i < beat.length; i++) {
-          if (beat[i].checked) {
-            this.makeBassSound();
-          }
-        }
-      }, 1);
-      clock.start();
+      if (this.transport === null) {
+        this.transport = Tone.Transport.scheduleRepeat((time) => {
+          this.sequencer.next();
+          this.col.forEach((state, i) => {
+            if (state) {
+              this.$socket.emit('startDrum', {
+                drum: i,
+                room: this.$route.query.room,
+              });
+              this.synths[i].triggerAttackRelease(this.instruments[i], '8n', time);
+            }
+          });
+        }, '0.5');
+      }
+      Tone.Transport.start();
+    },
+    stopLoop() {
+      Tone.Transport.stop();
     },
   },
 };
