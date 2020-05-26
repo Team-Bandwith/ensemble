@@ -24,6 +24,7 @@ exports.query = new GraphQLObjectType({
         const query = `SELECT song.*, member.username, member.url_avatar
         FROM song, member
         WHERE id_author = member.id
+        AND public
         ORDER BY created_at DESC`;
         return db.any(query)
           .then((data) => data)
@@ -219,6 +220,22 @@ exports.query = new GraphQLObjectType({
         AND song_user.id_song = song.id
         AND song_user.type = 'contribution'`;
         return db.any(query, [args.id])
+          .then((res) => res)
+          .catch((err) => console.log(err));
+      },
+    },
+    getPrivateFeed: {
+      type: new GraphQLList(SongType),
+      args: {
+        userIDs: { type: GraphQLString },
+      },
+      resolve(parentValue, args) {
+        const query = `SELECT song.*, member.username, member.url_avatar
+        FROM song, member
+        WHERE id_author = ANY($1::int[])
+        AND id_author = member.id
+        ORDER BY created_at DESC`;
+        return db.any(query, [args.userIDs])
           .then((res) => res)
           .catch((err) => console.log(err));
       },

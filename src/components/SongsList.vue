@@ -5,7 +5,7 @@
         :song="song"
         :liked="liked"
         :user="user"
-        :myId="user.id"
+        :myId="myId"
         v-on:new-like="newLike"
       />
       <hr>
@@ -22,6 +22,8 @@ export default {
     loggedIn: Boolean,
     liked: Array,
     user: Object,
+    friends: Object,
+    feed: String,
   },
   components: {
     Song,
@@ -31,12 +33,23 @@ export default {
       songs: [],
     };
   },
+  computed: {
+    myId() {
+      return this.user ? this.user.id : null;
+    },
+    userIDs() {
+      if (this.myId) {
+        let idString = this.myId.toString();
+        Object.keys(this.friends).forEach((id) => {
+          idString += `,${id}`;
+        });
+        return `{${idString}}`;
+      }
+      return '';
+    },
+  },
   methods: {
     getAllSongs() {
-      if (!this.loggedIn) {
-        this.songs = [];
-        return;
-      }
       const query = `query {
       getAllSongs {
         id, 
@@ -51,7 +64,31 @@ export default {
     }`;
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
         .then((res) => {
-          this.songs = res.getAllSongs;
+          if (this.myId) {
+            this.songs = res.getAllSongs.filter((song) => Number(song.id_author) !== this.myId);
+          } else {
+            this.songs = res.getAllSongs;
+          }
+        })
+        .catch((err) => console.log(err));
+    },
+    getPrivateFeed() {
+      const query = `query {
+        getPrivateFeed(userIDs: "${this.userIDs}") {
+          id, 
+          id_author, 
+          name, 
+          url, 
+          count_likes,
+          created_at,
+          username,
+          url_avatar
+        }
+      }`;
+
+      request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
+        .then((res) => {
+          this.songs = res.getPrivateFeed;
         })
         .catch((err) => console.log(err));
     },
@@ -60,11 +97,27 @@ export default {
     },
   },
   created() {
-    this.getAllSongs();
+    if (this.user) {
+      this.getPrivateFeed();
+    } else {
+      this.getAllSongs();
+    }
   },
   watch: {
-    loggedIn() {
-      this.getAllSongs();
+    loggedIn(val) {
+      if (!val) {
+        this.getAllSongs();
+      }
+    },
+    friends() {
+      this.getPrivateFeed();
+    },
+    feed(val) {
+      if (val === 'public') {
+        this.getAllSongs();
+      } else if (val === 'private') {
+        this.getPrivateFeed();
+      }
     },
   },
 };
