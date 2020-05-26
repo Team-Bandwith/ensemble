@@ -25,10 +25,20 @@
             <div class="song-url">
               <div>
                 <div v-if="isPlaying">
-                  <b-button @click="playSong()">Pause</b-button>
+                   <font-awesome-icon
+                    icon="pause"
+                    class="play align-top"
+                    size="2x"
+                    @click="playSong()"
+                  />
                 </div>
                 <div v-else>
-                  <b-button @click="playSong(song.url)">Play</b-button>
+                  <font-awesome-icon
+                    icon="play"
+                    class="play align-top"
+                    size="2x"
+                    @click="playSong(song.url)"
+                  />
                 </div>
               </div>
             </div>
@@ -144,7 +154,7 @@ export default {
 </script>
 
 <style>
-.song-item{
+.song-item {
   padding: 1em;
 }
 .song-title{
