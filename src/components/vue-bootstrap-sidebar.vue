@@ -31,7 +31,12 @@
             <b-button @click="setFeed('public')">Explore</b-button>
           </div>
           <div class='logout-btn'>
-            <b-button @click="logOut">Logout</b-button>
+            <font-awesome-icon
+              icon="sign-out-alt"
+              class="sign-out-alt align-top"
+              size="2x"
+              @click="logOut"
+            /> Logout
           </div>
           </div>
         <div v-if="loggedIn">
@@ -255,12 +260,16 @@ img {
    position:fixed;
    right:10px;
    top:7px;
+   color: #fff;
 }
-
+.sign-out-alt{
+  color: #fff;
+}
 .signup-btn {
    position:fixed;
    right:10px;
    top:7px;
+   border: 1px solid red;
 }
 
 .login-btn {
