@@ -1,5 +1,5 @@
 <template>
-  <b-container class="jam-page" style="background-color:#98AC9E;">
+  <b-container class="jam-page">
     <b-row>
       <b-col cols="8" >
     <b-row>
