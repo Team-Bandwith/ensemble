@@ -269,7 +269,6 @@ img {
    position:fixed;
    right:10px;
    top:7px;
-   border: 1px solid red;
 }
 
 .login-btn {
