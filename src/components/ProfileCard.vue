@@ -12,7 +12,7 @@
     background-color: #1f1e1d;"
   >
     <template v-slot:header style="opacity: 0; border:none;">
-      <b-avatar v-if="user.url_avatar"
+      <b-avatar
       :src="user.url_avatar"
       badge badge-offset="-0.5em"
       badge-variant="dark"
@@ -85,21 +85,21 @@
     <div style='font-size: 1.5em;'><b>Friends({{friendsData.length}})</b></div>
     <b-card-footer style="border:none; background-color: #1f1e1d;">
     <b-row v-for="row in friendsRow" :key="row[0].id" class='mb-3'>
-      <b-col>
+      <b-col cols="4">
         <b-avatar
         :to="`/profile/${row[0].id}`"
         :src="row[0].url_avatar"
         size="4em"
          />
       </b-col>
-      <b-col v-if="row[1]">
+      <b-col v-if="row[1]" cols="4">
         <b-avatar
         :to="`/profile/${row[1].id}`"
         :src="row[1].url_avatar"
         size="4em"
         />
       </b-col>
-      <b-col v-if="row[2]">
+      <b-col v-if="row[2]" cols="4">
         <b-avatar
         :to="`/profile/${row[2].id}`"
         :src="row[2].url_avatar"
