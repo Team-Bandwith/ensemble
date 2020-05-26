@@ -42,11 +42,16 @@
         Friend request sent.
       </b-toast>
     </template>
-    <b-card-body>
-      <b-card-text style="color: white;">
-        Some quick example text to build on the card title and make up the bulk of the card's
-        content.
+    <b-card-body class="field">
+      <label>Bio:</label>
+        <b-card-text
+          style="color: white;"
+          v-model="bio">
+          {{bio}}
       </b-card-text>
+      <div v-if="myId === parseInt(user.id)">
+          <EditBioModal :bio="bio"/>
+      </div>
     </b-card-body>
 
     <b-list-group flush>
@@ -93,7 +98,7 @@
         :to="`/profile/${row[0].id}`"
         :src="row[0].url_avatar"
         size="4em"
-         />
+      />
       </b-col>
       <b-col v-if="row[1]" cols="4">
         <b-avatar
@@ -120,15 +125,18 @@
 import { request } from 'graphql-request';
 import PhotoUpload from '@/components/PhotoUpload.vue';
 import MessageHistory from './MessageHistory.vue';
+import EditBioModal from './EditBioModal.vue';
 
 export default {
   name: 'ProfileCard',
   components: {
     PhotoUpload,
     MessageHistory,
+    EditBioModal,
   },
   data() {
     return {
+      bio: 'What\'s your story?',
       friendsRow: [],
     };
   },
