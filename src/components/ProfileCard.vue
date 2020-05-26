@@ -38,6 +38,9 @@
           <MessageHistory :userTo="$route.params.id" :myId='myId' :user='user'/>
         </b-button>
       </div>
+      <b-toast id="request-sent" title="Success!" auto-hide-delay="2000">
+        Friend request sent.
+      </b-toast>
     </template>
     <b-card-body>
       <b-card-text style="color: white;">
@@ -170,8 +173,11 @@ export default {
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
         .then(() => alert("You've already sent this user a friend request."))
         .catch(() => request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, mutation))
-        .then(() => {
+        .then((res) => {
           this.$emit('friend');
+          if (res) {
+            this.$bvToast.show('request-sent');
+          }
         })
         .then(() => {
           const reverseCheck = `
