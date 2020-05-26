@@ -24,6 +24,12 @@
           <div v-if="loggedIn">
           <img v-if="user.url_avatar" :src="user.url_avatar" />
           <div class='user-name'><b>{{ user.username }}</b></div>
+          <div class='feed-btn'>
+            <b-button @click="setFeed('private')">Your Feed</b-button>
+          </div>
+          <div class='explore-btn'>
+            <b-button @click="setFeed('public')">Explore</b-button>
+          </div>
           <div class='logout-btn'>
             <b-button @click="logOut">Logout</b-button>
           </div>
@@ -215,6 +221,10 @@ export default {
         this.$router.push(`/profile/${value.id}`);
       }
     },
+    setFeed(feed) {
+      console.log('navbar set feed', feed);
+      this.$emit('feed', feed);
+    },
   },
 };
 </script>
@@ -256,6 +266,18 @@ img {
 .login-btn {
    position:fixed;
    right:90px;
+   top:7px;
+}
+
+.feed-btn {
+   position:fixed;
+   right:300px;
+   top:7px;
+}
+
+.explore-btn {
+   position:fixed;
+   right:200px;
    top:7px;
 }
 .search {

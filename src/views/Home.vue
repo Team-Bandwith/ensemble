@@ -7,6 +7,7 @@
       :liked="liked"
       :user="user"
       :friends="friends"
+      :feed="feed"
       v-on:new-like="newLike"
     />
   </div>
@@ -28,6 +29,7 @@ export default {
     liked: Array,
     user: Object,
     friends: Object,
+    feed: String,
   },
   methods: {
     newLike() {

@@ -26,6 +26,7 @@ export default Vue.extend({
       online: [],
       friends: {},
       notifications: 0,
+      feed: null,
     };
   },
   mounted() {
@@ -111,6 +112,10 @@ export default Vue.extend({
     denotify() {
       this.notifications -= 1;
     },
+    setFeed(feed) {
+      console.log('app set feed', feed);
+      this.feed = feed;
+    },
   },
   sockets: {
     connect() {
@@ -136,6 +141,7 @@ export default Vue.extend({
     <BootstrapSidebar
       v-on:log-in="logIn"
       v-on:log-out="logOut"
+      v-on:feed="setFeed"
       :initial-show="initialShow"
       :links="links"
       :header="header"
@@ -167,6 +173,7 @@ export default Vue.extend({
             :liked="liked"
             :online="online"
             :friends="friends"
+            :feed="feed"
             v-on:new-avatar='newAvatar'
             v-on:new-like="getUserLikes(user.id)"
             v-on:friend="getUserFriends(user.id)"

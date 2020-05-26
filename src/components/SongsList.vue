@@ -23,6 +23,7 @@ export default {
     liked: Array,
     user: Object,
     friends: Object,
+    feed: String,
   },
   components: {
     Song,
@@ -37,11 +38,14 @@ export default {
       return this.user ? this.user.id : null;
     },
     userIDs() {
-      let idString = this.myId.toString();
-      Object.keys(this.friends).forEach((id) => {
-        idString += `,${id}`;
-      });
-      return `{${idString}}`;
+      if (this.myId) {
+        let idString = this.myId.toString();
+        Object.keys(this.friends).forEach((id) => {
+          idString += `,${id}`;
+        });
+        return `{${idString}}`;
+      }
+      return '';
     },
   },
   methods: {
@@ -60,7 +64,11 @@ export default {
     }`;
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
         .then((res) => {
-          this.songs = res.getAllSongs;
+          if (this.myId) {
+            this.songs = res.getAllSongs.filter((song) => Number(song.id_author) !== this.myId);
+          } else {
+            this.songs = res.getAllSongs;
+          }
         })
         .catch((err) => console.log(err));
     },
@@ -89,7 +97,7 @@ export default {
     },
   },
   created() {
-    if (this.friends) {
+    if (this.user) {
       this.getPrivateFeed();
     } else {
       this.getAllSongs();
@@ -103,6 +111,13 @@ export default {
     },
     friends() {
       this.getPrivateFeed();
+    },
+    feed(val) {
+      if (val === 'public') {
+        this.getAllSongs();
+      } else if (val === 'private') {
+        this.getPrivateFeed();
+      }
     },
   },
 };
