@@ -6,7 +6,7 @@
           :song="song"
           :liked="liked"
           :user="user"
-          :myId="user.id"
+          :myId="myId"
           v-on:new-like="newLike"
         />
       </div>
