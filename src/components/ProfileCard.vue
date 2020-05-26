@@ -67,7 +67,11 @@
       <PhotoUpload v-on:new-avatar='newAvatar' :user='user'/>
     </b-card-body>
     </div>
+<<<<<<< HEAD
     <div style='font-size: 1.5em;'><b>Friends({{friendsData.length}})</b></div>
+=======
+    <div><b>Friends({{friendsData.length}})</b></div>
+>>>>>>> changed friends list to look like prototype
     <b-card-footer style="border:none; background-color: #1f1e1d;">
     <b-row v-for="row in friendsRow" :key="row[0].id">
       <b-col>
