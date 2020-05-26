@@ -17,7 +17,7 @@
           placeholder="change your bio">
 
       </b-form-input>
-      <b-button class="mt-3" @click="editBio">Submit Bio</b-button>
+      <b-button class="mt-3" @click="editBio" v-on:click="emitToParent">Submit Bio</b-button>
       </b-form-group>
     </form>
     </b-modal>
@@ -38,6 +38,9 @@ export default {
   methods: {
     editBio() {
       this.bio = this.text;
+    },
+    emitToParent() {
+      this.$emit('editBio', this.text);
     },
   },
 };
