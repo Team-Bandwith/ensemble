@@ -51,12 +51,17 @@
                 @click="likeSong(song.count_likes, song.id)"
               />
               <font-awesome-icon
-                icon="thumbs-down"
-                class="like align-top"
+                icon="thumbs-up"
+                class="unlike align-top"
                 size="2x"
                 v-else-if="user" @click="unlikeSong(song.id)"
               />
-              <span v-else>Likes:</span>
+              <font-awesome-icon
+                icon="thumbs-up"
+                class="align-top"
+                size="2x"
+                v-else
+              />
                 {{ this.likes }}
             </div>
           </b-col>
@@ -179,5 +184,17 @@ export default {
 }
 .created-by a:hover {
   color: #e98e3e;
+}
+.like:hover {
+  cursor: pointer;
+}
+.unlike {
+  color: #e98e3e;
+}
+.unlike:hover {
+  cursor: pointer;
+}
+.comments:hover {
+  cursor: pointer;
 }
 </style>
