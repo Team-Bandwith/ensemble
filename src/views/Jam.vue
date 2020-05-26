@@ -25,7 +25,7 @@
         <BandMembers
           :users="users"
           :you="user"
-          :online="online.filter((usr) => usr.id !== user.id)"
+          :online="online.filter((usr) => usr.id !== user.id && friends[usr.id])"
         />
       </b-col>
     </b-row>
@@ -57,6 +57,7 @@ export default {
   props: {
     user: Object,
     online: Array,
+    friends: Object,
   },
   watch: {
     user(val) {
