@@ -16,6 +16,7 @@
       :src="user.url_avatar"
       badge badge-offset="-0.5em"
       badge-variant="dark"
+      class="justify-center"
       size='115px'>
       <template v-slot:badge><PhotoUpload v-on:new-avatar='newAvatar' :user='user'/></template>
       </b-avatar>
@@ -65,13 +66,21 @@
         </b-row>
         </b-list-group-item>
       <b-list-group-item style="border: none; background-color: #1f1e1d;">
-        contact: <b>{{user.email}}</b></b-list-group-item>
+        <b-row align-h="end">
+          <b-col cols="4">
+            <div style='text-align: right; color:white;'>
+        contact:
+            </div>
+          </b-col>
+          <b-col cols="8">
+            <div style="text-align: left;">
+        <b>{{user.email}}</b>
+            </div>
+          </b-col>
+        </b-row>
+        </b-list-group-item>
     </b-list-group>
     <div class='loader' v-if="myId === parseInt($route.params.id)">
-    <b-card-body style="border:none;">
-      Upload your Photo Here:
-      <PhotoUpload v-on:new-avatar='newAvatar' :user='user'/>
-    </b-card-body>
     </div>
     <div style='font-size: 1.5em;'><b>Friends({{friendsData.length}})</b></div>
     <b-card-footer style="border:none; background-color: #1f1e1d;">
