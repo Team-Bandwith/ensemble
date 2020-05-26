@@ -1,7 +1,7 @@
 <template>
   <b-container class="jam-page">
     <b-row>
-      <b-col cols="8" >
+      <b-col cols="8">
     <b-row>
         <div class="jam-instrument">
           <Instrument
