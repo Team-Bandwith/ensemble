@@ -50,7 +50,7 @@
           {{bio}}
       </b-card-text>
       <div v-if="myId === parseInt(user.id)">
-          <EditBioModal :bio="bio"/>
+          <EditBioModal :bio="bio" v-on:editBio="editedBio"/>
       </div>
     </b-card-body>
 
@@ -136,7 +136,7 @@ export default {
   },
   data() {
     return {
-      bio: 'What\'s your story?',
+      bio: '',
       friendsRow: [],
     };
   },
@@ -162,6 +162,9 @@ export default {
   methods: {
     newAvatar(avatar) {
       this.$emit('new-avatar', avatar);
+    },
+    editedBio(value) {
+      this.bio = value;
     },
     addFriend() {
       const query = `
