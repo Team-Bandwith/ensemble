@@ -1,22 +1,25 @@
 <template>
   <b-container fluid>
     <div class="song-item">
+
         <b-row cols="12">
           <b-col>
             <div class="song-title">{{ song.name }}</div>
           </b-col>
-        <div class="song-created-at">
+        <!-- <div class="song-created-at">
           <em>{{ handleMoment(song.created_at).fromNow() }}</em>
-        </div>
+        </div> -->
         </b-row>
         <b-row cols="12">
-          <b-col cols="3">
+          <!-- <b-col cols="3">
             <img v-if="song.url_avatar" :src="song.url_avatar" />
-          </b-col>
-          <b-col cols="2">
+          </b-col> -->
+          <b-col cols="12">
             <div class="created-by">
-              created by: <router-link
-                :to="`/profile/${song.id_author}`">{{ song.username }}</router-link>
+              <router-link
+                :to="`/profile/${song.id_author}`">
+                {{ song.username }}
+              </router-link>
             </div>
           </b-col>
         </b-row>
@@ -65,27 +68,27 @@
                 {{ this.likes }}
             </div>
           </b-col>
+           <b-col>
+            <div class="song-comments">
+              <div>
+                <!-- button to toggle element -->
+                <font-awesome-icon
+                        icon="comments"
+                        class="comments align-top"
+                        size="2x"
+                        v-b-toggle="'collapse' + song.id"
+                />
+                <!-- eslint-disable-next-line vue/no-parsing-error -->
+              </div>
+            </div>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-collapse :id="'collapse' + song.id">
+            <CommentsList :song="song" :user="user" :myId="myId"></CommentsList>
+          </b-collapse>
         </b-row>
       </div>
-      <b-row>
-        <b-col>
-        <div class="song-comments">
-          <div>
-            <!-- button to toggle element -->
-            <font-awesome-icon
-                    icon="comments"
-                    class="comments align-top"
-                    size="2x"
-                    v-b-toggle="'collapse' + song.id"
-             />
-            <!-- eslint-disable-next-line vue/no-parsing-error -->
-            <b-collapse :id="'collapse' + song.id">
-              <CommentsList :song="song" :user="user" :myId="myId"></CommentsList>
-            </b-collapse>
-          </div>
-        </div>
-        </b-col>
-      </b-row>
   </b-container>
 </template>
 
@@ -177,4 +180,17 @@ export default {
 .song-title{
   font-weight: bold;
 }
+.created-by a{
+  color: #000;
+  text-decoration: none;
+}
+.created-by a:hover {
+  color: #1d9c5b;
+}
+/* .play{
+  color: #1d9c5b;
+}
+.like{
+  color: #4fa7ee;
+} */
 </style>
