@@ -6,7 +6,7 @@ import Moment from 'vue-moment';
 import {
   faUserSecret, faHome, faTint, faUsers,
   faPhone, faChild, faUser, faMusic, faComments,
-  faPlay, faPause, faAddressBook, faThumbsUp, faThumbsDown,
+  faPlay, faPause, faAddressBook, faThumbsUp, faThumbsDown, faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import vSelect from 'vue-select';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -36,6 +36,7 @@ library.add(faPause);
 library.add(faAddressBook);
 library.add(faThumbsUp);
 library.add(faThumbsDown);
+library.add(faSignOutAlt);
 
 // Install BootstrapVue
 Vue.use(underscore);
