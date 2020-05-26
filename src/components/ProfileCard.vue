@@ -1,14 +1,17 @@
 <template>
-  <b-row>
-    <b-col>
   <div class="profile">
     <div class="profile-card">
   <b-card
     class="profile-card"
     no-body
-    style="max-width: 20rem; border:none; top:50px; right:50px; position:fixed;"
+    style="max-width:20rem;
+    border:none;
+    top:50px;
+    right:50px;
+    position:fixed;
+    background-color: #1f1e1d;"
   >
-    <template v-slot:header>
+    <template v-slot:header style="opacity: 0; border:none;">
       <img v-if="user.url_avatar" :src="user.url_avatar" />
       <h4 class="mb-0"
         :style="friends[user.id] ? { color: 'green' } : {}"
@@ -30,18 +33,33 @@
       </div>
     </template>
     <b-card-body>
-      <b-card-text>
+      <b-card-text style="color: white;">
         Some quick example text to build on the card title and make up the bulk of the card's
         content.
       </b-card-text>
     </b-card-body>
 
     <b-list-group flush>
-      <b-list-group-item>
-        Likes({{liked.length}})
-        contributions({{contribution}})
+      <b-list-group-item style="border: none; background-color: #1f1e1d;">
+        <b-row>
+          <b-col cols='7'>
+            <div style='font-size: 1.4em;'><b>({{liked.length}})</b></div>
+          </b-col>
+          <b-col>
+            <div style='font-size: 1.4em;'><b>({{contribution}})</b></div>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col>
+            <div style='font-size: 1em; color: white;'>likes</div>
+          </b-col>
+          <b-col>
+            <div style='font-size: 1em; color: white;'>contributions</div>
+          </b-col>
+        </b-row>
         </b-list-group-item>
-      <b-list-group-item>contact: <b>{{user.email}}</b></b-list-group-item>
+      <b-list-group-item style="border: none; background-color: #1f1e1d;">
+        contact: <b>{{user.email}}</b></b-list-group-item>
     </b-list-group>
     <div class='loader' v-if="myId === parseInt($route.params.id)">
     <b-card-body style="border:none;">
@@ -49,37 +67,35 @@
       <PhotoUpload v-on:new-avatar='newAvatar' :user='user'/>
     </b-card-body>
     </div>
-    <div>Friends:</div>
-    <b-card-footer style="border:none;">
-    <b-row v-for="row in friendsRow" :key="row[0].id">
+    <div style='font-size: 1.5em;'><b>Friends({{friendsData.length}})</b></div>
+    <b-card-footer style="border:none; background-color: #1f1e1d;">
+    <b-row v-for="row in friendsRow" :key="row[0].id" class='mb-3'>
       <b-col>
-        <b-avatar :src="row[0].url_avatar" />
-        <router-link class="friendname"
-        :to="`/profile/${row[0].id}`">
-        {{ row[0].username }}
-        </router-link>
+        <b-avatar
+        :to="`/profile/${row[0].id}`"
+        :src="row[0].url_avatar"
+        size="4em"
+         />
       </b-col>
       <b-col v-if="row[1]">
-        <b-avatar :src="row[1].url_avatar" />
-        <router-link class="friendname"
-        :to="`/profile/${row[1].id}`">
-        {{ row[1].username }}
-        </router-link>
+        <b-avatar
+        :to="`/profile/${row[1].id}`"
+        :src="row[1].url_avatar"
+        size="4em"
+        />
       </b-col>
       <b-col v-if="row[2]">
-        <b-avatar :src="row[2].url_avatar" />
-        <router-link class="friendname"
-        :to="`/profile/${row[2].id}`">
-        {{ row[2].username }}
-    </router-link>
+        <b-avatar
+        :to="`/profile/${row[2].id}`"
+        :src="row[2].url_avatar"
+        size="4em"
+        />
       </b-col>
     </b-row>
     </b-card-footer>
   </b-card>
 </div>
   </div>
-    </b-col>
-  </b-row>
 </template>
 
 <script>
@@ -188,6 +204,6 @@ export default {
 
 <style scoped>
 .profile-card {
-  text-decoration-color:#99aca0;
+  color:#99aca0;
 }
 </style>

@@ -1,9 +1,21 @@
 /* eslint-disable max-len */
 <template>
-<div class="profileBody">
-  <b-row>
-    <b-col>
-  <div class="profile">
+<b-container fluid class="profileBody">
+  <b-row align-h="around">
+    <b-col cols='7'>
+  <div class="user-song">
+    <UserSongsList
+      v-if='user'
+      :loggedIn="loggedIn"
+      :liked="liked"
+      :user="profileUser || user"
+      :myId="user.id"
+      v-on:new-like="newLike"
+      />
+  </div>
+    </b-col>
+    <b-col col='4'>
+    <div class="profile">
     <ProfileCard v-if='user'
      v-on:new-avatar='newAvatar'
      v-on:friend='newFriend'
@@ -15,17 +27,11 @@
      :contribution="contribution"
      :liked="liked"
     />
-  </div>
-  <div class="user-song">
-    <UserSongsList
-      v-if='user'
-      :loggedIn="loggedIn"
-      :liked="liked"
-      :user="profileUser || user"
-      :myId="user.id"
-      v-on:new-like="newLike"
-      />
-  </div>
+    </div>
+    </b-col>
+  </b-row>
+  <b-row >
+    <b-col cols='7'>
   <div class="contrib-list">
     <ContribList v-if='user'
     :user="profileUser || user"
@@ -37,7 +43,7 @@
   </div>
     </b-col>
   </b-row>
-</div>
+</b-container>
 </template>
 
 <script>
