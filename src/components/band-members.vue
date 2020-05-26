@@ -8,8 +8,8 @@
     </b-row>
     <b-row>
       <b-col cols="2" v-for="user in users" v-bind:key="user.id">
-        <span class="band-member-username">{{ user.username }}</span>
         <img class="band-member-avatar" v-if="user.url_avatar" :src="user.url_avatar" />
+        <span class="band-member-username">{{ user.username }}</span>
       </b-col>
     </b-row>
   </b-container>
