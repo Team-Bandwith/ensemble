@@ -1,6 +1,11 @@
 <template>
-  <div>
-    <b-button v-b-modal.login>Login</b-button>
+  <div class="sign-in-alt-text">
+     <font-awesome-icon
+        icon="sign-in-alt"
+        class="sign-in-alt align-top"
+        size="2x"
+        v-b-modal.login
+    /> Login
     <b-modal
       id="login"
       ref="modal1"
@@ -120,5 +125,13 @@ export default {
 <style scoped>
 .modal {
   border: 1px solid forestgreen;
+}
+.sign-in-alt{
+  color: #fff;
+}
+.sign-in-alt-text {
+  color: #fff;
+  margin-right: 35px;
+
 }
 </style>

@@ -1,13 +1,15 @@
 <template>
-  <b-container fluid style="background-color:#98AC9E;">
+  <b-container fluid>
     <div v-for="song in songs" :key="song.id">
-       <Song
-        :song="song"
-        :liked="liked"
-        :user="user"
-        :myId="myId"
-        v-on:new-like="newLike"
-      />
+       <div class="song">
+        <Song
+          :song="song"
+          :liked="liked"
+          :user="user"
+          :myId="user.id"
+          v-on:new-like="newLike"
+        />
+      </div>
       <hr>
     </div>
   </b-container>
@@ -124,5 +126,8 @@ export default {
 </script>
 
 <style scoped>
-
+.song {
+  margin-bottom: 1em;
+  background-color:#98AC9E;
+}
 </style>

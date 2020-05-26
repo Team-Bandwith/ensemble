@@ -1,7 +1,11 @@
 <template>
-  <div>
-    <b-button v-b-modal.modal-prevent-closing>Signup</b-button>
-
+  <div class="user-plus">
+    <font-awesome-icon
+      icon="user-plus"
+      class="user-plus"
+      size="2x"
+      v-b-modal.modal-prevent-closing
+    /> Signup
     <b-modal
       id="modal-prevent-closing"
       ref="modal"
@@ -121,5 +125,8 @@ export default {
 <style scoped>
 .modal {
   border: 1px solid forestgreen;
+}
+.user-plus {
+  color: #fff;
 }
 </style>

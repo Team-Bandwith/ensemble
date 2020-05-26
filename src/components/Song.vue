@@ -2,61 +2,84 @@
   <b-container fluid>
     <div class="song-item">
         <b-row cols="12">
-          <b-col>
             <div class="song-title">{{ song.name }}</div>
-          </b-col>
-        <div class="song-created-at">
+        <!-- <div class="song-created-at">
           <em>{{ handleMoment(song.created_at).fromNow() }}</em>
-        </div>
+        </div> -->
         </b-row>
         <b-row cols="12">
-          <b-col cols="3">
+          <!-- <b-col cols="3">
             <img v-if="song.url_avatar" :src="song.url_avatar" />
-          </b-col>
-          <b-col cols="2">
-            <div class="created-by">
-              created by: <router-link
-                :to="`/profile/${song.id_author}`">{{ song.username }}</router-link>
-            </div>
-          </b-col>
+          </b-col> -->
+          <div class="created-by">
+            <router-link
+              :to="`/profile/${song.id_author}`">
+              {{ song.username }}
+            </router-link>
+          </div>
         </b-row>
         <b-row cols="12">
          <b-col>
             <div class="song-url">
               <div>
                 <div v-if="isPlaying">
-                  <b-button @click="playSong()">Pause</b-button>
+                   <font-awesome-icon
+                    icon="pause"
+                    class="play align-top"
+                    size="2x"
+                    @click="playSong()"
+                  />
                 </div>
                 <div v-else>
-                  <b-button @click="playSong(song.url)">Play</b-button>
+                  <font-awesome-icon
+                    icon="play"
+                    class="play align-top"
+                    size="2x"
+                    @click="playSong(song.url)"
+                  />
                 </div>
               </div>
             </div>
          </b-col>
          <b-col>
             <div class="song-likes">
-              <b-button
+              <font-awesome-icon
+                icon="thumbs-up"
+                class="like align-top"
+                size="2x"
                 v-if="user && !liked.map((like) => like.id).includes(song.id)"
-                @click="likeSong(song.count_likes, song.id)">Like</b-button>
-              <b-button v-else-if="user" @click="unlikeSong(song.id)">Unlike</b-button>
-              <span v-else>Likes: </span>
+                @click="likeSong(song.count_likes, song.id)"
+              />
+              <font-awesome-icon
+                icon="thumbs-down"
+                class="like align-top"
+                size="2x"
+                v-else-if="user" @click="unlikeSong(song.id)"
+              />
                 {{ this.likes }}
             </div>
           </b-col>
+           <b-col>
+        <div class="song-comments">
+          <div>
+            <!-- button to toggle element -->
+            <font-awesome-icon
+                    icon="comments"
+                    class="comments align-top"
+                    size="2x"
+                    v-b-toggle="'collapse' + song.id"
+             />
+            <!-- eslint-disable-next-line vue/no-parsing-error -->
+          </div>
+        </div>
+        </b-col>
         </b-row>
       </div>
       <b-row>
         <b-col>
-        <div class="song-comments">
-          <div>
-            <!-- button to toggle element -->
-            <b-button v-b-toggle="'collapse' + song.id">Comments</b-button>
-            <!-- eslint-disable-next-line vue/no-parsing-error -->
-            <b-collapse :id="'collapse' + song.id">
+         <b-collapse :id="'collapse' + song.id">
               <CommentsList :song="song" :user="user" :myId="myId"></CommentsList>
             </b-collapse>
-          </div>
-        </div>
         </b-col>
       </b-row>
   </b-container>
@@ -144,10 +167,16 @@ export default {
 </script>
 
 <style>
-.song-item{
+.song-item {
   padding: 1em;
 }
 .song-title{
   font-weight: bold;
+}
+.created-by a {
+  color: #000;
+}
+.created-by a:hover {
+  color: #e98e3e;
 }
 </style>
