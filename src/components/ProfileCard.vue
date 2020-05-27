@@ -41,6 +41,9 @@
       <b-toast id="request-sent" title="Success!" auto-hide-delay="2000">
         Friend request sent.
       </b-toast>
+      <b-toast id="error" title="Hey!" auto-hide-delay="2000">
+        You already sent a friend request to this user.
+      </b-toast>
     </template>
     <b-card-body class="field">
       <label>Bio:</label>
@@ -192,7 +195,7 @@ export default {
       }`;
 
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
-        .then(() => alert("You've already sent this user a friend request."))
+        .then(() => this.$bvToast.show('error'))
         .catch(() => request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, mutation))
         .then((res) => {
           this.$emit('friend');
