@@ -59,7 +59,7 @@ export default {
       friendsData: [],
       profileUser: null,
       contribution: 0,
-      myLikes: [],
+      myLikes: 0,
     };
   },
   components: {
@@ -102,13 +102,13 @@ export default {
           this.friendsData = res.getUserFriends;
           const queryLikes = `
             query {
-              getLikedSongs(id: ${id}) {
-                 id, id_author, name, url, count_likes, public, created_at
+              getTotalLikes(id: ${id}) {
+                 count_likes
                 }
               }`;
           return request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, queryLikes);
         }).then((result) => {
-          this.myLikes = result.getLikedSongs;
+          this.myLikes = result.getTotalLikes.count_likes;
         });
     },
     newFriend() {
