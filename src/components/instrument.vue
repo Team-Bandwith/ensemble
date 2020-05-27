@@ -12,7 +12,7 @@
       </b-row>
       <b-row align-v="end" class="tools">
         <b-col>
-          <b-button squared class="btn" @click="openModal">Instrument</b-button>
+          <b-button squared class="btn jam-btn" @click="openModal">Instrument</b-button>
         </b-col>
         <b-col cols="1">
           <div class="record align-top" @click="startRecording">
@@ -41,14 +41,19 @@
             class="pause align-top"
             size="2x"
             @click="pauseSong"
-            v-if="!paused"
+            v-if="!paused && !recording"
           />
-          <span v-if="playing">
-              <div class="playback-string">{{ playbackString }}</div>
+          <span v-if="playing && !recording">
+              <div class="playback-string-play">{{ playbackString }}</div>
           </span>
         </b-col>
         <b-col>
-          <b-button v-if="!recording && !playing && playback" @click="uploadSong">save</b-button>
+          <b-button
+            squared
+            v-if="!recording && !playing && playback"
+            @click="uploadSong"
+          > Save
+          </b-button>
         </b-col>
         </b-row>
         <div v-show="showProgress">
@@ -324,5 +329,12 @@ export default {
   }
   .playback-string {
     color: #fff;
+  }
+  .playback-string-play{
+    float: right;
+    color: #fff;
+  }
+   .btn-secondary {
+    background-color: #6d8657!important;
   }
 </style>

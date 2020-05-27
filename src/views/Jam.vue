@@ -13,12 +13,12 @@
             />
           </div>
         <b-row>
-        <div class="jammers"><h4>Jammers</h4></div>
-        <BandMembers
-          :users="users"
-          :you="user"
-          :online="online.filter((usr) => usr.id !== user.id && friends[usr.id])"
-        />
+            <div class="jammers"><h4>Jammers</h4></div>
+            <BandMembers
+              :users="users"
+              :you="user"
+              :online="online.filter((usr) => usr.id !== user.id && friends[usr.id])"
+            />
         </b-row>
       </b-col>
       <b-col cols="4" class="jam-chat">
@@ -115,6 +115,9 @@ export default {
 .jammers,
 .chat {
   color: #FFF;
+}
+.jammers{
+  padding: 1em;
 }
 .jam-band{
   border: 1px solid #6d8657;
