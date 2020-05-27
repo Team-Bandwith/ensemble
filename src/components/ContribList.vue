@@ -1,6 +1,7 @@
 <template>
 <div>
-    <b-list-group>
+    <b-list-group
+    style="max-height:100px;">
     <b-list-group-header class='contribs' style="background-color: #1f1e1d;">
         Contributing Artist
     </b-list-group-header>
@@ -8,7 +9,7 @@
         v-for="contrib in contribution"
         :key="contrib.id">
         <span v-b-modal="`contrib${contrib.id}`"
-        style="font-size: 1.3rem;"
+        style="font-size: 1.7rem; overflow: auto; font-weight: bold;"
         >{{contrib.name}}</span>
         <b-modal :id="`contrib${contrib.id}`">
             <Song
@@ -81,6 +82,7 @@ div {
 }
 .contribs{
   font-size: 2rem;
+  font-weight: bold;
   color: #99aca0;
 }
 </style>
