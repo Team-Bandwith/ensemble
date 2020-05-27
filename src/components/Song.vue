@@ -179,6 +179,7 @@ export default {
 }
 .song-title{
   font-weight: bold;
+  font-size: 1.7rem;
 }
 .created-by a {
   color: #000;
