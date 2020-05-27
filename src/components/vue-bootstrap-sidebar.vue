@@ -25,10 +25,10 @@
           <img v-if="user.url_avatar" :src="user.url_avatar" />
           <div class='user-name'><b>{{ user.username }}</b></div>
           <div class='feed-btn'>
-            <b-button @click="setFeed('private')">Your Feed</b-button>
+            <b-button squared @click="setFeed('private')">Your Feed</b-button>
           </div>
           <div class='explore-btn'>
-            <b-button @click="setFeed('public')">Explore</b-button>
+            <b-button squared @click="setFeed('public')">Explore</b-button>
           </div>
           <div class='logout-btn'>
             <font-awesome-icon
