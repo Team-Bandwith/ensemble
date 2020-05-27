@@ -11,6 +11,7 @@ exports.MemberType = new GraphQLObjectType({
     username: { type: GraphQLString },
     url_avatar: { type: GraphQLString },
     email: { type: GraphQLString },
+    bio: { type: GraphQLString },
     password: { type: GraphQLString },
     auth: { type: GraphQLBoolean },
     token: { type: GraphQLString },
