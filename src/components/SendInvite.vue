@@ -19,7 +19,11 @@
       </div>
     </b-col>
     <b-col cols="2">
-      <button id="send" @click="send" squared class="btn" type='submit'>Send</button>
+      <button
+        id="send"
+        @click="send"
+        squared
+        type='submit'>Send</button>
     </b-col>
   </div>
 </template>
