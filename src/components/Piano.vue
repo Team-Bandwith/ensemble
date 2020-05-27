@@ -130,8 +130,8 @@ export default {
         }
       });
       // accessibility colors
-      Nexus.colors.accent = '#595959';
-      Nexus.colors.fill = '#fff';
+      newPiano.colors.accent = '#595959';
+      newPiano.colors.fill = '#fff';
       return newPiano;
     };
 
