@@ -61,7 +61,7 @@
       <b-list-group-item style="border: none; background-color: #1f1e1d;">
         <b-row>
           <b-col cols='7'>
-            <div style='font-size: 1.4em;'><b>({{liked.length}})</b></div>
+            <div style='font-size: 1.4em;'><b>({{myLikes.length}})</b></div>
           </b-col>
           <b-col>
             <div style='font-size: 1.4em;'><b>({{contribution}})</b></div>
@@ -149,7 +149,7 @@ export default {
     friends: Object,
     friendsData: Array,
     contribution: Number,
-    liked: Array,
+    myLikes: Array,
   },
   watch: {
     friendsData() {
