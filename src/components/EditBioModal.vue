@@ -5,6 +5,7 @@
       id="edit-bio"
       title="Edit Bio"
       hide-footer
+      @hidden="clearInput"
     >
     <form>
       <b-form-group>
@@ -41,6 +42,9 @@ export default {
     },
     emitToParent() {
       this.$emit('editBio', this.text);
+    },
+    clearInput() {
+      this.text = '';
     },
   },
 };
