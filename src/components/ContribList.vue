@@ -17,9 +17,9 @@
         :id="`contrib${contrib.id}`"
         hide-footer="true"
         hide-header="true"
-        :body-bg-variant="bodyBgVariant"
         >
             <Song
+            style="background-color: white;"
             :myId='myId'
             :song='contrib'
             :liked='liked'
@@ -93,8 +93,5 @@ div {
   font-size: 2rem;
   font-weight: bold;
   color: #99aca0;
-}
-.modal-backdrop {
-   background-color: #99aca0;
 }
 </style>
