@@ -7,16 +7,17 @@
     <div id="rack" class="rack-container">
       <b-row>
       <!-- Oscillator: -->
-        <div class="type">Type:</div>
+        <div class="type">Vibrato:</div>
       <div id="osc" />
       </b-row>
       <b-row>
         <b-col>
-        Frequency:
-        <div id="vibf" />
-        </b-col><b-col>
-        Depth:
-        <div id="vibd" />
+          <span>Speed:</span>
+          <div id="vibf" />
+        </b-col>
+        <b-col>
+          <span>Depth:</span>
+          <div id="vibd" />
         </b-col>
       </b-row>
     </div>
