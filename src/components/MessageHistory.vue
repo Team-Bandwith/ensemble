@@ -21,12 +21,16 @@
             </div>
           </b-card>
         <b-form-input
+          v-if="Number(userTo) !== 1"
           class="message-input"
           v-model="text"
           placeholder="send a message">
         </b-form-input>
       </b-form-group>
-      <b-button class="mt-3 send-button" block @click="handleOk">Send</b-button>
+      <b-button
+        v-if="Number(userTo) !== 1"
+        class="mt-3 send-button" block
+        @click="handleOk">Send</b-button>
       </form>
     </b-modal>
   </div>
