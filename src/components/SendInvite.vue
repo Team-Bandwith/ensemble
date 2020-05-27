@@ -1,5 +1,15 @@
 <template>
   <div id="invite-container" v-show="value">
+    <div inline>
+      <b-row>
+        <div class="col-sm-8"><h5>Select an Online Friend</h5></div>
+        <button
+        id="send"
+        @click="send"
+        squared
+        type='submit'>Send Invite</button>
+      </b-row>
+    </div>
     <b-col v-for="user in online" :key="user.id" id="invite-users">
       <div id="center-wrapper">
         <img
@@ -17,13 +27,6 @@
         {{ user.username }}
         </div>
       </div>
-    </b-col>
-    <b-col cols="2">
-      <button
-        id="send"
-        @click="send"
-        squared
-        type='submit'>Send</button>
     </b-col>
   </div>
 </template>
@@ -75,9 +78,14 @@ export default {
 </script>
 
 <style scoped>
+h5 {
+  color: white;
+}
   #invite-container {
     background-color: #3B3836;
-    border-radius: 5px;
+    border-radius: 2px;
+    padding: 20px;
+    width: 700px;
   }
   #invite-name {
     color: #99aca0;
@@ -93,9 +101,13 @@ export default {
     background-color: #6d8657;
     border-color: #6d8657;
     color: white;
-    margin: 10px;
     border-style: none;
     border-radius: 0px;
+    margin-left: 110px;
+    padding-top: 6px;
+    padding-right: 12px;
+    padding-bottom: 6px;
+    padding-left: 12px;
   }
   .selected {
     border-color: #6d8657;
@@ -105,5 +117,5 @@ export default {
     display: block;
     margin-left: auto;
     margin-right: auto;
-}
+  }
 </style>
