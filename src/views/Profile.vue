@@ -85,7 +85,7 @@ export default {
     getUserInfo(id) {
       const query = `query {
         getUserId(id:${id}){
-          id, username, url_avatar, email
+          id, username, url_avatar, email, bio
         }
       }`;
       return request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)

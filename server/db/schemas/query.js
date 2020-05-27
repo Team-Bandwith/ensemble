@@ -167,7 +167,7 @@ exports.query = new GraphQLObjectType({
         id: { type: GraphQLInt },
       },
       resolve(parentValue, args) {
-        const query = 'SELECT id, username, url_avatar, email from member where id = $1';
+        const query = 'SELECT id, username, url_avatar, email, bio from member where id = $1';
         return db.one(query, [args.id])
           .then((res) => res)
           .catch((err) => console.log(err, "error obtaining user's id"));
