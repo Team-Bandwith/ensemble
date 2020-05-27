@@ -69,4 +69,7 @@ export default {
     float: left;
     width: 100%;
   }
+  #span{
+    color: #fff;
+  }
 </style>

@@ -10,11 +10,10 @@
         <div class="instrument">
           <Piano v-if="selected === 'piano'" :dest="dest" :active="active" />
           <Drum v-if="selected === 'drum'" :dest="dest" :active="active" />
-
         </div>
         <audio controls />
       </b-row>
-      <b-row align-v="end">
+      <b-row align-v="end" class="tools">
         <b-col cols="1">
           <div class="record align-top" @click="startRecording">
             <b-spinner class="active" v-show="recording" small type="grow" />
@@ -25,7 +24,9 @@
             variant="dark" v-show="recording" @click="stopRecording" />
         </b-col>
         <b-col cols="1" v-show="recording">
-          {{ playbackString }}
+          <div class="playback-string">
+            {{ playbackString }}
+          </div>
         </b-col>
         <b-col>
           <font-awesome-icon
@@ -43,7 +44,7 @@
             v-if="!paused"
           />
           <span v-if="playing">
-            {{ playbackString }}
+              <div class="playback-string">{{ playbackString }}</div>
           </span>
         </b-col>
         <b-col>
@@ -52,13 +53,13 @@
         </b-row>
         <div v-show="showProgress">
           <loading-progress
-        indeterminate
-        shape="line"
-        size="500"
-        width="400"
-        height="15"
-        fill-duration="2"
-      />
+            indeterminate
+            shape="line"
+            size="500"
+            width="400"
+            height="15"
+            fill-duration="2"
+          />
         </div>
       </div>
     </b-container>
@@ -312,5 +313,12 @@ export default {
   }
   .btn {
     background-color: #98AC9E;
+  }
+  .tools{
+    background: #595959;
+    padding: 1em;
+  }
+  .playback-string {
+    color: #fff;
   }
 </style>

@@ -1,18 +1,18 @@
 <template>
 <b-row>
-<b-col>
-<div id="piano-keyboard" style="background-color:#0; width:400px; height:210px;"/>
-</b-col>
-<b-col>
-<div id="rack">
-  Oscillator:
-  <div id="osc" />
-  Vibrato Frequency:
-  <div id="vibf" />
-  Vibrato Depth:
-  <div id="vibd" />
-</div>
-</b-col>
+  <b-col>
+    <div id="piano-keyboard" style="width:400px; height:210px;"/>
+  </b-col>
+  <b-col>
+    <div id="rack" class="rack-container">
+      Oscillator:
+      <div id="osc" />
+      Vibrato Frequency:
+      <div id="vibf" />
+      Vibrato Depth:
+      <div id="vibd" />
+    </div>
+  </b-col>
 </b-row>
 </template>
 
@@ -182,3 +182,10 @@ export default {
   },
 };
 </script>
+<style scoped>
+#rack {
+ background: #595959;
+ color: #fff;
+ padding: 1em;
+}
+</style>
