@@ -4,7 +4,8 @@
   <b-card
     class="profile-card"
     no-body
-    style="max-width:20rem;
+    style="width:20rem;
+    max-width: 20rem;
     border:none;
     top:50px;
     right:50px;
@@ -61,7 +62,7 @@
       <b-list-group-item style="border: none; background-color: #1f1e1d;">
         <b-row>
           <b-col cols='7'>
-            <div style='font-size: 1.4em;'><b>({{liked.length}})</b></div>
+            <div style='font-size: 1.4em;'><b>({{myLikes}})</b></div>
           </b-col>
           <b-col>
             <div style='font-size: 1.4em;'><b>({{contribution}})</b></div>
@@ -76,7 +77,7 @@
           </b-col>
         </b-row>
         </b-list-group-item>
-      <b-list-group-item style="border: none; background-color: #1f1e1d;">
+      <!-- <b-list-group-item style="border: none; background-color: #1f1e1d;">
         <b-row align-h="end">
           <b-col cols="4">
             <div style='text-align: right; color:white;'>
@@ -89,7 +90,7 @@
             </div>
           </b-col>
         </b-row>
-        </b-list-group-item>
+        </b-list-group-item> -->
     </b-list-group>
     <div class='loader' v-if="myId === parseInt($route.params.id)">
     </div>
@@ -149,7 +150,7 @@ export default {
     friends: Object,
     friendsData: Array,
     contribution: Number,
-    liked: Array,
+    myLikes: Number,
   },
   watch: {
     friendsData() {

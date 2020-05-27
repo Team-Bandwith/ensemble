@@ -175,6 +175,7 @@ export default {
 <style>
 .song-item {
   padding: 1em;
+  color:#000;
 }
 .song-title{
   font-weight: bold;
