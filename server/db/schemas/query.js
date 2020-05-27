@@ -206,7 +206,10 @@ exports.query = new GraphQLObjectType({
         name: { type: GraphQLString },
       },
       resolve(parentValue, args) {
-        const query = 'SELECT id, username, url_avatar from member Where levenshtein(username, $1) < char_length(username) ORDER BY levenshtein(username, $1) limit 5';
+        const query = `SELECT id, username, url_avatar FROM member
+        WHERE LEVENSHTEIN(LOWER(username), LOWER($1)) < char_length(username)
+        AND NOT username = 'Ensemble'
+        ORDER BY LEVENSHTEIN(LOWER(username), LOWER($1)) LIMIT 5`;
         return db.any(query, [args.name])
           .then((res) => res)
           .catch((err) => console.log(err, 'cannot search for names'));
