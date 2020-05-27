@@ -96,7 +96,7 @@ export default {
   },
   beforeRouteLeave(to, from, next) {
     if (to.name !== 'Jam' && window.location.search) {
-      this.$socket.emit('leaveRoom', window.location.search);
+      this.$socket.emit('leaveRoom', this.$route.query.room);
     }
     next();
   },
