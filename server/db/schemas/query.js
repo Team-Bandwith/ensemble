@@ -257,7 +257,7 @@ exports.query = new GraphQLObjectType({
           .then((res) => res.reduce((totalCount, count) => {
             totalCount.count_likes = totalCount.count_likes + count.count_likes;
             return totalCount;
-          }))
+          }, { count_likes: 0 }))
           .catch((err) => console.log(err));
       },
     },
