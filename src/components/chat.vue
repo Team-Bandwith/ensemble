@@ -25,7 +25,7 @@
                   @focus="chat"
                   @blur="doneChat"
                 />
-                <b-button squared class="btn" type='submit' variant="primary">Send</b-button>
+                <b-button squared class="btn" type='submit'>Send</b-button>
             </b-form>
           </div>
         </b-form>
