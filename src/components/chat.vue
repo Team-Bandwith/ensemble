@@ -80,7 +80,7 @@ export default {
 <style>
 #chat-messages {
   background-color: #3B3836;
-  height: 400px;
+  height: 429px;
   width: 250px;
   overflow-y: scroll;
 }
