@@ -3,6 +3,7 @@
     <b-row align-h="end">
       <b-button
         squared
+        id="invite-button"
         class='button'
         @click="toggleInv">Invite
         </b-button>
@@ -46,4 +47,8 @@ export default {
 </script>
 
 <style>
+#invite-button {
+  background-color: #6d8657;
+  border-color: #6d8657;
+}
 </style>
