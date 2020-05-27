@@ -25,7 +25,7 @@
      :friends="friends"
      :friendsData="friendsData"
      :contribution="contribution"
-     :liked="liked"
+     :myLikes="myLikes"
     />
     </div>
     </b-col>
@@ -59,6 +59,7 @@ export default {
       friendsData: [],
       profileUser: null,
       contribution: 0,
+      myLikes: [],
     };
   },
   components: {
@@ -99,6 +100,15 @@ export default {
           return request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, querys);
         }).then((res) => {
           this.friendsData = res.getUserFriends;
+          const queryLikes = `
+            query {
+              getLikedSongs(id: ${id}) {
+                 id, id_author, name, url, count_likes, public, created_at
+                }
+              }`;
+          return request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, queryLikes);
+        }).then((result) => {
+          this.myLikes = result.getLikedSongs;
         });
     },
     newFriend() {
