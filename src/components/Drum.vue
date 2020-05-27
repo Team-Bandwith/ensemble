@@ -32,6 +32,8 @@ export default {
     };
   },
   mounted() {
+    Nexus.colors.accent = '#595959';
+    Nexus.colors.fill = '#fff';
     this.createSequencer();
     Tone.Master.connect(this.dest);
   },
@@ -49,6 +51,7 @@ export default {
       sequencer.on('step', (v) => {
         this.col = v;
       });
+      // sequencer.colors.fill = 'red';
       this.sequencer = sequencer;
     },
     playLoop() {
