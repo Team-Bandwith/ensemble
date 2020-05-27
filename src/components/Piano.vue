@@ -5,12 +5,20 @@
   </b-col>
   <b-col>
     <div id="rack" class="rack-container">
-      Oscillator:
+      <b-row>
+      <!-- Oscillator: -->
+        <div class="type">Type:</div>
       <div id="osc" />
-      Vibrato Frequency:
-      <div id="vibf" />
-      Vibrato Depth:
-      <div id="vibd" />
+      </b-row>
+      <b-row>
+        <b-col>
+        Frequency:
+        <div id="vibf" />
+        </b-col><b-col>
+        Depth:
+        <div id="vibd" />
+        </b-col>
+      </b-row>
     </div>
   </b-col>
 </b-row>
@@ -121,7 +129,9 @@ export default {
           delete activeSynths[k.note];
         }
       });
-
+      // accessibility colors
+      Nexus.colors.accent = '#595959';
+      Nexus.colors.fill = '#fff';
       return newPiano;
     };
 
@@ -184,8 +194,12 @@ export default {
 </script>
 <style scoped>
 #rack {
- background: #595959;
+ /* background: #595959; */
  color: #fff;
  padding: 1em;
+}
+.type{
+  padding: 1em;
+  margin-top: -.8em;
 }
 </style>
