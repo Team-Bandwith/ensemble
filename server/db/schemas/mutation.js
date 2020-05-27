@@ -140,6 +140,20 @@ exports.mutation = new GraphQLObjectType({
           .catch((err) => console.log(err));
       },
     },
+    editBio: {
+      type: MemberType,
+      args: {
+        bio: { type: GraphQLString },
+        id: { type: GraphQLInt }
+      },
+      resolve(parentValue, args) {
+        const query = 'UPDATE member SET bio = $1 WHERE id = $2 RETURNING id';
+        const values = [args.bio, args.id];
+        return db.one(query, values)
+          .then((res) => res)
+          .catch((err) => console.log(err));
+      },
+    },
     addFriend: {
       type: FriendType,
       args: {
