@@ -12,14 +12,12 @@
               v-on:deact="deactivate"
             />
           </div>
-        <b-row>
-            <div class="jammers"><h4>Jammers</h4></div>
             <BandMembers
               :users="users"
               :you="user"
               :online="online.filter((usr) => usr.id !== user.id && friends[usr.id])"
             />
-        </b-row>
+
       </b-col>
       <b-col cols="4" class="jam-chat">
           <div class="chat"><h4>Chat</h4></div>
