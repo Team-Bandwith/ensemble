@@ -47,10 +47,10 @@
         <b-card-text
           style="color: white;"
           v-model="bio">
-          {{bio}}
+          {{newBio || user.bio}}
       </b-card-text>
       <div v-if="myId === parseInt(user.id)">
-          <EditBioModal :bio="bio" v-on:editBio="editedBio"/>
+          <EditBioModal :bio="newBio || user.bio" v-on:editBio="editBio"/>
       </div>
     </b-card-body>
 
@@ -136,7 +136,7 @@ export default {
   },
   data() {
     return {
-      bio: '',
+      newBio: null,
       friendsRow: [],
     };
   },
@@ -163,8 +163,18 @@ export default {
     newAvatar(avatar) {
       this.$emit('new-avatar', avatar);
     },
-    editedBio(value) {
-      this.bio = value;
+    editBio(value) {
+      const mutation = `
+        mutation {
+          editBio(bio: "${value}", id: ${this.myId}) {
+            id
+            }
+        }`;
+      request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, mutation)
+        .then(() => {
+          this.newBio = value;
+        })
+        .catch((err) => console.log(err));
     },
     addFriend() {
       const query = `
