@@ -26,6 +26,7 @@ export default {
   props: {
     dest: MediaStreamAudioDestinationNode,
     active: Boolean,
+    selected: String,
   },
   data() {
     return {
@@ -34,7 +35,11 @@ export default {
       oscType: 'triangle',
       vibFreq: 0,
       vibDepth: 0.1,
+      destroyed: false,
     };
+  },
+  beforeDestroy() {
+    this.destroyed = true;
   },
   mounted() {
     this.master.connect(this.dest);
@@ -142,7 +147,7 @@ export default {
 
 
     document.addEventListener('keydown', (event) => {
-      if (!this.active || window.location.pathname !== '/jam') {
+      if (!this.active || this.destroyed || window.location.pathname !== '/jam') {
         return;
       }
       const keyIndex = keyMapper[event.key];
