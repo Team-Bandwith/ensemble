@@ -82,6 +82,7 @@ export default {
   background-color: #3B3836;
   height: 400px;
   width: 250px;
+  overflow-y: scroll;
 }
 #user-message {
   margin-top: 10px;
