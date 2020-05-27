@@ -1,37 +1,34 @@
 <template>
   <b-container fluid>
+    <b-row>
     <div class="chat">
-      <p>User is {{user.username}}</p>
-      <b-row>
-       <div class="messages">
-         <ul>
-          <div v-for="message in messages"
-          v-bind:key=message.message>
-          <span >{{message.user}}<small>: {{message.message}}</small>
-          </span>
+      <div id="chat-messages">
+        <span v-for="message in messages" v-bind:key=message.message>
+          <div id="user-message">
+          <span id="chat-user">{{message.user}}:</span>
+          <span id="chat-message"> {{message.message}}</span>
           </div>
-        </ul>
-       </div>
-      </b-row>
-      <b-row align-v="end">
+        </span>
+      </div>
         <b-form>
           <div>
             <b-form @submit.prevent="sendMessage" inline>
               <label class="sr-only" for="inline-form-input-name">Name</label>
                 <b-input
                   type="text"
+                  id="chat-input"
                   placeholder="Message..."
                   v-model="message"
                   @focus="chat"
                   @blur="doneChat"
                 />
-                <b-button squared class="btn" type='submit'>Send</b-button>
+                <button id="chat-button" squared class="btn" type='submit'>Send</button>
             </b-form>
           </div>
         </b-form>
-      </b-row>
-      </div>
-    </b-container>
+    </div>
+    </b-row>
+  </b-container>
 </template>
 
 <script>
@@ -81,7 +78,35 @@ export default {
 </script>
 
 <style>
-  .btn {
-    background-color: #98AC9E;
-  }
+#chat-messages {
+  background-color: #3B3836;
+  height: 400px;
+  width: 250px;
+}
+#user-message {
+  margin-top: 10px;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+#chat-user {
+  color: #6b8554;
+}
+#chat-message {
+  color: white;
+}
+#chat-input {
+  background-color: #3B3836;
+  border-color: #3B3836;
+  border-radius: 0px;
+  width: 180px;
+  color: white;
+  margin-top: 5px;
+  margin-right: 5px;
+}
+#chat-button {
+  background-color: #6d8657;
+  color: white;
+  border-radius: 0px;
+  margin-top: 5px;
+}
 </style>
