@@ -5,7 +5,7 @@
         class="sign-in-alt align-top"
         size="2x"
         v-b-modal.login
-    /> Login
+    /> <span v-b-modal.login>Login</span>
     <b-modal
       id="login"
       ref="modal1"
