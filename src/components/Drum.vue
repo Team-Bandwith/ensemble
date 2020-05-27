@@ -43,10 +43,10 @@ export default {
     },
     createSequencer() {
       const sequencer = new Nexus.Sequencer('#target', {
-        size: [400, 200],
+        size: [600, 200],
         mode: 'toggle',
         rows: 2,
-        columns: 10,
+        columns: 12,
       });
       sequencer.on('step', (v) => {
         this.col = v;
