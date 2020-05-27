@@ -10,16 +10,16 @@
         </button>
       </b-row>
     </div>
-    <b-row>
-      <b-collapse id="invite-collapse" class="mt-2">
-      <SendInvite v-model="invOpen" :online="online" :you="you" />
-      </b-collapse>
-    </b-row>
     <b-row align-h="around">
       <b-col cols="2" v-for="user in users" v-bind:key="user.id">
         <b-avatar class="band-member-avatar" v-if="user.url_avatar" :src="user.url_avatar" />
         <p class="band-member-username">{{ user.username }} </p>
       </b-col>
+    </b-row>
+    <b-row>
+      <b-collapse id="invite-collapse" class="mt-2">
+      <SendInvite v-model="invOpen" :online="online" :you="you" />
+      </b-collapse>
     </b-row>
   </b-container>
 </template>
@@ -59,7 +59,13 @@ export default {
     border-style: none;
     border-radius: 0px;
     margin-top: 15px;
-    padding: 6px;
-    margin-left: 170px;
+    padding-top: 6px;
+    padding-right: 12px;
+    padding-bottom: 6px;
+    padding-left: 12px;
+    margin-left: 155px;
+}
+#invite-collapse {
+  float: right;
 }
 </style>
