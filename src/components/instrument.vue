@@ -3,18 +3,17 @@
     <SaveSong :cloudURL="cloudURL" :id="id" :users="users" v-on:active="activate" />
     <div class="jam">
       <b-row>
-        <b-button squared class="btn" @click="openModal">Select instrument</b-button>
-      </b-row>
-      <b-row>
         <SelectInstrument v-model="modalOpen" v-on:select="select" />
         <div class="instrument">
           <Piano v-if="selected === 'piano'" :dest="dest" :active="active" />
           <Drum v-if="selected === 'drum'" :dest="dest" :active="active" />
-
         </div>
         <audio controls />
       </b-row>
-      <b-row align-v="end">
+      <b-row align-v="end" class="tools">
+        <b-col>
+          <b-button squared class="btn jam-btn" @click="openModal">Instrument</b-button>
+        </b-col>
         <b-col cols="1">
           <div class="record align-top" @click="startRecording">
             <b-spinner class="active" v-show="recording" small type="grow" />
@@ -25,7 +24,9 @@
             variant="dark" v-show="recording" @click="stopRecording" />
         </b-col>
         <b-col cols="1" v-show="recording">
-          {{ playbackString }}
+          <div class="playback-string">
+            {{ playbackString }}
+          </div>
         </b-col>
         <b-col>
           <font-awesome-icon
@@ -40,25 +41,30 @@
             class="pause align-top"
             size="2x"
             @click="pauseSong"
-            v-if="!paused"
+            v-if="!paused && !recording"
           />
-          <span v-if="playing">
-            {{ playbackString }}
+          <span v-if="playing && !recording">
+              <div class="playback-string-play">{{ playbackString }}</div>
           </span>
         </b-col>
         <b-col>
-          <b-button v-if="!recording && !playing && playback" @click="uploadSong">save</b-button>
+          <b-button
+            squared
+            v-if="!recording && !playing && playback"
+            @click="uploadSong"
+          > Save
+          </b-button>
         </b-col>
         </b-row>
         <div v-show="showProgress">
           <loading-progress
-        indeterminate
-        shape="line"
-        size="500"
-        width="400"
-        height="15"
-        fill-duration="2"
-      />
+            indeterminate
+            shape="line"
+            size="500"
+            width="400"
+            height="15"
+            fill-duration="2"
+          />
         </div>
       </div>
     </b-container>
@@ -190,6 +196,7 @@ export default {
       this.selected = instr;
     },
     openModal() {
+      this.selected = '';
       this.modalOpen = !this.modalOpen;
     },
     startRecording() {
@@ -312,5 +319,22 @@ export default {
   }
   .btn {
     background-color: #98AC9E;
+  }
+  .instrument {
+    height: 45vh;
+  }
+  .tools{
+    background: #595959;
+    padding: 1em;
+  }
+  .playback-string {
+    color: #fff;
+  }
+  .playback-string-play{
+    float: right;
+    color: #fff;
+  }
+   .btn-secondary {
+    background-color: #6d8657!important;
   }
 </style>

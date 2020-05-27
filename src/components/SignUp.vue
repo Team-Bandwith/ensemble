@@ -5,7 +5,7 @@
       class="user-plus"
       size="2x"
       v-b-modal.modal-prevent-closing
-    /> Signup
+    /> <span v-b-modal.modal-prevent-closing> Signup</span>
     <b-modal
       id="modal-prevent-closing"
       ref="modal"

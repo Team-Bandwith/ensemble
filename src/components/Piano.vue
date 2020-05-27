@@ -1,18 +1,27 @@
 <template>
 <b-row>
-<b-col>
-<div id="piano-keyboard" style="background-color:#0; width:400px; height:210px;"/>
-</b-col>
-<b-col>
-<div id="rack">
-  Oscillator:
-  <div id="osc" />
-  Vibrato Frequency:
-  <div id="vibf" />
-  Vibrato Depth:
-  <div id="vibd" />
-</div>
-</b-col>
+  <b-col>
+    <div id="piano-keyboard" style="width:400px; height:210px;"/>
+  </b-col>
+  <b-col>
+    <div id="rack" class="rack-container">
+      <b-row>
+      <!-- Oscillator: -->
+        <div class="type">Vibrato:</div>
+      <div id="osc" />
+      </b-row>
+      <b-row>
+        <b-col>
+          <span>Speed:</span>
+          <div id="vibf" />
+        </b-col>
+        <b-col>
+          <span>Depth:</span>
+          <div id="vibd" />
+        </b-col>
+      </b-row>
+    </div>
+  </b-col>
 </b-row>
 </template>
 
@@ -121,7 +130,9 @@ export default {
           delete activeSynths[k.note];
         }
       });
-
+      // accessibility colors
+      newPiano.colors.accent = '#595959';
+      newPiano.colors.fill = '#fff';
       return newPiano;
     };
 
@@ -182,3 +193,14 @@ export default {
   },
 };
 </script>
+<style scoped>
+#rack {
+ /* background: #595959; */
+ color: #fff;
+ padding: 1em;
+}
+.type{
+  padding: 1em;
+  margin-top: -.8em;
+}
+</style>

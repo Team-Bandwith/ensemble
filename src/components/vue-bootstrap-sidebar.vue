@@ -36,7 +36,7 @@
               class="sign-out-alt align-top"
               size="2x"
               @click="logOut"
-            /> Logout
+            /> <span @click="logOut"> Logout</span>
           </div>
           </div>
         <div v-if="loggedIn">

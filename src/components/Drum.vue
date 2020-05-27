@@ -1,12 +1,15 @@
 <template>
-  <b-container>
+  <b-container class="drum-toggle">
     <b-row><div id="target"></div></b-row>
-    <div>
-      <b-row><b-button @click="playLoop">play loop</b-button></b-row>
-    </div>
-    <div>
-      <b-row><b-button @click="stopLoop">stop loop</b-button></b-row>
-    </div>
+    <b-button-group>
+      <div class="play-btn">
+        <b-button squared @click="playLoop">Play</b-button>
+      </div>
+      <div class="stop-btn">
+        <b-button squared @click="stopLoop">Stop</b-button>
+      </div>
+      <div class="prompt">*Choose a pattern, then hit play.</div>
+    </b-button-group>
   </b-container>
 </template>
 <script>
@@ -32,6 +35,8 @@ export default {
     };
   },
   mounted() {
+    Nexus.colors.accent = '#595959';
+    Nexus.colors.fill = '#fff';
     this.createSequencer();
     Tone.Master.connect(this.dest);
   },
@@ -41,14 +46,15 @@ export default {
     },
     createSequencer() {
       const sequencer = new Nexus.Sequencer('#target', {
-        size: [400, 200],
+        size: [600, 200],
         mode: 'toggle',
         rows: 2,
-        columns: 10,
+        columns: 12,
       });
       sequencer.on('step', (v) => {
         this.col = v;
       });
+      // sequencer.colors.fill = 'red';
       this.sequencer = sequencer;
     },
     playLoop() {
@@ -77,4 +83,17 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.prompt{
+  color: #fff;
+  float: right;
+  padding: .5em;
+}
+.play-btn {
+  margin-left: -15px;
+  margin-top: 10px
+}
+.stop-btn{
+  margin-left: 5px;
+  margin-top: 10px
+}
 </style>
