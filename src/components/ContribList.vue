@@ -1,5 +1,5 @@
 <template>
-<div>
+<div v-if='contribution.length > 0'>
     <b-list-group
     style="max-height:100px;">
     <b-list-group-header class='contribs' style="background-color: #1f1e1d;">
