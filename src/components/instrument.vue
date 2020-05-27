@@ -3,9 +3,6 @@
     <SaveSong :cloudURL="cloudURL" :id="id" :users="users" v-on:active="activate" />
     <div class="jam">
       <b-row>
-        <b-button squared class="btn" @click="openModal">Select instrument</b-button>
-      </b-row>
-      <b-row>
         <SelectInstrument v-model="modalOpen" v-on:select="select" />
         <div class="instrument">
           <Piano v-if="selected === 'piano'" :dest="dest" :active="active" />
@@ -14,6 +11,9 @@
         <audio controls />
       </b-row>
       <b-row align-v="end" class="tools">
+        <b-col>
+          <b-button squared class="btn" @click="openModal">Instrument</b-button>
+        </b-col>
         <b-col cols="1">
           <div class="record align-top" @click="startRecording">
             <b-spinner class="active" v-show="recording" small type="grow" />
@@ -191,6 +191,7 @@ export default {
       this.selected = instr;
     },
     openModal() {
+      this.selected = '';
       this.modalOpen = !this.modalOpen;
     },
     startRecording() {
@@ -313,6 +314,9 @@ export default {
   }
   .btn {
     background-color: #98AC9E;
+  }
+  .instrument {
+    height: 45vh;
   }
   .tools{
     background: #595959;

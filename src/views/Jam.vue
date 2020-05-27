@@ -2,33 +2,34 @@
   <b-container class="jam-page">
     <b-row>
       <b-col cols="8">
-    <b-row>
-        <div class="jam-instrument">
-          <Instrument
-            :id="user.id"
-            :active="active"
-            :users="users"
-            v-on:active="activate"
-            v-on:deact="deactivate"
-          />
-        </div>
-    </b-row>
-    <b-row class="jam-band">
+        <div class="jammers"><h4>Jam Room</h4></div>
+          <div class="jam-instrument">
+            <Instrument
+              :id="user.id"
+              :active="active"
+              :users="users"
+              v-on:active="activate"
+              v-on:deact="deactivate"
+            />
+          </div>
+        <b-row>
+        <div class="jammers"><h4>Jammers</h4></div>
         <BandMembers
           :users="users"
           :you="user"
           :online="online.filter((usr) => usr.id !== user.id && friends[usr.id])"
         />
-    </b-row>
+        </b-row>
       </b-col>
       <b-col cols="4" class="jam-chat">
-        <Chat
+          <div class="chat"><h4>Chat</h4></div>
+          <Chat
           :user="user"
           v-on:active="activate"
           v-on:deact="deactivate"
         />
       </b-col>
-      </b-row>
+    </b-row>
   </b-container>
 </template>
 
@@ -106,6 +107,16 @@ export default {
 
 <style>
 .jam-instrument {
-  height: 60vh;
+  width: 100%;
+}
+.jam-height{
+
+}
+.jammers,
+.chat {
+  color: #FFF;
+}
+.jam-band{
+  border: 1px solid #6d8657;
 }
 </style>
