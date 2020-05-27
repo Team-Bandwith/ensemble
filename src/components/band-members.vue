@@ -3,7 +3,6 @@
     <b-row align-h="end">
       <b-button
         squared
-        variant="primary"
         class='button'
         @click="toggleInv">Invite
         </b-button>
