@@ -3,7 +3,7 @@
     <SaveSong :cloudURL="cloudURL" :id="id" :users="users" v-on:active="activate" />
     <div class="jam">
       <b-row>
-        <b-button @click="openModal">Select instrument</b-button>
+        <b-button squared class="btn" @click="openModal">Select instrument</b-button>
       </b-row>
       <b-row>
         <SelectInstrument v-model="modalOpen" v-on:select="select" />
@@ -257,7 +257,6 @@ export default {
       synth.triggerAttack(note(midi));
     },
     receiveStop(midi) {
-      console.log('stop', midi);
       this.activeExternalSynths[midi].triggerRelease();
       const removeSynth = { ...this.activeExternalSynths };
       delete removeSynth[midi];
@@ -268,6 +267,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import 'node_modules/@jurajkavka/vue-hamburger-button/src/scss/default-theme.scss';
+
   jam {
     height: 100%
   }
@@ -309,5 +310,7 @@ export default {
   audio {
     display: none;
   }
-
+  .btn {
+    background-color: #98AC9E;
+  }
 </style>

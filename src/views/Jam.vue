@@ -1,7 +1,8 @@
 <template>
-  <b-container class="jam-page" style="background-color:#98AC9E;">
+  <b-container class="jam-page">
     <b-row>
-      <b-col cols="8" >
+      <b-col cols="8">
+    <b-row>
         <div class="jam-instrument">
           <Instrument
             :id="user.id"
@@ -11,24 +12,23 @@
             v-on:deact="deactivate"
           />
         </div>
-      </b-col>
-      <b-col cols="4" class="jam-chat">
-         <Chat
-          :user="user"
-          v-on:active="activate"
-          v-on:deact="deactivate"
-        />
-      </b-col>
     </b-row>
-    <b-row>
-      <b-col class="jam-band">
+    <b-row class="jam-band">
         <BandMembers
           :users="users"
           :you="user"
           :online="online.filter((usr) => usr.id !== user.id && friends[usr.id])"
         />
-      </b-col>
     </b-row>
+      </b-col>
+      <b-col cols="4" class="jam-chat">
+        <Chat
+          :user="user"
+          v-on:active="activate"
+          v-on:deact="deactivate"
+        />
+      </b-col>
+      </b-row>
   </b-container>
 </template>
 

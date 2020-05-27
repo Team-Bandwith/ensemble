@@ -25,7 +25,7 @@
                   @focus="chat"
                   @blur="doneChat"
                 />
-                <b-button type='submit' variant="primary">Send</b-button>
+                <b-button squared class="btn" type='submit'>Send</b-button>
             </b-form>
           </div>
         </b-form>
@@ -81,5 +81,7 @@ export default {
 </script>
 
 <style>
-
+  .btn {
+    background-color: #98AC9E;
+  }
 </style>
