@@ -243,5 +243,20 @@ exports.query = new GraphQLObjectType({
           .catch((err) => console.log(err));
       },
     },
+    getTotalLikes: {
+      type: SongType,
+      args: {
+        id: {type: GraphQLInt },
+      },
+      resolve(parentValue, args) {
+        const query = 'SELECT count_likes from song WHERE id_author = $1';
+        return db.any(query, [args.id])
+          .then((res) => res.reduce((totalCount, count) => {
+            totalCount.count_likes = totalCount.count_likes + count.count_likes;
+            return totalCount;
+          }))
+          .catch((err) => console.log(err));
+      },
+    },
   },
 });
