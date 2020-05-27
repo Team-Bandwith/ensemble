@@ -1,15 +1,19 @@
 <template>
   <b-container>
-    <b-row align-h="end">
-      <b-button
-        squared
+    <div inline>
+      <b-row>
+      <div class="jammers col-sm-8"><h4>Jammers</h4></div>
+      <button
+        v-b-toggle.invite-collapse
         id="invite-button"
-        class='button'
         @click="toggleInv">Invite
-        </b-button>
-    </b-row>
+        </button>
+      </b-row>
+    </div>
     <b-row>
+      <b-collapse id="invite-collapse" class="mt-2">
       <SendInvite v-model="invOpen" :online="online" :you="you" />
+      </b-collapse>
     </b-row>
     <b-row align-h="around">
       <b-col cols="2" v-for="user in users" v-bind:key="user.id">
@@ -48,7 +52,14 @@ export default {
 
 <style>
 #invite-button {
-  background-color: #6d8657;
-  border-color: #6d8657;
+    height: 75%;
+    background-color: #6d8657;
+    border-color: #6d8657;
+    color: white;
+    border-style: none;
+    border-radius: 0px;
+    margin-top: 15px;
+    padding: 6px;
+    margin-left: 170px;
 }
 </style>
