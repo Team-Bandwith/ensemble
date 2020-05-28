@@ -24,11 +24,13 @@
           <div v-if="loggedIn">
           <img v-if="user.url_avatar" :src="user.url_avatar" />
           <div class='user-name'><b>{{ user.username }}</b></div>
-          <div class='feed-btn'>
-            <b-button squared @click="setFeed('private')">Your Feed</b-button>
-          </div>
-          <div class='explore-btn'>
-            <b-button squared @click="setFeed('public')">Explore</b-button>
+          <div v-if="this.$route.name === 'Home'" class="home-header-options">
+            <div class='feed-btn'>
+              <b-button squared @click="setFeed('private')">Your Feed</b-button>
+            </div>
+            <div class='explore-btn'>
+              <b-button squared @click="setFeed('public')">Explore</b-button>
+            </div>
           </div>
           <div class='logout-btn'>
             <font-awesome-icon
@@ -95,12 +97,13 @@
               <b-row class="search-icon">
                 <b-col sm="1" >
                   <div>
-              <font-awesome-icon class="fa-icon" icon='address-book'></font-awesome-icon>
+                    <br>
+              <!-- <font-awesome-icon class="fa-icon" icon='address-book'></font-awesome-icon> -->
               </div>
               </b-col>
               <b-col sm='10'>
                 <div class="link-name search">
-              <p>Search</p>
+                <!-- <p>Search</p> -->
               </div>
               </b-col>
             </b-row>
@@ -108,10 +111,9 @@
             label="username"
             :filterable="false"
             :options="options"
-            @search="onSearch">
-            <template slot="no-options">
-              Search for Friends
-            </template>
+            @search="onSearch"
+            placeholder="Search for friends"
+        >
             <template slot="option" slot-scope="option">
                 <router-link :to="`/profile/${option.id}`">
               <div class="d-center" >
@@ -279,14 +281,16 @@ img {
 
 .feed-btn {
    position:fixed;
-   right:300px;
    top:7px;
+   left: 42%;
+   transform: translate(-50%, 0);
 }
 
 .explore-btn {
    position:fixed;
-   right:200px;
    top:7px;
+   left: 50%;
+   transform: translate(-50%, 0);
 }
 .search {
   margin-left: -6px;
@@ -294,5 +298,8 @@ img {
 .search-icon {
   margin-top: 5px;
   margin-bottom: -10px;
+}
+::placeholder {
+  color: green;
 }
 </style>
