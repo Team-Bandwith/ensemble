@@ -7,7 +7,7 @@ import {
   faUserSecret, faHome, faTint, faUsers,
   faPhone, faChild, faUser, faMusic, faComments,
   faPlay, faPause, faAddressBook, faThumbsUp, faThumbsDown,
-  faSignOutAlt, faSignInAlt, faUserPlus, faPlus, faDrum,
+  faSignOutAlt, faSignInAlt, faUserPlus, faPlus, faDrum, faQuestionCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import vSelect from 'vue-select';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -43,6 +43,7 @@ library.add(faUserPlus);
 library.add(faPlus);
 library.add(faMusic);
 library.add(faDrum);
+library.add(faQuestionCircle);
 
 // Install BootstrapVue
 Vue.use(underscore);

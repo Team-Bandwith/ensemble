@@ -1,6 +1,12 @@
 <template>
 <b-row>
   <b-col>
+    <font-awesome-icon
+      icon="question-circle"
+      size="lg"
+      class="question"
+    />
+    <img class="legend" src="../assets/pianolegend.png" />
     <div id="piano-keyboard" style="width:400px; height:210px;"/>
   </b-col>
   <b-col>
@@ -202,5 +208,21 @@ export default {
 .type{
   padding: 1em;
   margin-top: -.8em;
+}
+.question {
+  color: white;
+}
+
+.legend {
+  position: absolute;
+  display: none;
+  z-index: 3;
+  border-radius: 0px;
+  width: 338px;
+  height: 188px;
+}
+
+.question:hover + .legend {
+  display: inline;
 }
 </style>
