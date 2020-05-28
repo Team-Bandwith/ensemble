@@ -124,15 +124,18 @@ export default {
       likes: null,
       isPlaying: false,
       player: null,
+      likeEnabled: true,
     };
   },
   mounted() {
     this.likes = this.song.count_likes;
   },
-  methods: {
-    created() {
-      this.$watch();
+  watch: {
+    liked() {
+      this.likeEnabled = true;
     },
+  },
+  methods: {
     playSong(src) {
       if (this.isPlaying) {
         this.player.pause();
@@ -149,7 +152,9 @@ export default {
       }
     },
     likeSong(likes, songId) {
-      // console.log('like', likes);
+      if (!this.likeEnabled) {
+        return;
+      }
       const query = `mutation {
       likeSong(id: ${songId}, id_user: ${this.myId}) {
         count_likes
@@ -159,10 +164,14 @@ export default {
         .then((res) => {
           this.likes = res.likeSong.count_likes;
           this.$emit('new-like');
+          this.likeEnabled = false;
         })
         .catch((err) => console.log(err));
     },
     unlikeSong(songId) {
+      if (!this.likeEnabled) {
+        return;
+      }
       const query = `mutation {
       unlikeSong(id: ${songId}, id_user: ${this.myId}) {
         count_likes
@@ -172,6 +181,7 @@ export default {
         .then((res) => {
           this.likes = res.unlikeSong.count_likes;
           this.$emit('new-like');
+          this.likeEnabled = false;
         })
         .catch((err) => console.log(err));
     },
