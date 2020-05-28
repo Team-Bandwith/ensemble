@@ -11,14 +11,14 @@
       <b-col>
         <div class="spacer"></div>
         <div class="creds">
-          <div class="user-link">
+          <span class="user-link">
             <router-link :to="`/profile/${comment.id_user}`">
               {{ comment.username + ':' }}
             </router-link>
-          </div>
-          <div class="comment-text">
-            <p>{{comment.text}}</p>
-          </div>
+          </span>
+          <span class="comment-text">
+            {{comment.text}}
+          </span>
         </div>
         <div class="moment">
             <em>{{handleMoment(comment.created_at).fromNow()}}</em>
@@ -49,15 +49,6 @@ export default {
 </script>
 
 <style>
-.comment-text {
-  width: 82%;
-  float: left;
-  height: 100%;
-  color: #fff;
-}
-.comment-text p {
-  max-width: 100px;
-}
 .spacer {
   float: left;
   width: 18%;
@@ -71,6 +62,15 @@ export default {
   float: right;
   color: #fff;
   font-size: .5em;
+}
+.comment-text {
+  float: left;
+  height: 100%;
+  color: #fff;
+  padding-left: 4px;
+}
+.user-link {
+  float: left;
 }
 .user-link a {
   float: left;
