@@ -4,7 +4,7 @@
       <b-row>
       <div class="jammers col-sm-8"><h4>Jammers</h4></div>
       <button
-        v-b-toggle.invite-collapse
+        v-b-modal.invite-modal
         id="invite-button"
         @click="toggleInv">Invite
         </button>
@@ -17,9 +17,7 @@
       </b-col>
     </b-row>
     <b-row>
-      <b-collapse id="invite-collapse" class="mt-2">
       <SendInvite v-model="invOpen" :online="online" :you="you" />
-      </b-collapse>
     </b-row>
   </b-container>
 </template>
