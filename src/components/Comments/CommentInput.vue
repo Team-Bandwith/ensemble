@@ -89,7 +89,7 @@ form:focus {
   outline:0;
 }
 form {
-  width: 84%;
+  width: 82%;
 }
 input:hover,
 input:focus,

@@ -62,6 +62,7 @@ export default {
   float: right;
   color: #fff;
   font-size: .5em;
+  margin-top: 5px;
 }
 .comment-text {
   float: left;
