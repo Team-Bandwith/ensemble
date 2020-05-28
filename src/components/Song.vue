@@ -1,22 +1,26 @@
 <template>
   <b-container fluid>
+    <div class="green"><!-- begin green -->
     <div class="song-item">
         <b-row cols="12">
             <div class="song-title">{{ song.name }}</div>
-        <!-- <div class="song-created-at">
-          <em>{{ handleMoment(song.created_at).fromNow() }}</em>
-        </div> -->
-        </b-row>
-        <b-row cols="12">
-          <!-- <b-col cols="3">
-            <img v-if="song.url_avatar" :src="song.url_avatar" />
-          </b-col> -->
-          <div class="created-by">
-            <router-link
+            <div class="song-created-at">
+              <em>{{ handleMoment(song.created_at).fromNow() }}</em>
+            </div>
+            <div class="created-by">by:
+             <router-link
               :to="`/profile/${song.id_author}`">
               {{ song.username }}
             </router-link>
-          </div>
+            </div>
+        </b-row>
+        <b-row cols="12">
+          <!-- <b-col>
+            <b-avatar v-if="song.url_avatar" :src="song.url_avatar"  class='fluid wid'/>
+          </b-col> -->
+          <!-- <div class="song-created-at">
+              <em>{{ handleMoment(song.created_at).fromNow() }}</em>
+          </div> -->
         </b-row>
         <b-row cols="12">
          <b-col>
@@ -80,14 +84,17 @@
         </div>
         </b-col>
         </b-row>
+        </div><!-- end gren -->
       </div>
+      <div class="comment-bg">
       <b-row>
         <b-col>
-         <b-collapse :id="'collapse' + song.id">
+            <b-collapse :id="'collapse' + song.id">
               <CommentsList :song="song" :user="user" :myId="myId"></CommentsList>
             </b-collapse>
         </b-col>
       </b-row>
+      </div>
   </b-container>
 </template>
 
@@ -180,23 +187,38 @@ export default {
 .song-title{
   font-weight: bold;
   font-size: 1.7rem;
+  float: left;
+  width: 100%;
 }
 .created-by a {
   color: #000;
 }
 .created-by a:hover {
-  color: #e98e3e;
+  color: #6b8554;
+}
+.song-created-at {
+  color: #3B3836;
+  float: right;
 }
 .like:hover {
   cursor: pointer;
 }
 .unlike {
-  color: #e98e3e;
+  color: #6d8657;
 }
 .unlike:hover {
   cursor: pointer;
 }
 .comments:hover {
   cursor: pointer;
+}
+.comment-bg {
+  width: 100%;
+  margin-top: -35px;
+  margin-top: 10px;
+  background: #3B3836;
+}
+.green {
+  background: #98AC9E;
 }
 </style>

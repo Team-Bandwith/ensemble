@@ -2,12 +2,9 @@
   <b-container fluid>
     <b-row>
       <b-col>
-        <div class="av-img">
+        <!-- <div class="av-img">
           <b-avatar v-if="comment.url_avatar" :src="comment.url_avatar" />
-        </div>
-        <div class="comment-text">
-          {{comment.text}}
-        </div>
+        </div> -->
       </b-col>
     </b-row>
     <b-row>
@@ -16,21 +13,22 @@
         <div class="creds">
           <div class="user-link">
             <router-link :to="`/profile/${comment.id_user}`">
-              {{ comment.username }}
-            </router-link>:
+              {{ comment.username + ':' }}
+            </router-link>
           </div>
-          <div class="moment">
-            <em>{{handleMoment(comment.created_at).fromNow()}}</em>
+          <div class="comment-text">
+            <p>{{comment.text}}</p>
           </div>
         </div>
+        <div class="moment">
+            <em>{{handleMoment(comment.created_at).fromNow()}}</em>
+          </div>
       </b-col>
     </b-row>
   </b-container>
 </template>
 
 <script>
-
-// import { request } from 'graphql-request';
 
 const moment = require('moment');
 
@@ -55,27 +53,31 @@ export default {
   width: 82%;
   float: left;
   height: 100%;
-  padding: .5em;
+  color: #fff;
 }
-.av-img  {
-  max-width: 18%;
-  float: left;
+.comment-text p {
+  max-width: 100px;
 }
 .spacer {
   float: left;
   width: 18%;
 }
-.creds{
+.creds {
   width: 82%;
   float: left;
   height: 100%;
-  padding: .5px;
 }
 .moment{
-  float: left;
+  float: right;
+  color: #fff;
+  font-size: .5em;
 }
-.user-link {
+.user-link a {
   float: left;
+  color: #6b8554
+}
+.user-link a:hover {
+  color: #fff;
 }
 
 </style>

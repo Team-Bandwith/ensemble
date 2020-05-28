@@ -1,10 +1,10 @@
 <template>
   <b-container>
     <b-row>
-      <b-col>
       <form ref="form" @submit.stop.prevent="handleSubmit">
 
           <b-form-input
+            squared
             :id="song.id"
             v-model="commentText"
             :state="commentState"
@@ -12,14 +12,11 @@
           ></b-form-input>
 
       </form>
-      </b-col>
-      <b-col>
         <b-button
           @click="handleComment(myId, song.id)"
         >
           submit
         </b-button>
-      </b-col>
     </b-row>
   </b-container>
 </template>
