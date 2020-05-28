@@ -23,7 +23,7 @@
             required
           ></b-form-input>
         </b-form-group>
-         <b-form-group
+        <b-form-group
           :state="publicState"
           label="Make song public?"
           label-for="public-input"
