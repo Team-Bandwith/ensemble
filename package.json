@@ -31,6 +31,7 @@
     "graphql-iso-date": "^3.6.1",
     "graphql-request": "^1.8.2",
     "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.15",
     "midi-note": "^1.0.0",
     "moment": "^2.25.3",
     "nexusui": "https://github.com/jwebber18/ui/tarball/fix",
