@@ -55,7 +55,6 @@ export default {
   },
   methods: {
     rsvp(user) {
-      console.log('click');
       this.toInvite = [...this.toInvite, user];
     },
     unrsvp(user) {
