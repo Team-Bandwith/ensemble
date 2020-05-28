@@ -128,6 +128,6 @@ export default {
 <style scoped>
 .song {
   margin-bottom: 1em;
-  background-color:#98AC9E;
+  background-color: transparent;
 }
 </style>
