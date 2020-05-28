@@ -1,6 +1,7 @@
 @import './jamroom.scss';
 @import './vue-bootstrap-sidebar';
 @import './variables';
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
 
 
@@ -19,6 +20,7 @@
   & .sidebar-header {
     background-color: $bg-color;
     color: $color;
+    font-family: 'Fredoka One', cursive;
   }
   
   .items-wrapper {
