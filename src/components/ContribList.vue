@@ -74,7 +74,6 @@ export default {
     },
   },
   created() {
-    console.log('Im created', this.$route.params.id);
     this.getContribution(this.$route.params.id);
   },
   watch: {
