@@ -157,8 +157,16 @@ io.on('connection', (socket) => {
     socket.broadcast.to(room).emit('receiveStop', note);
   });
 
-  socket.on('startDrum', ({ drum, room }) => {
-    socket.broadcast.to(room).emit('receiveStartDrum', { drum });
+  socket.on('startDrum', ({ drum, time, room }) => {
+    socket.broadcast.to(room).emit('receiveStartDrum', { drum, time });
+  });
+
+  socket.on('setDrum', ({ index, option, value, room }) => {
+    socket.broadcast.to(room).emit('receiveDrumSet', { index, option, value });
+  });
+
+  socket.on('setVol', ({ index, vol, room}) => {
+    socket.broadcast.to(room).emit('receiveVolSet', { index, vol });
   });
 
   socket.on('sendMessage', ({ message, room }) => {

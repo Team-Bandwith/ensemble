@@ -113,10 +113,28 @@ export default {
       playbackTimer: null,
       paused: true,
       master: Tone.Master,
-      instruments: ['C3', 'C4'],
+      instruments: ['C1', 'C2', 'G2'],
+      vols: [1, 1, 0.5],
       synths: [
-        new Tone.MembraneSynth().toMaster(),
-        new Tone.MembraneSynth().toMaster(),
+        new Tone.MembraneSynth({
+          pitchDecay: 0.15,
+          octaves: 13,
+          envelope: {
+            attack: 0.01,
+            decay: 0.55,
+          },
+        }).toMaster(),
+        new Tone.MembraneSynth({
+          oscillator: { type: 'triangle' },
+          pitchDecay: 0.05,
+          envelope: {
+            attack: 0.02,
+            decay: 0.35,
+          },
+        }).toMaster(),
+        new Tone.MembraneSynth({
+          oscillator: { type: 'sawtooth' },
+        }).toMaster(),
       ],
     };
   },
@@ -245,9 +263,17 @@ export default {
   },
   sockets: {
     receiveStartDrum({
-      drum: d,
+      drum: d, time,
     }) {
-      this.synths[d].triggerAttackRelease(this.instruments[d], '8n');
+      this.synths[d].triggerAttackRelease(this.instruments[d], '8n', time + Tone.context.currentTime);
+    },
+    receiveDrumSet({ index, option, value }) {
+      this.synths[index].set(option, value);
+    },
+    receiveVolSet({ index, vol }) {
+      const vols = [...this.vols];
+      vols[index] = vol;
+      this.vols = vols;
     },
     receiveStart({
       note: midi,
