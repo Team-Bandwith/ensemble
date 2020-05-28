@@ -3,10 +3,11 @@
     <b-modal
       id="save-song"
       ref="modal"
-      title="Create an Account"
+      title="Save Your Song"
       @show="showModal"
       @hidden="closeModal"
       @ok="handleOk"
+      hide-footer
     >
       <form ref="form" @submit.stop.prevent="handleSubmit">
         <b-form-group
@@ -24,7 +25,7 @@
         </b-form-group>
          <b-form-group
           :state="publicState"
-          label="Public?"
+          label="Make song public?"
           label-for="public-input"
         >
           <b-form-checkbox
@@ -34,6 +35,9 @@
             required
           ></b-form-checkbox>
         </b-form-group>
+        <b-button
+        class="mt-3 save-button" block
+        @click="handleOk">Save</b-button>
       </form>
     </b-modal>
   </div>
@@ -121,5 +125,8 @@ export default {
 <style scoped>
 .modal {
   border: 1px solid forestgreen;
+}
+#save-song {
+  background-color: #1f1e1d;
 }
 </style>
