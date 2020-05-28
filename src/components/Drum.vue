@@ -73,8 +73,6 @@ export default {
   mounted() {
     Nexus.colors.accent = '#595959';
     Nexus.colors.fill = '#fff';
-    Tone.Transport.on('stop', () => console.log('STOP'));
-    Tone.Transport.on('pause', () => console.log('pause'));
     document.documentElement.addEventListener('mousedown', () => {
       if (Tone.context.state !== 'running') Tone.context.resume();
     });
@@ -98,11 +96,27 @@ export default {
 
       select.on('change', (s) => {
         this.synths[i - 1].set('oscillator.type', s.value);
+        this.$socket.emit('setDrum', {
+          index: i - 1,
+          option: 'oscillator.type',
+          value: s.value,
+          room: this.$route.query.room,
+        });
         const vols = [...this.vols];
         if (s.value === 'square' || s.value === 'sawtooth') {
           vols[i - 1] = 0.5;
+          this.$socket.emit('setVol', {
+            index: i - 1,
+            vol: 0.5,
+            room: this.$route.query.room,
+          });
         } else {
           vols[i - 1] = 1;
+          this.$socket.emit('setVol', {
+            index: i - 1,
+            vol: 0.5,
+            room: this.$route.query.room,
+          });
         }
         this.vols = vols;
       });
@@ -120,6 +134,12 @@ export default {
       pitchDecay.on('change', (v) => {
         if (this.synths[i - 1].pitchDecay !== v) {
           this.synths[i - 1].set('pitchDecay', v);
+          this.$socket.emit('setDrum', {
+            index: i - 1,
+            option: 'pitchDecay',
+            value: v,
+            room: this.$route.query.room,
+          });
         }
       });
     }
@@ -136,6 +156,12 @@ export default {
       octaves.on('change', (v) => {
         if (this.synths[i - 1].octaves !== v) {
           this.synths[i - 1].set('octaves', v);
+          this.$socket.emit('setDrum', {
+            index: i - 1,
+            option: 'octaves',
+            value: v,
+            room: this.$route.query.room,
+          });
         }
       });
     }
@@ -151,6 +177,12 @@ export default {
 
       const changeAttack = _.debounce((val) => {
         this.synths[i - 1].set('envelope.attack', val);
+        this.$socket.emit('setDrum', {
+          index: i - 1,
+          option: 'envelope.attack',
+          value: val,
+          room: this.$route.query.room,
+        });
       }, 500);
 
       attack.on('change', (a) => {
@@ -169,6 +201,12 @@ export default {
 
       const changeDecay = _.debounce((val) => {
         this.synths[i - 1].set('envelope.decay', val);
+        this.$socket.emit('setDrum', {
+          index: i - 1,
+          option: 'envelope.decay',
+          value: val,
+          room: this.$route.query.room,
+        });
       }, 500);
 
       decay.on('change', (a) => {
@@ -201,9 +239,9 @@ export default {
             if (state) {
               this.$socket.emit('startDrum', {
                 drum: i,
+                time: time - Tone.context.currentTime,
                 room: this.$route.query.room,
               });
-              // const synth = new Tone.MembraneSynth().toMaster();
               this.synths[i].triggerAttackRelease(this.instruments[i], '8n', time, this.vols[i]);
             }
           });
