@@ -95,7 +95,7 @@
     </b-list-group>
     <div class='loader' v-if="myId === parseInt($route.params.id)">
     </div>
-    <div style='font-size: 1.5em;'><b>Friends({{friendsData.length}})</b></div>
+    <div style='font-size: 1.5em; padding: 1em;'><b>Friends({{friendsData.length}})</b></div>
     <b-card-footer style="border:none; background-color: #1f1e1d;">
     <b-row v-for="row in friendsRow" :key="row[0].id" class='mb-3'>
       <b-col cols="4">
