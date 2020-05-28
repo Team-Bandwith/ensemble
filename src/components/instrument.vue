@@ -113,6 +113,8 @@ export default {
       playbackTimer: null,
       paused: true,
       master: Tone.Master,
+      activeExternalSynths: {},
+      activeDrums: {},
       instruments: ['C1', 'C2', 'G2'],
       vols: [1, 1, 0.5],
       synths: [
@@ -263,36 +265,68 @@ export default {
   },
   sockets: {
     receiveStartDrum({
-      drum: d, time,
+      drum: d, time, sockId,
     }) {
-      this.synths[d].triggerAttackRelease(this.instruments[d], '8n', time + Tone.context.currentTime);
+      const activeDrums = { ...this.activeDrums };
+      if (!activeDrums[sockId]) {
+        activeDrums[sockId] = {};
+        activeDrums[sockId].synths = this.synths;
+        activeDrums[sockId].instruments = this.instruments;
+        activeDrums[sockId].vols = this.vols;
+        this.activeDrums = { ...this.activeDrums, ...activeDrums };
+      }
+      activeDrums[sockId].synths[d].triggerAttackRelease(activeDrums[sockId].instruments[d], '8n', time + Tone.context.currentTime);
     },
-    receiveDrumSet({ index, option, value }) {
-      this.synths[index].set(option, value);
+    receiveDrumSet({
+      index, option, value, sockId,
+    }) {
+      const activeDrums = { ...this.activeDrums };
+      if (!activeDrums[sockId]) {
+        activeDrums[sockId] = {};
+        activeDrums[sockId].synths = this.synths;
+        activeDrums[sockId].instruments = this.instruments;
+        activeDrums[sockId].vols = this.vols;
+        this.activeDrums = { ...this.activeDrums, ...activeDrums };
+      }
+      activeDrums[sockId].synths[index].set(option, value);
+      this.activeDrums = { ...this.activeDrums, ...activeDrums };
     },
-    receiveVolSet({ index, vol }) {
-      const vols = [...this.vols];
-      vols[index] = vol;
-      this.vols = vols;
+    receiveVolSet({ index, vol, sockId }) {
+      const activeDrums = { ...this.activeDrums };
+      if (!activeDrums[sockId]) {
+        activeDrums[sockId] = {};
+        activeDrums[sockId].synths = this.synths;
+        activeDrums[sockId].instruments = this.instruments;
+        activeDrums[sockId].vols = this.vols;
+        this.activeDrums = { ...this.activeDrums, ...activeDrums };
+      }
+      activeDrums[sockId].vols[index] = vol;
+      this.activeDrums = { ...this.activeDrums, ...activeDrums };
     },
     receiveStart({
       note: midi,
       vibFreq,
       vibDepth,
       oscType,
+      sockId,
     }) {
+      const activeExternalSynths = { ...this.activeExternalSynths };
+      if (!activeExternalSynths[sockId]) {
+        activeExternalSynths[sockId] = {};
+      }
       const vibrato = new Tone.Vibrato({ frequency: vibFreq, depth: vibDepth });
       const synth = new Tone.Synth({
         oscillator: { type: oscType },
       });
       synth.chain(vibrato, this.master);
-      this.activeExternalSynths = Object.assign({}, this.activeExternalSynths, { [midi]: synth });
+      activeExternalSynths[sockId][midi] = synth;
+      this.activeExternalSynths = { ...this.activeExternalSynths, ...activeExternalSynths };
       synth.triggerAttack(note(midi));
     },
-    receiveStop(midi) {
-      this.activeExternalSynths[midi].triggerRelease();
+    receiveStop({ note: midi, sockId }) {
+      this.activeExternalSynths[sockId][midi].triggerRelease();
       const removeSynth = { ...this.activeExternalSynths };
-      delete removeSynth[midi];
+      delete removeSynth[sockId][midi];
       this.activeExternalSynths = removeSynth;
     },
   },
