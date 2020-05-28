@@ -1,16 +1,14 @@
 <template>
+  <b-modal
+  id="invite-modal"
+  title="Select an Online Friend"
+  @click="send"
+  hide-footer
+  >
+  <form>
+  <span v-for="user in online" :key="user.id">
   <div id="invite-container" v-show="value">
-    <div inline>
-      <b-row>
-        <div class="col-sm-8"><h5>Select an Online Friend</h5></div>
-        <button
-        id="send"
-        @click="send"
-        squared
-        type='submit'>Send Invite</button>
-      </b-row>
-    </div>
-    <b-col v-for="user in online" :key="user.id" id="invite-users">
+    <div id="invite-users">
       <div id="center-wrapper">
         <img
           v-if="!toInvite.map((usr) => usr.id).includes(user.id)"
@@ -27,8 +25,15 @@
         {{ user.username }}
         </div>
       </div>
-    </b-col>
+      </div>
   </div>
+    </span>
+  <b-button
+        id="send"
+        @click="send"
+        class="mt-3" block>Send Invite</b-button>
+  </form>
+</b-modal>
 </template>
 
 <script>
@@ -70,6 +75,7 @@ export default {
       }))
         .then(() => {
           this.$emit('input', false);
+          this.$bvModal.hide('invite-modal');
         })
         .catch((err) => console.log(err));
     },
@@ -81,11 +87,13 @@ export default {
 h5 {
   color: white;
 }
+  #invite-modal {
+    background-color: #3B3836;
+  }
   #invite-container {
     background-color: #3B3836;
     border-radius: 2px;
     padding: 20px;
-    width: 700px;
   }
   #invite-name {
     color: #99aca0;
@@ -103,11 +111,6 @@ h5 {
     color: white;
     border-style: none;
     border-radius: 0px;
-    margin-left: 110px;
-    padding-top: 6px;
-    padding-right: 12px;
-    padding-bottom: 6px;
-    padding-left: 12px;
   }
   .selected {
     border-color: #6d8657;
