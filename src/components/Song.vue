@@ -5,7 +5,7 @@
         <b-row cols="12">
             <div class="song-title">{{ song.name }}</div>
             <div class="song-created-at">
-              <em>{{ handleMoment(song.created_at).fromNow() }}</em>
+              <em class="moment-prefix">{{ handleMoment(song.created_at).fromNow() }}</em>
             </div>
             <div class="created-by">by:
              <router-link
@@ -220,5 +220,8 @@ export default {
 }
 .green {
   background: #98AC9E;
+}
+.moment-prefix {
+  padding-right: 4px;
 }
 </style>
