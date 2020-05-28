@@ -275,10 +275,7 @@ export default {
       }, (60 / this.tempo).toString());
     }, 500),
     playLoop() {
-      if (this.transport === null) {
-        this.schedule();
-      }
-
+      this.schedule();
       Tone.Transport.start();
     },
     stopLoop() {
