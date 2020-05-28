@@ -128,10 +128,11 @@ export default {
 }
 .sign-in-alt{
   color: #fff;
+  margin-top: -5px;
 }
 .sign-in-alt-text {
   color: #fff;
   margin-right: 35px;
-
+  margin-top: 9px;
 }
 </style>
