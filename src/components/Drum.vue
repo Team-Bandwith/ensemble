@@ -70,6 +70,12 @@ export default {
       transport: null,
     };
   },
+  beforeDestroy() {
+    Tone.Transport.stop();
+    if (this.transport !== null) {
+      Tone.Transport.clear(this.transport);
+    }
+  },
   mounted() {
     Nexus.colors.accent = '#595959';
     Nexus.colors.fill = '#fff';
