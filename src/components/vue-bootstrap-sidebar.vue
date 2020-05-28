@@ -70,24 +70,6 @@
             <b-list-group-item
               :key="index"
             >
-              <b-button
-                v-b-toggle="`accordion-${link.name}`"
-                block
-                href="#"
-                variant="info"
-                class="sidebar-menu-item dropdown-toggle"
-              >
-                <div class="fa-icon">
-                  <component
-                    v-if="link.faIcon"
-                    :is="'font-awesome-icon'"
-                    :icon="link.faIcon"
-                  />
-                </div>
-                <div class="link-name">
-                  {{ link.name }}
-                </div>
-              </b-button>
             </b-list-group-item>
           </template>
         </template>

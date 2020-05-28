@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 <template>
 <b-container fluid class="profileBody">
+<h4 class='username-title'>{{profileUser.username}}</h4>
   <b-row align-h="around">
     <b-col cols='7'>
   <div class="user-song">
@@ -134,5 +135,13 @@ export default {
 <style scoped>
 user-song {
   overflow: hidden;
+}
+.username-title{
+  position: relative;
+  margin-top: -20px;
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  margin-left: 0px;
 }
 </style>

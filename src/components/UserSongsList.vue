@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 <template>
   <b-container fluid>
+      <h3 v-if="songs.length > 0" class='list-title'>Original Songs</h3>
     <div v-for="song in songs" :key="song.id">
       <div class='listcontainer'>
        <Song
@@ -82,5 +83,10 @@ export default {
 .listcontainer {
   margin-bottom: 1em;
   background-color:#98AC9E;
+}
+.list-title {
+  font-size: 1.5rem;
+  color: #99aca0;
+  margin-left: -16px;
 }
 </style>
