@@ -3,7 +3,7 @@
 <b-container fluid class="profileBody">
 <h4 class='username-title'>{{profileUser.username}}</h4>
   <b-row align-h="around">
-    <b-col cols='7'>
+    <b-col cols='8'>
   <div class="user-song">
     <UserSongsList
       v-if='user'

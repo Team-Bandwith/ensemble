@@ -53,6 +53,10 @@ export default {
     };
   },
   methods: {
+    scrollDown() {
+      const container = this.$el.querySelector('#chat-messages');
+      container.scrollTop = container.scrollHeight;
+    },
     sendMessage() {
       const message = {
         message: this.message,
@@ -68,6 +72,9 @@ export default {
     doneChat() {
       this.$emit('active');
     },
+  },
+  updated() {
+    this.scrollDown();
   },
   sockets: {
     receiveMessage(message) {
