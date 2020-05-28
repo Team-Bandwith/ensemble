@@ -1,6 +1,6 @@
 <template>
   <b-row>
-    <b-col>
+    <b-col cols='8'>
   <div class="home">
     <SongsList msg="Welcome to Ensemble"
       :loggedIn="loggedIn"

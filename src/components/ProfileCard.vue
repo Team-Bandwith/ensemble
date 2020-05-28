@@ -19,7 +19,8 @@
       badge-variant="dark"
       class="justify-center"
       size='115px'>
-      <template v-slot:badge><PhotoUpload v-on:new-avatar='newAvatar' :user='user'/></template>
+      <template v-if="myId === parseInt(user.id)" v-slot:badge>
+        <PhotoUpload v-on:new-avatar='newAvatar' :user='user'/></template>
       </b-avatar>
       <h4 class="mb-0"
         :style="friends[user.id] ? { color: 'green' } : {}"
