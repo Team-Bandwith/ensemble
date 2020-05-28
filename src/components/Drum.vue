@@ -6,16 +6,16 @@
         <div v-for="n in 3" :id="`select${3 - n + 1}`" :key="`select${n}`" />
         </div>
         <div id="rack2">
-        <div v-for="n in 3" :id="`pd${3 - n + 1}`" :key="`pd${n}`" />
+        <div title="Pitch Decay" v-for="n in 3" :id="`pd${3 - n + 1}`" :key="`pd${n}`" />
         </div>
         <div id="rack3">
-        <div v-for="n in 3" :id="`oct${3 - n + 1}`" :key="`oct${n}`" />
+        <div title="Resonance" v-for="n in 3" :id="`oct${3 - n + 1}`" :key="`oct${n}`" />
         </div>
         <div id="rack4">
-        <div v-for="n in 3" :id="`att${3 - n + 1}`" :key="`att${n}`" />
+        <div title="Attack" v-for="n in 3" :id="`att${3 - n + 1}`" :key="`att${n}`" />
         </div>
         <div id="rack5">
-        <div v-for="n in 3" :id="`dec${3 - n + 1}`" :key="`dec${n}`" />
+        <div title="Decay" v-for="n in 3" :id="`dec${3 - n + 1}`" :key="`dec${n}`" />
         </div>
       </b-row>
     <b-button-group>
