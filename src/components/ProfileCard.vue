@@ -14,7 +14,7 @@
   >
     <template v-slot:header style="opacity: 0; border:none;">
       <b-avatar
-      :src="user.url_avatar"
+      :src="tempAvatar || user.url_avatar"
       badge badge-offset="-0.5em"
       badge-variant="dark"
       class="justify-center"
@@ -143,6 +143,7 @@ export default {
     return {
       newBio: null,
       friendsRow: [],
+      tempAvatar: null,
     };
   },
   props: {
@@ -166,6 +167,7 @@ export default {
   },
   methods: {
     newAvatar(avatar) {
+      this.tempAvatar = avatar;
       this.$emit('new-avatar', avatar);
     },
     editBio(value) {
