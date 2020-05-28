@@ -89,8 +89,7 @@ div {
     background-color:#98AC9E;
 }
 .contribs{
-  font-size: 2rem;
-  font-weight: bold;
+  font-size: 1.5rem;
   color: #99aca0;
 }
 </style>
