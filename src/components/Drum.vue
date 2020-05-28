@@ -1,7 +1,10 @@
 <template>
   <b-container>
     <b-row>
+        <div id="rack0">
         <div id="seq" />
+        <div title="Tempo" id="tempo" />
+        </div>
         <div id="rack1">
         <div v-for="n in 3" :id="`select${3 - n + 1}`" :key="`select${n}`" />
         </div>
@@ -68,7 +71,14 @@ export default {
       ],
       col: null,
       transport: null,
+      tempo: 120,
     };
+  },
+  beforeDestroy() {
+    Tone.Transport.stop();
+    if (this.transport !== null) {
+      Tone.Transport.clear(this.transport);
+    }
   },
   mounted() {
     Nexus.colors.accent = '#595959';
@@ -81,11 +91,26 @@ export default {
 
     Tone.Master.connect(this.dest);
     /* eslint-disable no-new */
+    new Nexus.Rack('#rack0');
     new Nexus.Rack('#rack1');
     new Nexus.Rack('#rack2');
     new Nexus.Rack('#rack3');
     new Nexus.Rack('#rack4');
     new Nexus.Rack('#rack5');
+
+    const tempo = new Nexus.Slider('#tempo', {
+      min: 60,
+      max: 480,
+      step: 1,
+      value: 240,
+    });
+
+    tempo.on('change', (t) => {
+      if (t !== this.tempo) {
+        this.tempo = t;
+        this.schedule();
+      }
+    });
 
     for (let i = 1; i < 4; i += 1) {
       const select = new Nexus.Select(`#select${i}`, {
@@ -231,22 +256,26 @@ export default {
       // sequencer.colors.fill = 'red';
       this.sequencer = sequencer;
     },
-    playLoop() {
-      if (this.transport === null) {
-        this.transport = Tone.Transport.scheduleRepeat((time) => {
-          this.sequencer.next();
-          this.col.forEach((state, i) => {
-            if (state) {
-              this.$socket.emit('startDrum', {
-                drum: i,
-                time: time - Tone.context.currentTime,
-                room: this.$route.query.room,
-              });
-              this.synths[i].triggerAttackRelease(this.instruments[i], '8n', time, this.vols[i]);
-            }
-          });
-        }, '0.25');
+    schedule: _.debounce(function () {
+      if (this.transport !== null) {
+        Tone.Transport.clear(this.transport);
       }
+      this.transport = Tone.Transport.scheduleRepeat((time) => {
+        this.sequencer.next();
+        this.col.forEach((state, i) => {
+          if (state) {
+            this.$socket.emit('startDrum', {
+              drum: i,
+              time: time - Tone.context.currentTime,
+              room: this.$route.query.room,
+            });
+            this.synths[i].triggerAttackRelease(this.instruments[i], '8n', time, this.vols[i]);
+          }
+        });
+      }, (60 / this.tempo).toString());
+    }, 500),
+    playLoop() {
+      this.schedule();
       Tone.Transport.start();
     },
     stopLoop() {

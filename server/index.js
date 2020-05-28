@@ -150,23 +150,23 @@ io.on('connection', (socket) => {
   });
 
   socket.on('startNote', ({ note, vibFreq, vibDepth, oscType, room }) => {
-    socket.broadcast.to(room).emit('receiveStart', { note, vibFreq, vibDepth, oscType });
+    socket.broadcast.to(room).emit('receiveStart', { note, vibFreq, vibDepth, oscType, sockId: socket.id });
   });
 
   socket.on('stopNote', ({ note, room }) => {
-    socket.broadcast.to(room).emit('receiveStop', note);
+    socket.broadcast.to(room).emit('receiveStop', { note, sockId: socket.id });
   });
 
   socket.on('startDrum', ({ drum, time, room }) => {
-    socket.broadcast.to(room).emit('receiveStartDrum', { drum, time });
+    socket.broadcast.to(room).emit('receiveStartDrum', { drum, time, sockId: socket.id });
   });
 
   socket.on('setDrum', ({ index, option, value, room }) => {
-    socket.broadcast.to(room).emit('receiveDrumSet', { index, option, value });
+    socket.broadcast.to(room).emit('receiveDrumSet', { index, option, value, sockId: socket.id });
   });
 
   socket.on('setVol', ({ index, vol, room}) => {
-    socket.broadcast.to(room).emit('receiveVolSet', { index, vol });
+    socket.broadcast.to(room).emit('receiveVolSet', { index, vol, sockId: socket.id });
   });
 
   socket.on('sendMessage', ({ message, room }) => {
