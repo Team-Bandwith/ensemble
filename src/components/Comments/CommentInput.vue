@@ -5,6 +5,7 @@
 
           <b-form-input
             squared
+            class="input-sub"
             :id="song.id"
             v-model="commentText"
             :state="commentState"
@@ -13,6 +14,8 @@
 
       </form>
         <b-button
+          squared
+          class="comment-submit"
           @click="handleComment(myId, song.id)"
         >
           submit
@@ -72,3 +75,37 @@ export default {
   },
 };
 </script>
+<style scoped>
+.comment-submit {
+  margin-left: 10px;
+}
+.input-sub {
+  border-radius: 0;
+  background: #3B3836;
+  width: 100%;
+  color: #fff;
+}
+form:focus {
+  outline:0;
+}
+form {
+  width: 84%;
+}
+input:hover,
+input:focus,
+input:active {
+  background-color: #3B3836;
+  text-shadow: none;
+  border-color: #fff;
+  outline: none;
+  color: #fff;
+}
+textarea:focus,
+input[type="text"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {
+  border-color: #6b8554;
+  box-shadow: 0 1px 1px #6b8554 inset, 0 0 8px #6b8554;
+  outline: 0 none;
+}
+</style>
