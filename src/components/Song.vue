@@ -90,7 +90,12 @@
       <b-row>
         <b-col>
             <b-collapse :id="'collapse' + song.id">
-              <CommentsList :song="song" :user="user" :myId="myId"></CommentsList>
+              <CommentsList
+                :song="song"
+                :user="user"
+                :myId="myId"
+                :username="username"
+              />
             </b-collapse>
         </b-col>
       </b-row>
@@ -114,6 +119,7 @@ export default {
     liked: Array,
     user: Object,
     myId: Number,
+    username: String,
   },
   components: {
     CommentsList,

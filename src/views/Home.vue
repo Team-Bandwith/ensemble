@@ -6,6 +6,7 @@
       :loggedIn="loggedIn"
       :liked="liked"
       :user="user"
+      :username="user.username"
       :friends="friends"
       :feed="feed"
       v-on:new-like="newLike"

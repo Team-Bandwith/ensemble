@@ -8,10 +8,11 @@
 
   <CommentInput
     v-if="myId"
-    v-on:new-comment="getSongComments"
+    v-on:new-comment="addNewComment"
     :song="song"
     :user="user"
     :myId="myId"
+    :username="username"
   >
   </CommentInput>
 
@@ -30,6 +31,7 @@ export default {
     user: Object,
     song: Object,
     myId: Number,
+    username: String,
   },
   components: {
     CommentInput,
@@ -47,6 +49,9 @@ export default {
     scrollDown() {
       const container = this.$el.querySelector('.comments-list');
       container.scrollTop = container.scrollHeight;
+    },
+    addNewComment(comment) {
+      this.comments = [...this.comments, comment];
     },
     getSongComments() {
       const query = `query {

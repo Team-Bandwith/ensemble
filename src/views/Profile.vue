@@ -11,6 +11,7 @@
       :liked="liked"
       :user="profileUser || user"
       :myId="user.id"
+      :username="user.username"
       v-on:new-like="newLike"
       />
   </div>

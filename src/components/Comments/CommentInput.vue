@@ -35,6 +35,7 @@ export default {
     user: Object,
     song: Object,
     myId: Number,
+    username: String,
   },
   data() {
     return {
@@ -68,7 +69,12 @@ export default {
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
         .then((res) => {
           this.newUserComment = res.addComment;
-          this.$emit('new-comment');
+          this.$emit('new-comment', {
+            id_user: userId,
+            text,
+            username: this.username,
+            created_at: new Date(),
+          });
         })
         .catch((err) => console.log(err));
     },
