@@ -116,6 +116,12 @@ export default Vue.extend({
       console.log('app set feed', feed);
       this.feed = feed;
     },
+    newLike(songId) {
+      this.liked = [...this.liked, { id: songId }];
+    },
+    unlike(songId) {
+      this.liked = this.liked.filter((song) => song.id !== songId);
+    },
   },
   sockets: {
     connect() {
@@ -175,7 +181,8 @@ export default Vue.extend({
             :friends="friends"
             :feed="feed"
             v-on:new-avatar='newAvatar'
-            v-on:new-like="getUserLikes(user.id)"
+            v-on:new-like="newLike"
+            v-on:unlike="unlike"
             v-on:friend="getUserFriends(user.id)"
             v-on:checked="clearNotifications"
             v-on:denotify="denotify"

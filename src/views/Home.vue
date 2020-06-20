@@ -9,6 +9,7 @@
       :friends="friends"
       :feed="feed"
       v-on:new-like="newLike"
+      v-on:unlike="unlike"
     />
   </div>
     </b-col>
@@ -37,8 +38,11 @@ export default {
     feed: String,
   },
   methods: {
-    newLike() {
-      this.$emit('new-like');
+    newLike(songId) {
+      this.$emit('new-like', songId);
+    },
+    unlike(songId) {
+      this.$emit('unlike', songId);
     },
   },
 };
