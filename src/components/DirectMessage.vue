@@ -1,6 +1,11 @@
 <template>
   <b-container >
-  <MessageHistory :userTo='dm.id_user_from' :myId='user.id' :user='dm'/>
+  <MessageHistory
+    :userTo='dm.id_user_from'
+    :myId='user.id'
+    :user='dm'
+    :myAvatar='user.url_avatar'
+  />
     <b-list-group flush>
       <div class="direct-message">
         <b-list-group-item class="direct-message">

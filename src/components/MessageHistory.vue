@@ -16,7 +16,8 @@
               <MessageHistoryList
               :myId="myId"
               :userTo="userTo"
-              :message="message"></MessageHistoryList>
+              :message="message"
+              />
             </span>
             </div>
           </b-card>
@@ -55,6 +56,7 @@ export default {
     myId: Number,
     friends: Object,
     userTo: String,
+    myAvatar: String,
   },
   components: {
     MessageHistoryList,
@@ -96,9 +98,14 @@ export default {
           id
         }
       }`;
+      const messageText = this.text;
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, sendMessage)
         .then(() => {
-          this.messageHistory();
+          this.messages = [...this.messages, {
+            id_user_from: this.myId,
+            url_avatar: this.myAvatar,
+            text: messageText,
+          }];
           this.$socket.emit('notify', this.userTo);
           const room = this.myId < this.userTo ? `${this.myId}${this.userTo}` : `${this.userTo}${this.myId}`;
           this.$socket.emit('sendDM', room);
