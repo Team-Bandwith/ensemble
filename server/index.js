@@ -131,8 +131,8 @@ io.on('connection', (socket) => {
     socket.join(room);
   });
 
-  socket.on('sendDM', (room) => {
-    socket.broadcast.to(room).emit('getDM');
+  socket.on('sendDM', ({ room, message }) => {
+    socket.broadcast.to(room).emit('getDM', message);
   });
 
   socket.on('closeDM', (room) => {

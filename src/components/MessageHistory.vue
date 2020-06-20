@@ -101,14 +101,15 @@ export default {
       const messageText = this.text;
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, sendMessage)
         .then(() => {
-          this.messages = [...this.messages, {
+          const message = {
             id_user_from: this.myId,
             url_avatar: this.myAvatar,
             text: messageText,
-          }];
+          };
+          this.messages = [...this.messages, message];
           this.$socket.emit('notify', this.userTo);
           const room = this.myId < this.userTo ? `${this.myId}${this.userTo}` : `${this.userTo}${this.myId}`;
-          this.$socket.emit('sendDM', room);
+          this.$socket.emit('sendDM', { room, message });
         })
         .catch((err) => console.log(err));
       this.text = '';
@@ -121,8 +122,8 @@ export default {
     },
   },
   sockets: {
-    getDM() {
-      this.messageHistory();
+    getDM(message) {
+      this.messages = [...this.messages, message];
     },
   },
 };
