@@ -12,6 +12,7 @@
       :user="profileUser || user"
       :myId="user.id"
       v-on:new-like="newLike"
+      v-on:unlike="unlike"
       />
   </div>
     </b-col>
@@ -39,6 +40,7 @@
     :myId="user.id"
     :liked="liked"
     v-on:new-like='newLike'
+    v-on:unlike='unlike'
     v-on:num-contribs='setContribs'
     />
   </div>
@@ -81,8 +83,11 @@ export default {
     newAvatar(avatar) {
       this.$emit('new-avatar', avatar);
     },
-    newLike() {
-      this.$emit('new-like');
+    newLike(songId) {
+      this.$emit('new-like', songId);
+    },
+    unlike(songId) {
+      this.$emit('unlike', songId);
     },
     getUserInfo(id) {
       const query = `query {
