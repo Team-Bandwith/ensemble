@@ -199,6 +199,7 @@ export default {
   font-size: 1.7rem;
   float: left;
   width: 100%;
+  margin-top: -10px;
 }
 .created-by a {
   color: #000;
@@ -209,6 +210,7 @@ export default {
 .song-created-at {
   color: #3B3836;
   float: right;
+  margin-bottom: 20px;
 }
 .like:hover {
   cursor: pointer;
@@ -224,12 +226,11 @@ export default {
 }
 .comment-bg {
   width: 100%;
-  margin-top: -35px;
-  margin-top: 10px;
   background: #3B3836;
 }
 .green {
   background: #98AC9E;
+  padding: 1em;
 }
 .moment-prefix {
   padding-right: 4px;
