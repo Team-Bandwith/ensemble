@@ -7,6 +7,7 @@
           :liked="liked"
           :user="user"
           :myId="myId"
+          :username="username"
           v-on:new-like="newLike"
         />
       </div>
@@ -26,6 +27,7 @@ export default {
     user: Object,
     friends: Object,
     feed: String,
+    username: String,
   },
   components: {
     Song,
