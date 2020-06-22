@@ -25,6 +25,7 @@
             :liked='liked'
             :user='user'
             v-on:new-like='newLike'
+            v-on:unlike='unlike'
             />
         </b-modal>
         </b-list-group-item>
@@ -57,8 +58,11 @@ export default {
     liked: Array,
   },
   methods: {
-    newLike() {
-      this.$emit('new-like');
+    newLike(songId) {
+      this.$emit('new-like', songId);
+    },
+    unlike(songId) {
+      this.$emit('unlike', songId);
     },
     getContribution(id) {
       const contribQuery = `query {

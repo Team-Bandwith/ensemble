@@ -9,6 +9,7 @@
           :myId="myId"
           :username="username"
           v-on:new-like="newLike"
+          v-on:unlike="unlike"
         />
       </div>
       <hr>
@@ -96,8 +97,11 @@ export default {
         })
         .catch((err) => console.log(err));
     },
-    newLike() {
-      this.$emit('new-like');
+    newLike(songId) {
+      this.$emit('new-like', songId);
+    },
+    unlike(songId) {
+      this.$emit('unlike', songId);
     },
   },
   created() {

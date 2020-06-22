@@ -131,6 +131,7 @@ export default {
       isPlaying: false,
       player: null,
       likeEnabled: true,
+      unlikes: [],
     };
   },
   mounted() {
@@ -169,7 +170,7 @@ export default {
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
         .then((res) => {
           this.likes = res.likeSong.count_likes;
-          this.$emit('new-like');
+          this.$emit('new-like', songId);
           this.likeEnabled = false;
         })
         .catch((err) => console.log(err));
@@ -186,7 +187,7 @@ export default {
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
         .then((res) => {
           this.likes = res.unlikeSong.count_likes;
-          this.$emit('new-like');
+          this.$emit('unlike', songId);
           this.likeEnabled = false;
         })
         .catch((err) => console.log(err));
