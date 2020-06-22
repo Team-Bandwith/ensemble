@@ -32,6 +32,7 @@ export default {
     message: Object,
     myId: Number,
     userTo: String,
+    myAvatar: String,
   },
   components: {
 
