@@ -14,8 +14,10 @@
   >
     <template v-slot:header style="opacity: 0; border:none;">
       <b-avatar
-      :src="tempAvatar || user.url_avatar"
-      badge badge-offset="-0.5em"
+
+      :src="user.url_avatar"
+      :badge="myId === parseInt(user.id)"
+      badge-offset="-0.5em"
       badge-variant="dark"
       class="justify-center"
       size='115px'>
