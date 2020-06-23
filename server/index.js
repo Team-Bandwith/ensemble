@@ -173,6 +173,10 @@ io.on('connection', (socket) => {
     io.to(room).emit('receiveMessage', message);
   });
 
+  socket.on('newComment', (newComment) => {
+    socket.broadcast.emit(`receiveComment${newComment.id_song}`, newComment);
+  });
+
   socket.on('notify', (id) => {
     const online = getOnlineUsers();
     console.log(online, online[id]);

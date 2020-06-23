@@ -42,8 +42,10 @@ export default {
       commentText: '',
       commentState: null,
       handleMoment: moment,
-      newUserComment: null,
     };
+  },
+  mounted() {
+    this.$socket.on(`receiveComment${this.song.id}`, (comment) => this.renderComment(comment));
   },
   methods: {
     handleSubmit(event) {
@@ -58,24 +60,29 @@ export default {
         console.log('please enter a comment');
       }
     },
+    renderComment(comment) {
+      this.$emit('new-comment', comment);
+    },
     addComment(userId, songId, text) {
-      // console.log('like', likes);
+      const newComment = {
+        id_user: userId,
+        id_song: songId,
+        text,
+        username: this.username,
+        create_at: new Date(),
+      };
+
+      this.renderComment(newComment);
+      this.$socket.emit('newComment', newComment);
+
       const query = `mutation {
       addComment(id_user: ${userId}, id_song: ${songId}, text: "${text}") {
         id,
         text,
       }
     }`;
+
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
-        .then((res) => {
-          this.newUserComment = res.addComment;
-          this.$emit('new-comment', {
-            id_user: userId,
-            text,
-            username: this.username,
-            created_at: new Date(),
-          });
-        })
         .catch((err) => console.log(err));
     },
   },
