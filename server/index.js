@@ -177,6 +177,14 @@ io.on('connection', (socket) => {
     socket.broadcast.emit(`receiveComment${newComment.id_song}`, newComment);
   });
 
+  socket.on('newLike', (songId) => {
+    socket.broadcast.emit(`incLike${songId}`);
+  });
+
+  socket.on('unlike', (songId) => {
+    socket.broadcast.emit(`decLike${songId}`);
+  });
+
   socket.on('notify', (id) => {
     const online = getOnlineUsers();
     console.log(online, online[id]);

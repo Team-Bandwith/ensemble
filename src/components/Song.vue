@@ -130,17 +130,16 @@ export default {
       likes: null,
       isPlaying: false,
       player: null,
-      likeEnabled: true,
-      unlikes: [],
     };
   },
   mounted() {
     this.likes = this.song.count_likes;
-  },
-  watch: {
-    liked() {
-      this.likeEnabled = true;
-    },
+    this.$socket.on(`incLike${this.song.id}`, () => {
+      this.likes += 1;
+    });
+    this.$socket.on(`decLike${this.song.id}`, () => {
+      this.likes -= 1;
+    });
   },
   methods: {
     playSong(src) {
@@ -159,35 +158,31 @@ export default {
       }
     },
     likeSong(likes, songId) {
-      if (!this.likeEnabled) {
-        return;
-      }
       const query = `mutation {
       likeSong(id: ${songId}, id_user: ${this.myId}) {
         count_likes
       }
     }`;
+      this.$emit('new-like', songId);
+      this.$socket.emit('newLike', songId);
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
         .then((res) => {
           this.likes = res.likeSong.count_likes;
-          this.$emit('new-like', songId);
           this.likeEnabled = false;
         })
         .catch((err) => console.log(err));
     },
     unlikeSong(songId) {
-      if (!this.likeEnabled) {
-        return;
-      }
       const query = `mutation {
       unlikeSong(id: ${songId}, id_user: ${this.myId}) {
         count_likes
       }
     }`;
+      this.$emit('unlike', songId);
+      this.$socket.emit('unlike', songId);
       request(`${process.env.NODE_ENV === 'development' ? 'http://localhost:8081' : ''}/api`, query)
         .then((res) => {
           this.likes = res.unlikeSong.count_likes;
-          this.$emit('unlike', songId);
           this.likeEnabled = false;
         })
         .catch((err) => console.log(err));
