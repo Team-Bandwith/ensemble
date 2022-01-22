@@ -35,7 +35,7 @@
     "midi-note": "^1.0.0",
     "moment": "^2.25.3",
     "nexusui": "https://github.com/jwebber18/ui/tarball/fix",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^3.1.1",
     "passport": "^0.4.1",
     "pg-promise": "^10.5.5",
     "randomstring": "^1.1.5",
